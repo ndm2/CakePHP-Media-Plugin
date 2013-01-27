@@ -20,8 +20,7 @@
 3. Load the plugin.
 <pre>
     ``//Within your bootstrap.php``
-    ``CakePlugin::load('Media');``
-    ``require APP . 'Plugin' . DS . 'Media' . DS . 'Config' . DS . 'core.php';``
+    ``CakePlugin::load('Media', array('bootstrap'=>true));`
 </pre>
 4. Initialize Media files.
 ``cake Media.Media init``
@@ -72,8 +71,8 @@ Do you want to create it now?
 ``echo $this->Form->input('checksum', array('type'=>'hidden'));``
 ``echo $this->Form->end(__('Submit'));``
 </pre>
-3. To view image:
+3. To view image, add the Media helper to your controller and use:
 <pre>
-``<?php echo $this->Html->image( '../media/transfer/img/' . h($employee['User']['basename']), array('alt' => __('Profile Picture'), 'border' => '0')); ?>``
+``<?php echo $this->Media->embed(h($employee['User']['basename'])); ?>``
 </pre>
 4. ENJOY!
