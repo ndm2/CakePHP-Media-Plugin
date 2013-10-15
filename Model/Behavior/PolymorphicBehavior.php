@@ -1,36 +1,27 @@
 <?php
-/* SVN FILE: $Id: polymorphic.php 1375 2009-08-03 09:05:08Z AD7six $ */
-
 /**
  * Polymorphic Behavior.
  *
  * Allow the model to be associated with any other model object
  *
- * PHP versions 4 and 5
+ * PHP 5
+ * CakePHP 2
  *
  * Copyright (c) 2008, Andy Dawson
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.models.behaviors
- * @since         v 0.1
- * @version       $Revision: 1375 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2009-08-03 09:05:08 +0000 (Mon, 03 Aug 2009) $
+ * @package       Base.Model.Behavior
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
  * PolymorphicBehavior class
  *
- * @uses          ModelBehavior
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       Base.Model.Behavior
  */
 class PolymorphicBehavior extends ModelBehavior {
 

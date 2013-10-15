@@ -1,4 +1,21 @@
 <?php
+/**
+ * Model Test Models
+ *
+ * Copyright (c) 2007-2012 David Persson
+ *
+ * Distributed under the terms of the MIT License.
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * PHP 5
+ * CakePHP 2
+ *
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.Model
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ */
+
 class Movie extends CakeTestModel {
 	var $name = 'Movie';
 	var $useTable = 'movies';

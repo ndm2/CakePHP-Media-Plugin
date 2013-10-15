@@ -7,14 +7,13 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.models.behaviors
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Model.Behavior
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::uses('Inflector', 'Utility');
 App::uses('Cache', 'Cache');
@@ -38,8 +37,7 @@ App::uses('Info', 'mm/Media');
  *      $result = $this->Document->metadata('/tmp/cern.jpg', 2);
  * }}}
  *
- * @package    media
- * @subpackage media.models.behaviors
+ * @package       Media.Model.Behavior
  */
 class MetaBehavior extends ModelBehavior {
 

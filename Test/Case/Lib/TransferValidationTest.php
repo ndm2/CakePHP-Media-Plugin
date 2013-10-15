@@ -7,14 +7,13 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.tests.cases.libs
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.Lib
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Lib','Media.TransferValidation');
 require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'test_data.php';
@@ -22,8 +21,7 @@ require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'test_d
 /**
  * Transfer Validation Test Case Class
  *
- * @package    media
- * @subpackage media.tests.cases.libs
+ * @package       Media.Test.Case.Lib
  */
 class TransferValidationTest extends CakeTestCase {
 	function setUp() {

@@ -1,4 +1,23 @@
 <?php
+/**
+ * Generated Deletable Behavior File
+ *
+ * Distributed under the terms of the MIT License.
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * PHP 5
+ * CakePHP 2
+ *
+ * @author        Ben McClure
+ * @package       Media.Model.Behavior
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ */
+
+/**
+ * Generated Deletable Behavior Class
+ *
+ * @package       Media.Model.Behavior
+ */
 class GeneratedDeletableBehavior extends ModelBehavior {
     
 	public function beforeDelete(Model $Model, $cascade = true) {

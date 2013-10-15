@@ -7,14 +7,13 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.libs
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Lib
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::uses('Validation', 'Utility');
 App::uses('MediaValidation', 'Media.Lib');
@@ -22,8 +21,7 @@ App::uses('MediaValidation', 'Media.Lib');
 /**
  * Transfer Validation Class
  *
- * @package    media
- * @subpackage media.libs
+ * @package       Media.Lib
  */
 class TransferValidation extends MediaValidation {
 

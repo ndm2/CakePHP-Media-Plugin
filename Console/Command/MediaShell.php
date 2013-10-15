@@ -7,14 +7,13 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.shells
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Console.Command
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::uses('ConnectionManager', 'Model');
 //require_once(dirname(dirname(dirname(__FILE__))) . DS . 'Config' . DS. 'core.php');
@@ -25,8 +24,7 @@ Configure::write('Cache.disable', true);
 /**
  * Media Shell Class
  *
- * @package    media
- * @subpackage media.shells
+ * @package       Media.Console.Command
  */
 class MediaShell extends Shell {
 

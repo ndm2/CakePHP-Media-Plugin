@@ -7,14 +7,13 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.views.helpers
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.View.Helper
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 require_once 'Mime/Type.php';
 
@@ -37,11 +36,10 @@ require_once 'Mime/Type.php';
  * dynamically expanded path fragments for let you specify paths to files in a
  * very short way.
  *
- * @see file()
- * @see __construct()
- * @link http://book.cakephp.org/view/99/Using-Helpers
- * @package    media
- * @subpackage media.views.helpers
+ * @see           MediaHelper::file()
+ * @see           MediaHelper::__construct()
+ * @link          http://book.cakephp.org/2.0/en/views/helpers.html
+ * @package       Media.View.Helper
  */
 class MediaHelper extends AppHelper {
 
