@@ -15,6 +15,7 @@
  * @package       Media.Lib
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
 App::uses('Validation', 'Utility');
 
 /**
@@ -342,4 +343,3 @@ class MediaValidation extends Validation {
 	    return $size;
 	}
 }
-?>

@@ -25,6 +25,7 @@ require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'test_d
  * @package       Media.Test.Case.Lib
  */
 class TransferValidationTest extends CakeTestCase {
+
 	function setUp() {
 		$this->TestData = new TestData();
 	}
@@ -33,4 +34,3 @@ class TransferValidationTest extends CakeTestCase {
 		$this->TestData->flushFiles();
 	}
 }
-?>

@@ -384,5 +384,3 @@ class GeneratorBehavior extends ModelBehavior {
 		return $filter[$name];
     }
 }
-
-?>

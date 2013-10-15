@@ -867,5 +867,3 @@ class TransferBehavior extends ModelBehavior {
 		return $new;
 	}
 }
-
-?>

@@ -27,16 +27,16 @@ class MakeTask extends MediaShell {
 
 	public $source;
 
-    public $model;
+	public $model;
 
-    protected $_Model;
+	protected $_Model;
 
 /**
  * Main execution methpd
  *
  * @return void
  */
-    public function execute() {
+	public function execute() {
 		if (isset($this->params['model'])) {
 			$this->model = $this->params['model'];
 		 } else {
@@ -81,5 +81,3 @@ class MakeTask extends MediaShell {
 		$this->out();
 	}
 }
-
-?>

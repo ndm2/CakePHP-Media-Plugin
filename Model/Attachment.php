@@ -15,6 +15,7 @@
  * @package       Media.Model
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
 App::uses('MediaAppModel', 'Media.Model');
 
 /**
@@ -25,20 +26,21 @@ App::uses('MediaAppModel', 'Media.Model');
  * @package       Media.Model
  */
 class Attachment extends MediaAppModel {
+
 /**
  * actsAs property
  *
  * @var array
  */
-    public $actsAs = array(
+	public $actsAs = array(
 		'Media.Transfer' => array(
-			'trustClient' => false,
+			'trustClient'       => false,
 			'transferDirectory' => MEDIA_TRANSFER,
-			'createDirectory' => true,
-			'alternativeFile' => 100
+			'createDirectory'   => true,
+			'alternativeFile'   => 100
 		),
 		'Media.Generator' => array(
-			'baseDirectory' => MEDIA_TRANSFER,
+			'baseDirectory'   => MEDIA_TRANSFER,
 			'filterDirectory' => MEDIA_FILTER,
 			'createDirectory' => true,
 		),
@@ -68,7 +70,7 @@ class Attachment extends MediaAppModel {
  *
  * @var array
  */
-    public $validate = array(
+	public $validate = array(
 		'file' => array(
 			'resource'   => array('rule' => 'checkResource'),
 			'access'     => array('rule' => 'checkAccess'),
@@ -96,7 +98,7 @@ class Attachment extends MediaAppModel {
  *
  * @var array
  */
-    public $virtualFields = array(
+	public $virtualFields = array(
 		'path' => "CONCAT_WS('/', dirname, basename)"
 	);
 
@@ -135,4 +137,3 @@ class Attachment extends MediaAppModel {
 	// public function transferTo($via, $from) {
 	// }
 }
-?>

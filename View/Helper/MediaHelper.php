@@ -53,19 +53,19 @@ class MediaHelper extends AppHelper {
  *
  * @var array
  */
-    public $helpers = array('Html');
+	public $helpers = array('Html');
 
 /**
  * Tags
  *
  * @var array
  */
-    public $tags = array(
-		'audio'          => '<audio%s>%s%s</audio>',
-		'video'          => '<video%s>%s%s</video>',
-		'source'         => '<source%s/>',
-		'object'         => '<object%s>%s%s</object>',
-		'param'          => '<param%s/>'
+	public $tags = array(
+		'audio'  => '<audio%s>%s%s</audio>',
+		'video'  => '<video%s>%s%s</video>',
+		'source' => '<source%s/>',
+		'object' => '<object%s>%s%s</object>',
+		'param'  => '<param%s/>'
 	);
 
 /**
@@ -74,10 +74,10 @@ class MediaHelper extends AppHelper {
  *
  * @var array
  */
-    public $_paths = array(
-		MEDIA_STATIC => MEDIA_STATIC_URL,
+	public $_paths = array(
+		MEDIA_STATIC   => MEDIA_STATIC_URL,
 		MEDIA_TRANSFER => MEDIA_TRANSFER_URL,
-		MEDIA_FILTER => MEDIA_FILTER_URL
+		MEDIA_FILTER   => MEDIA_FILTER_URL
 	);
 
 /**
@@ -91,7 +91,7 @@ class MediaHelper extends AppHelper {
  *                        corresponding to an absolute path. Paths are expected to end with a
  *                        trailing slash.
  */
-    public function __construct(View $View, $settings = array()) {
+	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 		$this->_paths = array_merge($this->_paths, (array) $settings);
 	}
@@ -105,7 +105,7 @@ class MediaHelper extends AppHelper {
  * @param boolean $full Forces the URL to be fully qualified
  * @return string|void An URL to the file
  */
-    public function url($path = null, $full = false) {
+	public function url($path = null, $full = false) {
 		if (!$path = $this->webroot($path)) {
 			return null;
 		}
@@ -123,7 +123,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return string|void An URL to the file
  */
-    public function webroot($path) {
+	public function webroot($path) {
 		if (!$file = $this->file($path)) {
 			return null;
 		}
@@ -173,23 +173,23 @@ class MediaHelper extends AppHelper {
  *                                        one of these.
  * @return string|void
  */
-    public function embed($paths, $options = array()) {
+	public function embed($paths, $options = array()) {
 		$default = array(
 			'autoplay' => false,
-			'preload' => false,
+			'preload'  => false,
 			'controls' => true,
-			'loop' => false,
+			'loop'     => false,
 			'fallback' => null,
-			'poster' => null,
-			'full' => false
+			'poster'   => null,
+			'full'     => false
 		);
 		$optionalAttributes = array(
-			'alt' => null,
-			'id' => null,
-			'title' => null,
-			'class' => null,
-			'width' => null,
-			'height' => null,
+			'alt'      => null,
+			'id'       => null,
+			'title'    => null,
+			'class'    => null,
+			'width'    => null,
+			'height'   => null,
 			'itemprop' => null
 		);
 
@@ -244,7 +244,7 @@ class MediaHelper extends AppHelper {
 					$body .= sprintf(
 						$this->tags['source'],
 						$this->_parseAttributes(array(
-							'src' => $source['url'],
+							'src'  => $source['url'],
 							'type' => $source['mimeType']
 					)));
 				}
@@ -288,20 +288,20 @@ class MediaHelper extends AppHelper {
  *                       - width, height
  * @return string
  */
-    public function embedAsObject($paths, $options = array()) {
+	public function embedAsObject($paths, $options = array()) {
 		$default = array(
 			'autoplay' => false,
 			'controls' => true,
-			'loop' => false,
+			'loop'     => false,
 			'fallback' => null,
-			'full' => false
+			'full'     => false
 		);
 		$optionalAttributes = array(
-			'alt' => null,
-			'id' => null,
-			'title' => null,
-			'class' => null,
-			'width' => null,
+			'alt'    => null,
+			'id'     => null,
+			'title'  => null,
+			'class'  => null,
+			'width'  => null,
 			'height' => null
 		);
 
@@ -331,9 +331,9 @@ class MediaHelper extends AppHelper {
 					'classid' => 'clsid:6BF52A52-394A-11d3-B153-00C04F79FAA6'
 				);
 				$parameters = array(
-					'src' => $url,
-					'autostart' => $autoplay,
-					'controller' => $controls,
+					'src'         => $url,
+					'autostart'   => $autoplay,
+					'controller'  => $controls,
 					'pluginspage' => 'http://www.microsoft.com/Windows/MediaPlayer/'
 				);
 				break;
@@ -345,60 +345,60 @@ class MediaHelper extends AppHelper {
 					'classid' => 'clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA',
 				);
 				$parameters = array(
-					'src' => $sources[0]['url'],
-					'autostart' => $autoplay,
-					'controls' => isset($controls) ? 'ControlPanel' : null,
-					'console' => 'video' . uniqid(),
-					'loop' => $loop,
-					'nologo' => true,
-					'nojava' => true,
-					'center' => true,
+					'src'         => $sources[0]['url'],
+					'autostart'   => $autoplay,
+					'controls'    => isset($controls) ? 'ControlPanel' : null,
+					'console'     => 'video' . uniqid(),
+					'loop'        => $loop,
+					'nologo'      => true,
+					'nojava'      => true,
+					'center'      => true,
 					'pluginspage' => 'http://www.real.com/player/'
 				);
 				break;
 			/* QuickTime */
 			case 'video/quicktime':
 				$attributes += array(
-					'classid' => 'clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B',
+					'classid'  => 'clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B',
 					'codebase' => 'http://www.apple.com/qtactivex/qtplugin.cab'
 				);
 				$parameters = array(
 					'src' => $sources[0]['url'],
-					'autoplay' => $autoplay,
-					'controller' => $controls,
-					'showlogo' => false,
+					'autoplay'    => $autoplay,
+					'controller'  => $controls,
+					'showlogo'    => false,
 					'pluginspage' => 'http://www.apple.com/quicktime/download/'
 				);
 				break;
 			/* Mpeg */
 			case 'video/mpeg':
 				$parameters = array(
-					'src' => $sources[0]['url'],
+					'src'       => $sources[0]['url'],
 					'autostart' => $autoplay,
 				);
 				break;
 			/* Flashy Flash */
 			case 'application/x-shockwave-flash':
 				$attributes += array(
-					'classid' => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000',
+					'classid'  => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000',
 					'codebase' => 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab'
 				);
 				$parameters = array(
-					'movie' => $sources[0]['url'],
-					'wmode' => 'transparent',
-					'FlashVars' => 'playerMode=embedded',
-					'quality' => 'best',
-					'scale' => 'noScale',
-					'salign' => 'TL',
+					'movie'       => $sources[0]['url'],
+					'wmode'       => 'transparent',
+					'FlashVars'   => 'playerMode=embedded',
+					'quality'     => 'best',
+					'scale'       => 'noScale',
+					'salign'      => 'TL',
 					'pluginspage' => 'http://www.adobe.com/go/getflashplayer'
 				);
 				break;
 			case 'application/pdf':
 				$parameters = array(
-					'src' => $sources[0]['url'],
-					'toolbar' => $controls, /* 1 or 0 */
+					'src'       => $sources[0]['url'],
+					'toolbar'   => $controls, /* 1 or 0 */
 					'scrollbar' => $controls, /* 1 or 0 */
-					'navpanes' => $controls
+					'navpanes'  => $controls
 				);
 				break;
 			case 'audio/x-wav':
@@ -406,7 +406,7 @@ class MediaHelper extends AppHelper {
 			case 'audio/ogg':
 			case 'audio/x-midi':
 				$parameters = array(
-					'src' => $sources[0]['url'],
+					'src'      => $sources[0]['url'],
 					'autoplay' => $autoplay
 				);
 				break;
@@ -430,7 +430,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return string|void i.e. `image` or `video`
  */
-    public function name($path) {
+	public function name($path) {
 		if ($file = $this->file($path)) {
 			return Mime_Type::guessName($file);
 		}
@@ -442,7 +442,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return string|void
  */
-    public function mimeType($path) {
+	public function mimeType($path) {
 		if ($file = $this->file($path)) {
 			return Mime_Type::guessType($file);
 		}
@@ -454,7 +454,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return integer|void
  */
-    public function size($path)	{
+	public function size($path)	{
 		if ($file = $this->file($path)) {
 			return filesize($file);
 		}
@@ -474,7 +474,7 @@ class MediaHelper extends AppHelper {
  * @return string|boolean False on error or if path couldn't be resolved otherwise
  *                        an absolute path to the file.
  */
-    public function file($path) {
+	public function file($path) {
 		// Most recent paths are probably searched more often
 		$bases = array_reverse(array_keys($this->_paths));
 
@@ -516,7 +516,7 @@ class MediaHelper extends AppHelper {
  * @param boolean $full When `true` will generate absolute URLs.
  * @return array An array of sources each one with the keys `name`, `mimeType`, `url` and `file`.
  */
-    protected function _sources($paths, $full = false) {
+	protected function _sources($paths, $full = false) {
 		$sources = array();
 
 		foreach ($paths as $path) {
@@ -598,5 +598,3 @@ class MediaHelper extends AppHelper {
 		return implode("\n", $parameters);
 	}
 }
-
-?>

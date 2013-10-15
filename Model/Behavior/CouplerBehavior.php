@@ -222,4 +222,3 @@ class CouplerBehavior extends ModelBehavior {
 		return !empty($value);
 	}
 }
-?>

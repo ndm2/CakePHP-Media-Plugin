@@ -21,7 +21,7 @@ App::uses('ModelBehavior', 'Model');
  * @package       Media.Model.Behavior
  */
 class GeneratedDeletableBehavior extends ModelBehavior {
-    
+
 	public function beforeDelete(Model $Model, $cascade = true) {
 		if (!$cascade) {
 			return true;
@@ -67,4 +67,3 @@ class GeneratedDeletableBehavior extends ModelBehavior {
 		return true;
 	}
 }
-?>

@@ -25,6 +25,7 @@ require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'test_d
  * @package       Media.Test.Case.Lib
  */
 class MediaValidationTest extends CakeTestCase {
+
 	function setUp() {
 		$this->TestData = new TestData();
 	}
@@ -291,4 +292,3 @@ class MediaValidationTest extends CakeTestCase {
 		$this->assertTrue($result);
 	}
 }
-?>

@@ -29,7 +29,7 @@ class MediaSchema extends CakeSchema {
  * @param array $event
  * @return boolean
  */
-    public function before($event = array()) {
+	public function before($event = array()) {
 		return true;
 	}
 
@@ -38,7 +38,7 @@ class MediaSchema extends CakeSchema {
  *
  * @param array $event
  */
-    public function after($event = array()) {
+	public function after($event = array()) {
 	}
 
 /**
@@ -46,7 +46,7 @@ class MediaSchema extends CakeSchema {
  *
  * @var array
  */
-    public $attachments = array(
+	public $attachments = array(
 		'id'          => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'extra' => 'auto_increment', 'length' => 10),
 		'model'       => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 255),
 		'foreign_key' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10),
@@ -60,4 +60,3 @@ class MediaSchema extends CakeSchema {
 		'indexes'     => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
 }
-?>

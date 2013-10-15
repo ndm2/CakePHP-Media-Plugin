@@ -54,49 +54,49 @@ class SyncTask extends MediaShell {
  *
  * @var string
  */
-    public $model;
+	public $model;
 
 /**
  * Directory
  *
  * @var string
  */
-    public $directory;
+	public $directory;
 
 /**
  * Default answer to use if prompted for input
  *
  * @var string
  */
-    protected $_answer = 'n';
+	protected $_answer = 'n';
 
 /**
  * Verbosity of output, control via argument `-quiet`
  *
  * @var boolean
  */
-    protected $_quiet;
+	protected $_quiet;
 
 /**
  * Model
  *
  * @var Model
  */
-    protected $_Model;
+	protected $_Model;
 
 /**
  * baseDirectory from the model's media behavior settings
  *
  * @var string
  */
-    protected $_baseDirectory;
+	protected $_baseDirectory;
 
 /**
  * Folder to search
  *
  * @var Folder
  */
-    protected $_Folder;
+	protected $_Folder;
 
 /**
  * Current item retrieved from the model
@@ -110,42 +110,42 @@ class SyncTask extends MediaShell {
  *
  * @var array
  */
-    private $__fsItem;
+	private $__fsItem;
 
 /**
  * Current set of items retrieved from the model
  *
  * @var array
  */
-    private $__dbMap;
+	private $__dbMap;
 
 /**
  * Current set of items retrieved from the filesystem
  *
  * @var array
  */
-    private $__fsMap;
+	private $__fsMap;
 
 /**
  * Current file object
  *
  * @var File
  */
-    private $__File;
+	private $__File;
 
 /**
  * An alternative for the current file
  *
  * @var mixed
  */
-    private $__alternativeFile;
+	private $__alternativeFile;
 
 /**
  * Main execution method
  *
  * @return boolean
  */
-    public function execute() {
+	public function execute() {
 		$this->_answer = isset($this->params['auto']) ? 'y' : 'n';
 		$this->model = array_shift($this->args);
 		$this->directory = array_shift($this->args);
@@ -197,7 +197,7 @@ class SyncTask extends MediaShell {
  *
  * @return void
  */
-    protected function _checkFilesWithRecords() {
+	protected function _checkFilesWithRecords() {
 		$this->out('');
 		$this->out('Checking if files are in sync with records');
 		$this->hr();
@@ -240,7 +240,7 @@ class SyncTask extends MediaShell {
  *
  * @return void
  */
-    protected function _checkRecordsWithFiles() {
+	protected function _checkRecordsWithFiles() {
 		$this->out('');
 		$this->out('Checking if records are in sync with files');
 		$this->hr();
@@ -275,7 +275,7 @@ class SyncTask extends MediaShell {
  *
  * @return mixed
  */
-    protected function _handleNotReadable() {
+	protected function _handleNotReadable() {
 		if (!$this->__File->readable() && $this->__File->exists()) {
 			$message  = 'File `' . $this->shortPath($this->__File->pwd()) . '`';
 			$message .= ' exists but is not readable.';
@@ -290,7 +290,7 @@ class SyncTask extends MediaShell {
  *
  * @return mixed
  */
-    protected function _handleOrphanedRecord() {
+	protected function _handleOrphanedRecord() {
 		if ($this->__File->exists()) {
 			return;
 		}
@@ -312,7 +312,7 @@ class SyncTask extends MediaShell {
  *
  * @return mixed
  */
-    protected function _handleChecksumMismatch() {
+	protected function _handleChecksumMismatch() {
 		if (!$this->__File->exists()) {
 			return;
 		}
@@ -330,7 +330,7 @@ class SyncTask extends MediaShell {
 
 		if ($input == 'y') {
 			$data = array(
-				'id' => $this->__dbItem['id'],
+				'id'       => $this->__dbItem['id'],
 				'checksum' => $this->__File->md5(true),
 			);
 			$this->_Model->save($data);
@@ -348,7 +348,7 @@ class SyncTask extends MediaShell {
  *
  * @return mixed
  */
-    protected function _handleOrphanedFile() {
+	protected function _handleOrphanedFile() {
 		if ($this->_findByFile($this->__fsItem['file'], $this->__dbMap)) {
 			return;
 		}
@@ -372,7 +372,7 @@ class SyncTask extends MediaShell {
  *
  * @return boolean
  */
-    protected function _fixWithAlternative() {
+	protected function _fixWithAlternative() {
 		if (!$this->__alternativeFile) {
 			return false;
 		}
@@ -388,8 +388,8 @@ class SyncTask extends MediaShell {
 		}
 
 		$data = array(
-			'id' => $this->__dbItem['id'],
-			'dirname' => dirname(str_replace($this->_baseDirectory, '', $this->__alternativeFile)),
+			'id'       => $this->__dbItem['id'],
+			'dirname'  => dirname(str_replace($this->_baseDirectory, '', $this->__alternativeFile)),
 			'basename' => basename($this->__alternativeFile),
 		);
 		$this->_Model->save($data);
@@ -402,7 +402,7 @@ class SyncTask extends MediaShell {
  *
  * @return bool
  */
-    protected function _fixDeleteRecord() {
+	protected function _fixDeleteRecord() {
 		$input = $this->in('Delete record?', 'y,n', $this->_answer);
 
 		if ($input == 'y') {
@@ -421,7 +421,7 @@ class SyncTask extends MediaShell {
  *
  * @return array
  */
-    protected function _generateMaps() {
+	protected function _generateMaps() {
 		$fsFiles = $this->_Folder->findRecursive();
 		$results = $this->_Model->find('all');
 		$fsMap = array();
@@ -430,13 +430,13 @@ class SyncTask extends MediaShell {
 		foreach ($fsFiles as $value) {
 			$File = new File($value);
 			$fsMap[] = array(
-				'file' => $File->pwd(),
+				'file'     => $File->pwd(),
 				'checksum' => $File->md5(true)
 			);
 		}
 		foreach ($results as $result) {
 			$dbMap[] = array(
-				'id' => $result[$this->_Model->name]['id'],
+				'id'   => $result[$this->_Model->name]['id'],
 				'file' => $this->_baseDirectory
 						. $result[$this->_Model->name]['dirname']
 						. DS . $result[$this->_Model->name]['basename'],
@@ -453,7 +453,7 @@ class SyncTask extends MediaShell {
  * @param array $map Map to use as a haystack
  * @return mixed
  */
-    protected function _findByChecksum($checksum, $map) {
+	protected function _findByChecksum($checksum, $map) {
 		foreach ($map as $item) {
 			if ($checksum == $item['checksum']) {
 				return $item['file'];
@@ -469,7 +469,7 @@ class SyncTask extends MediaShell {
  * @param array $map Map to use as a haystack
  * @return mixed
  */
-    protected function _findByFile($file, $map) {
+	protected function _findByFile($file, $map) {
 		foreach ($map as $item) {
 			if ($file == $item['file']) {
 				return $item['file'];
@@ -478,4 +478,3 @@ class SyncTask extends MediaShell {
 		return false;
 	}
 }
-?>

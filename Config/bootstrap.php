@@ -102,10 +102,10 @@ if (!defined('MEDIA_FILTER')) {
 	define('MEDIA_FILTER', MEDIA . 'filter' . DS);
 }
 if (!defined('MEDIA_TRANSFER')) {
-    define('MEDIA_TRANSFER', MEDIA . 'transfer' . DS);
+	define('MEDIA_TRANSFER', MEDIA . 'transfer' . DS);
 }
 if (!defined('MEDIA_UPLOAD_TMP_DIR')) {
-    define('MEDIA_UPLOAD_TMP_DIR', ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir());
+	define('MEDIA_UPLOAD_TMP_DIR', ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir());
 }
 
 /**
@@ -142,7 +142,7 @@ $hasImagick = extension_loaded('imagick');
 $mm = dirname(dirname(__FILE__)) . DS . 'Lib' . DS . 'mm';
 
 if (strpos(ini_get('include_path'), $mm) === false) {
-	ini_set('include_path', $mm.DS.'src'.PATH_SEPARATOR.ini_get('include_path'));
+	ini_set('include_path', $mm . DS . 'src' . PATH_SEPARATOR . ini_get('include_path'));
 }
 
 /**
@@ -166,7 +166,7 @@ if ($hasFileinfo) {
 } else {
 	Mime_Type::config('Magic', array(
 		'adapter' => 'Freedesktop',
-		'file' => $mm . DS . 'data' . DS . 'magic.db'
+		'file'    => $mm . DS . 'data' . DS . 'magic.db'
 	));
 }
 if ($cached = Cache::read('mime_type_glob')) {
@@ -179,7 +179,7 @@ if ($cached = Cache::read('mime_type_glob')) {
 } else {
 	Mime_Type::config('Glob', array(
 		'adapter' => 'Freedesktop',
-		'file' => $mm . DS . 'data' . DS . 'glob.db'
+		'file'    => $mm . DS . 'data' . DS . 'glob.db'
 	));
 	Cache::write('mime_type_glob', Mime_Type::$glob->to('array'));
 }
@@ -196,10 +196,10 @@ if ($cached = Cache::read('mime_type_glob')) {
 require_once 'Media/Process.php';
 
 Media_Process::config(array(
-	// 'audio' => 'SoxShell',
+	//'audio'    => 'SoxShell',
 	'document' => $hasImagick ? 'Imagick' : null,
-	'image' => $hasImagick ? 'Imagick' : 'Gd',
-	// 'video' => 'FfmpegShell'
+	'image'    => $hasImagick ? 'Imagick' : 'Gd',
+	//'video'    => 'FfmpegShell'
 ));
 
 /**
@@ -213,10 +213,10 @@ Media_Process::config(array(
 require_once 'Media/Info.php';
 
 Media_Info::config(array(
-	'audio' => array('NewWave'),
+	'audio'    => array('NewWave'),
 	'document' => $hasImagick ? array('Imagick') : array(),
-	'image' => $hasImagick ? array('ImageBasic', 'Imagick') : array('ImageBasic'),
-	//'video' => array()
+	'image'    => $hasImagick ? array('ImageBasic', 'Imagick') : array('ImageBasic'),
+	//'video'    => array()
 ));
 
 /**
@@ -233,16 +233,14 @@ Media_Info::config(array(
 // $sRGB = $mm . DS . 'data' . DS . 'sRGB_IEC61966-2-1_black_scaled.icc';
 
 $s = array('convert' => 'image/jpeg', 'fitCrop' => array(100, 100));
-$m = array('convert' => 'image/jpeg', 'fit' => array(300, 300));
-$l = array('convert' => 'image/jpeg', 'fit' => array(600, 440));
-$original = array('clone'=>'copy');
+$m = array('convert' => 'image/jpeg', 'fit'     => array(300, 300));
+$l = array('convert' => 'image/jpeg', 'fit'     => array(600, 440));
+$original = array('clone' => 'copy');
 
 Configure::write('Media.filter', array('default' => array(
-	'audio' => compact('s', 'm'),
-	'document' => compact('s', 'm','original'),
-	'generic' => array('original'=>array('clone'=>'copy')),
-	'image' => compact('s', 'm', 'l','original'),
-	'video' => compact('s', 'm')
+	'audio'    => compact('s', 'm'),
+	'document' => compact('s', 'm', 'original'),
+	'generic'  => array('original' => array('clone' => 'copy')),
+	'image'    => compact('s', 'm', 'l', 'original'),
+	'video'    => compact('s', 'm')
 )));
-
-?>
