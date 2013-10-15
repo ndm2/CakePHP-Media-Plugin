@@ -27,7 +27,7 @@ class MakeTask extends MediaShell {
 
     public $model;
 
-    public $_Model;
+    protected $_Model;
 
 /**
  * Main execution methpd

@@ -31,7 +31,7 @@ class MediaShell extends Shell {
 /**
  * Tasks
  *
- * @var string
+ * @var array
  */
 	public $tasks = array('Media.Sync', 'Media.Make');
 
