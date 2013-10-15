@@ -16,6 +16,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
+App::uses('File', 'Utility');
+App::uses('ModelBehavior', 'Model');
+
 /**
  * Coupler Behavior Class
  *
@@ -47,8 +50,6 @@
  * @see           SyncTask
  * @package       Media.Model.Behavior
  */
- App::uses('File', 'Utility');
-
 class CouplerBehavior extends ModelBehavior {
 
 /**

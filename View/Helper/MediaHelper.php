@@ -15,6 +15,11 @@
  * @package       Media.View.Helper
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
+App::uses('Folder', 'Utility');
+App::uses('Set', 'Utility');
+App::uses('AppHelper', 'View/Helper');
+
 require_once 'Mime/Type.php';
 
 /**

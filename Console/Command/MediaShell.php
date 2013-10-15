@@ -16,7 +16,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::uses('ConnectionManager', 'Model');
-//require_once(dirname(dirname(dirname(__FILE__))) . DS . 'Config' . DS. 'core.php');
+App::uses('Shell', 'Console');
 App::uses('Folder', 'Utility');
 
 Configure::write('Cache.disable', true);

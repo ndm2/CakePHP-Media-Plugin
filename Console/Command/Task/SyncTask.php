@@ -16,6 +16,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
+App::uses('MediaShell', 'Media.Console/Command');
+
 /**
  * Sync Task Class
  *

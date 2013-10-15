@@ -15,8 +15,10 @@
  * @package       Media.Model.Behavior
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::uses('Inflector', 'Utility');
+
 App::uses('Cache', 'Cache');
+App::uses('Inflector', 'Utility');
+App::uses('ModelBehavior', 'Model');
 
 //require_once 'Mime/Type.php';
 //require_once 'Media/Info.php';

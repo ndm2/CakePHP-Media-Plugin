@@ -15,12 +15,14 @@
  * @package       Media.Model.Behavior
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
+App::uses('HttpSocket', 'Network/Http');
 App::uses('Folder', 'Utility');
 App::uses('MediaValidation', 'Media.Lib');
 App::uses('TransferValidation', 'Media.Lib');
+App::uses('ModelBehavior', 'Model');
 
 require_once 'Mime/Type.php';
-//App::uses('Type', 'mm/Mime');
 
 /**
  * Transfer Behavior Class

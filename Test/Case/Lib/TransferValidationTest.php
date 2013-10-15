@@ -15,7 +15,8 @@
  * @package       Media.Test.Case.Lib
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Lib','Media.TransferValidation');
+
+App::uses('TransferValidation', 'Media.Lib');
 require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'test_data.php';
 
 /**
