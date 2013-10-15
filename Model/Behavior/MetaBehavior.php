@@ -20,10 +20,8 @@ App::uses('Cache', 'Cache');
 App::uses('Inflector', 'Utility');
 App::uses('ModelBehavior', 'Model');
 
-//require_once 'Mime/Type.php';
-//require_once 'Media/Info.php';
-App::uses('Type', 'mm/Mime');
-App::uses('Info', 'mm/Media');
+require_once 'Mime/Type.php';
+require_once 'Media/Info.php';
 
 /**
  * Coupler Behavior Class
