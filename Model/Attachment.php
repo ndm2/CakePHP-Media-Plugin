@@ -75,7 +75,7 @@ class Attachment extends MediaAppModel {
 			'resource'   => array('rule' => 'checkResource'),
 			'access'     => array('rule' => 'checkAccess'),
 			'location'   => array('rule' => array('checkLocation', array(
-				MEDIA_TRANSFER, '/tmp/'
+				MEDIA_TRANSFER, MEDIA_UPLOAD_TMP_DIR
 			))),
 			'permission' => array('rule' => array('checkPermission', '*')),
 			'size'       => array('rule' => array('checkSize', '5M')),

@@ -104,6 +104,9 @@ if (!defined('MEDIA_FILTER')) {
 if (!defined('MEDIA_TRANSFER')) {
     define('MEDIA_TRANSFER', MEDIA . 'transfer' . DS);
 }
+if (!defined('MEDIA_UPLOAD_TMP_DIR')) {
+    define('MEDIA_UPLOAD_TMP_DIR', ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir());
+}
 
 /**
  * URL paths
