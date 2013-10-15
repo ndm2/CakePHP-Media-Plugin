@@ -26,11 +26,11 @@ require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'test_d
  */
 class TransferValidationTest extends CakeTestCase {
 
-	function setUp() {
+	public function setUp() {
 		$this->TestData = new TestData();
 	}
 
-	function tearDown() {
+	public function tearDown() {
 		$this->TestData->flushFiles();
 	}
 }
