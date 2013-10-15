@@ -29,9 +29,8 @@ class Attachment extends MediaAppModel {
  * actsAs property
  *
  * @var array
- * @access public
  */
-	var $actsAs = array(
+    public $actsAs = array(
 		'Media.Transfer' => array(
 			'trustClient' => false,
 			'transferDirectory' => MEDIA_TRANSFER,
@@ -68,9 +67,8 @@ class Attachment extends MediaAppModel {
  * specify the `'tmp'` extension in case you are using a whitelist.
  *
  * @var array
- * @access public
  */
-	var $validate = array(
+    public $validate = array(
 		'file' => array(
 			'resource'   => array('rule' => 'checkResource'),
 			'access'     => array('rule' => 'checkAccess'),
@@ -97,9 +95,8 @@ class Attachment extends MediaAppModel {
  * Supply a fancy Path field
  *
  * @var array
- * @access public
  */
-	var $virtualFields = array(
+    public $virtualFields = array(
 		'path' => "CONCAT_WS('/', dirname, basename)"
 	);
 
@@ -122,7 +119,7 @@ class Attachment extends MediaAppModel {
  * @param array $process version, directory, instructions
  * @return boolean `true` if version for the file was successfully stored
  */
-	// function makeVersion($file, $process) {
+	// public function makeVersion($file, $process) {
 	// }
 
 /**
@@ -135,7 +132,7 @@ class Attachment extends MediaAppModel {
  * @param array $from Information about the source file
  * @return string The path to the destination file or false
  */
-	// function transferTo($via, $from) {
+	// public function transferTo($via, $from) {
 	// }
 }
 ?>

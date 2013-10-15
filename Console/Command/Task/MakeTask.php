@@ -23,19 +23,18 @@
  */
 class MakeTask extends MediaShell {
 
-	var $source;
+	public $source;
 
-	var $model;
+    public $model;
 
-	var $_Model;
+    public $_Model;
 
 /**
  * Main execution methpd
  *
- * @access public
  * @return void
  */
-	function execute() {
+    public function execute() {
 		if (isset($this->params['model'])) {
 			$this->model = $this->params['model'];
 		 } else {
@@ -62,7 +61,7 @@ class MakeTask extends MediaShell {
 		$this->out(sprintf('%-25s: %s', 'Create directories', $settings['createDirectory'] ? 'yes' : 'no'));
 
 		if ($this->in('Looks OK?', 'y,n', 'y') == 'n') {
-			return false;
+			return;
 		}
 		$this->out();
 		$this->out('Making');

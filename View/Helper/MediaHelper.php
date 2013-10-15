@@ -23,13 +23,13 @@ require_once 'Mime/Type.php';
  * To load the helper just include it in the helpers property
  * of a controller:
  * {{{
- *     var $helpers = array('Form', 'Html', 'Media.Media');
+ *     public $helpers = array('Form', 'Html', 'Media.Media');
  * }}}
  *
  * If needed you can also pass additional path to URL mappings when
  * loading the helper:
  * {{{
- *     var $helpers = array('Media.Media' => array(MEDIA_FOO => 'foo/'));
+ *     public $helpers = array('Media.Media' => array(MEDIA_FOO => 'foo/'));
  * }}}
  *
  * Nearly all helper methods take so called partial paths. Partial paths are
@@ -48,14 +48,14 @@ class MediaHelper extends AppHelper {
  *
  * @var array
  */
-	var $helpers = array('Html');
+    public $helpers = array('Html');
 
 /**
  * Tags
  *
  * @var array
  */
-	var $tags = array(
+    public $tags = array(
 		'audio'          => '<audio%s>%s%s</audio>',
 		'video'          => '<video%s>%s%s</video>',
 		'source'         => '<source%s/>',
@@ -69,7 +69,7 @@ class MediaHelper extends AppHelper {
  *
  * @var array
  */
-	var $_paths = array(
+    public $_paths = array(
 		MEDIA_STATIC => MEDIA_STATIC_URL,
 		MEDIA_TRANSFER => MEDIA_TRANSFER_URL,
 		MEDIA_FILTER => MEDIA_FILTER_URL
@@ -80,13 +80,13 @@ class MediaHelper extends AppHelper {
  *
  * Merges user supplied map settings with default map
  *
+ * @param View $View The View this helper is being attached to.
  * @param array $settings An array of base directory paths mapped to URLs. Used for determining
  *                        the absolute path to a file in `file()` and for determining the URL
  *                        corresponding to an absolute path. Paths are expected to end with a
  *                        trailing slash.
- * @return void
  */
-	function __construct(View $View, $settings = array()) {
+    public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 		$this->_paths = array_merge($this->_paths, (array) $settings);
 	}
@@ -100,7 +100,7 @@ class MediaHelper extends AppHelper {
  * @param boolean $full Forces the URL to be fully qualified
  * @return string|void An URL to the file
  */
-	function url($path = null, $full = false) {
+    public function url($path = null, $full = false) {
 		if (!$path = $this->webroot($path)) {
 			return null;
 		}
@@ -118,7 +118,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return string|void An URL to the file
  */
-	function webroot($path) {
+    public function webroot($path) {
 		if (!$file = $this->file($path)) {
 			return null;
 		}
@@ -168,7 +168,7 @@ class MediaHelper extends AppHelper {
  *                                        one of these.
  * @return string|void
  */
-	function embed($paths, $options = array()) {
+    public function embed($paths, $options = array()) {
 		$default = array(
 			'autoplay' => false,
 			'preload' => false,
@@ -283,7 +283,7 @@ class MediaHelper extends AppHelper {
  *                       - width, height
  * @return string
  */
-	function embedAsObject($paths, $options = array()) {
+    public function embedAsObject($paths, $options = array()) {
 		$default = array(
 			'autoplay' => false,
 			'controls' => true,
@@ -425,7 +425,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return string|void i.e. `image` or `video`
  */
-	function name($path) {
+    public function name($path) {
 		if ($file = $this->file($path)) {
 			return Mime_Type::guessName($file);
 		}
@@ -437,7 +437,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return string|void
  */
-	function mimeType($path) {
+    public function mimeType($path) {
 		if ($file = $this->file($path)) {
 			return Mime_Type::guessType($file);
 		}
@@ -449,7 +449,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return integer|void
  */
-	function size($path)	{
+    public function size($path)	{
 		if ($file = $this->file($path)) {
 			return filesize($file);
 		}
@@ -469,7 +469,7 @@ class MediaHelper extends AppHelper {
  * @return string|boolean False on error or if path couldn't be resolved otherwise
  *                        an absolute path to the file.
  */
-	function file($path) {
+    public function file($path) {
 		// Most recent paths are probably searched more often
 		$bases = array_reverse(array_keys($this->_paths));
 
@@ -511,7 +511,7 @@ class MediaHelper extends AppHelper {
  * @param boolean $full When `true` will generate absolute URLs.
  * @return array An array of sources each one with the keys `name`, `mimeType`, `url` and `file`.
  */
-	function _sources($paths, $full = false) {
+    protected function _sources($paths, $full = false) {
 		$sources = array();
 
 		foreach ($paths as $path) {
@@ -552,10 +552,9 @@ class MediaHelper extends AppHelper {
  * Generates attributes from options. Overwritten from Helper::_parseAttributes
  * to take new minimized HTML5 attributes used here into account.
  *
- * @param array $options
- * @return string
+ * TODO Helper::_parseAttributes is deprecated, and is going to move to HtmlHelper::_parseAttributes in 3.0
  */
-	function _parseAttributes($options, $exclude = NULL, $insertBefore = ' ', $insertAfter = NULL) {
+	protected function _parseAttributes($options, $exclude = NULL, $insertBefore = ' ', $insertAfter = NULL) {
 		$attributes = array();
 		$this->_minimizedAttributes = array('autoplay', 'controls', 'autobuffer', 'loop');
 
@@ -576,7 +575,7 @@ class MediaHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-	function _parseParameters($options) {
+	protected function _parseParameters($options) {
 		$parameters = array();
 		$options = Set::filter($options);
 

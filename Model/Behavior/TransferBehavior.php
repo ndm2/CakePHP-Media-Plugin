@@ -585,7 +585,7 @@ class TransferBehavior extends ModelBehavior {
  *
  * To require a file being uploaded, consider the following validation rule.
  * {{{
- *     var $validate = array(
+ *     public $validate = array(
  *         'file' => array(
  *             'resource' => array(
  *                 'rule' => 'checkResource',
