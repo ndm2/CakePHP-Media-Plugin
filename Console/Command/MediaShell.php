@@ -125,7 +125,6 @@ class MediaShell extends Shell {
  */
 	public function init() {
 		$message = 'Do you want to create missing media directories now?';
-
 		if ($this->in($message, 'y,n', 'n') == 'n') {
 			return false;
 		}
@@ -261,7 +260,7 @@ class MediaShell extends Shell {
  * @param mixed $text
  * @return void
  */
-public function progress($value, $text = null) {
+	public function progress($value, $text = null) {
 		static $target = 0;
 
 		if ($this->quiet) {

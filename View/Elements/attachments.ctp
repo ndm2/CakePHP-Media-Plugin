@@ -126,7 +126,7 @@ if (!isset($title)) {
 			}
 			echo $this->Form->input($assocAlias . '.' . $i . '.delete', array(
 				'label' => __('Release', true),
-				'type' => 'checkbox',
+				'type'  => 'checkbox',
 				'value' => 0
 			));
 		?>

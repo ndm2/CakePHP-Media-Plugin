@@ -334,7 +334,7 @@ class MediaValidation extends Validation {
 			case 'Y': $size *= 1024; /* Yotta */
 			case 'Z': $size *= 1024; /* Zetta */
 			case 'E': $size *= 1024; /* Exa */
-	        case 'P': $size *= 1024; /* Peta */
+			case 'P': $size *= 1024; /* Peta */
 			case 'T': $size *= 1024; /* Tera */
 			case 'G': $size *= 1024; /* Giga */
 			case 'M': $size *= 1024; /* Mega */
