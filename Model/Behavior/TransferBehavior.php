@@ -122,8 +122,9 @@ class TransferBehavior extends ModelBehavior {
  *
  * Merges default settings with provided config and sets default validation options
  *
- * @param Model $Model
- * @param array $settings See defaultSettings for configuration options
+ * @see $_defaultSettings
+ * @param Model $Model Model using this behavior
+ * @param array $settings Configuration settings for $Model
  * @return void
  */
 	public function setup(Model $Model, $settings = array()) {
@@ -152,8 +153,9 @@ class TransferBehavior extends ModelBehavior {
  * enable validation rules to check the transfer. If that fails
  * invalidates the model.
  *
- * @param Model $Model
- * @return boolean
+ * @param Model $Model Model using this behavior
+ * @param array $options Options passed from Model::save().
+ * @return mixed False or null will abort the operation. Any other result will continue.
  */
 	public function beforeValidate(Model $Model, $options = array()) {
 		if (!isset($Model->data[$Model->alias]['file'])) {
@@ -178,8 +180,9 @@ class TransferBehavior extends ModelBehavior {
  *
  * If transfer is unsuccessful save operation will abort.
  *
- * @param Model $Model
- * @return boolean
+ * @param Model $Model Model using this behavior
+ * @param array $options Options passed from Model::save().
+ * @return mixed False if the operation should abort. Any other result will continue.
  */
 	public function beforeSave(Model $Model, $options = array()) {
 		if (!isset($Model->data[$Model->alias]['file'])) {
@@ -200,7 +203,7 @@ class TransferBehavior extends ModelBehavior {
 	}
 
 /**
- * Retrieves metadata of any transferrable resource
+ * Retrieves metadata of any transferable resource
  *
  * @param Model $Model
  * @param array|string $resource Transfer resource
@@ -331,10 +334,10 @@ class TransferBehavior extends ModelBehavior {
  * @see _prepare()
  * @param Model $Model
  * @param array $via Information about the temporary resource (if used)
- * @param array $source Information about the source
+ * @param array $from Information about the source
  * @return string
  */
-	public function transferTo($Model, $via, $from) {
+	public function transferTo(Model $Model, $via, $from) {
 		extract($from);
 
 		$irregular = array(
@@ -866,4 +869,5 @@ class TransferBehavior extends ModelBehavior {
 		}
 		return $new;
 	}
+
 }

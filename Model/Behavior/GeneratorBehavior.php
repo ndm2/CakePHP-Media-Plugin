@@ -92,8 +92,9 @@ class GeneratorBehavior extends ModelBehavior {
 /**
  * Setup
  *
- * @param Model $Model
- * @param array $settings See defaultSettings for configuration options
+ * @see $_defaultSettings
+ * @param Model $Model Model using this behavior
+ * @param array $settings Configuration settings for $Model
  * @return void
  */
 	public function setup(Model $Model, $settings = array()) {
@@ -112,8 +113,9 @@ class GeneratorBehavior extends ModelBehavior {
  * Triggers `make()` if both `dirname` and `basename` fields are present.
  * Otherwise skips and returns `true` to continue the save operation.
  *
- * @param Model $Model
- * @param boolean $created
+ * @param Model $Model Model using this behavior
+ * @param boolean $created True if this save created a new record
+ * @param array $options Options passed from Model::save().
  * @return boolean
  */
 	public function afterSave(Model $Model, $created, $options = array()) {
@@ -387,4 +389,5 @@ class GeneratorBehavior extends ModelBehavior {
 
 		return $filter[$name];
     }
+
 }

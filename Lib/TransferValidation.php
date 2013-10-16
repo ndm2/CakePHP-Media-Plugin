@@ -84,7 +84,8 @@ class TransferValidation extends MediaValidation {
 /**
  * Checks if subject is an uploaded file
  *
- * @param mixed $check
+ * @param mixed $check Absolute path to file
+ * @return boolean
  */
 	public static function uploadedFile($check) {
 		return MediaValidation::file($check) && is_uploaded_file($check);
@@ -93,8 +94,9 @@ class TransferValidation extends MediaValidation {
 /**
  * Validates url
  *
- * @param string string to check
- * @param array options for allowing different url parts currently only scheme is supported
+ * @param string $check String to check
+ * @param array $options Options for allowing different url parts currently only scheme is supported
+ * @return boolean
  */
 	public static function url($check, $options = array()) {
 		if (!is_string($check)) {
@@ -107,4 +109,5 @@ class TransferValidation extends MediaValidation {
 		}
 		return Validation::url($check);
 	}
+
 }

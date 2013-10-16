@@ -240,9 +240,9 @@ class MediaValidation {
 
 /**
  * Checks if subject is an (existent) file
- * Please note, that directoires are not treated as files in strict mode
+ * Please note, that directories are not treated as files in strict mode
  *
- * @param string $file Absolute path to file
+ * @param string $check Absolute path to file
  * @param boolean $strict Enable checking for actual existence of file
  * @return boolean
  */
@@ -287,6 +287,7 @@ class MediaValidation {
 		$args = func_get_args();
 
 		if (count($args) > 1) {
+			$result = array();
 			foreach($args as $param) {
 				$result[] = self::_normalize($param);
 			}
@@ -342,4 +343,5 @@ class MediaValidation {
 	    }
 	    return $size;
 	}
+
 }

@@ -32,7 +32,7 @@ class MakeTask extends MediaShell {
 	protected $_Model;
 
 /**
- * Main execution methpd
+ * Main execution method
  *
  * @return void
  */
@@ -80,4 +80,5 @@ class MakeTask extends MediaShell {
 		}
 		$this->out();
 	}
+
 }

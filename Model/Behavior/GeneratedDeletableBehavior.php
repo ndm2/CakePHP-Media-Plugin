@@ -22,6 +22,13 @@ App::uses('ModelBehavior', 'Model');
  */
 class GeneratedDeletableBehavior extends ModelBehavior {
 
+	/**
+	 * Tries do delete the versions that were generated from the file associated with the record.
+	 *
+	 * @param Model $Model Model using this behavior
+	 * @param boolean $cascade If true records that depend on this record will also be deleted
+	 * @return mixed False if the operation should abort. Any other result will continue.
+	 */
 	public function beforeDelete(Model $Model, $cascade = true) {
 		if (!$cascade) {
 			return true;
@@ -32,19 +39,21 @@ class GeneratedDeletableBehavior extends ModelBehavior {
 			'fields' => array('dirname', 'basename'),
 			'recursive' => -1,
 		));
-                
+
 		if (empty($result)) {
 			return false;
 		}
-                if (empty($result[$Model->alias]['basename']) && empty($result[$Model->alias]['dirname'])) {
-                    return true;
-                }
+
+		if (empty($result[$Model->alias]['basename']) && empty($result[$Model->alias]['dirname'])) {
+			return true;
+		}
 
 		$pattern = MEDIA_FILTER.'*'.DS.$result[$Model->alias]['dirname'].DS;
 		$pattern .= pathinfo($result[$Model->alias]['basename'], PATHINFO_FILENAME).'.*';
 
 		$files = glob($pattern);
 
+		// TODO There should be some safety precautions
 		/*
 		$versions = array_keys($Model->Generator->filter($Model, $result[$Model->alias]['basename']));
 		if (count($files) > count($versions)) {
@@ -66,4 +75,5 @@ class GeneratedDeletableBehavior extends ModelBehavior {
 
 		return true;
 	}
+
 }

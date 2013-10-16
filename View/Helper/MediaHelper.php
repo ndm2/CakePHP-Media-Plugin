@@ -597,4 +597,5 @@ class MediaHelper extends AppHelper {
 		}
 		return implode("\n", $parameters);
 	}
+
 }

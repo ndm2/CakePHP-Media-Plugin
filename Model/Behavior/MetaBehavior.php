@@ -98,8 +98,9 @@ class MetaBehavior extends ModelBehavior {
  *
  * Adds metadata to be stored in table if a record is about to be created.
  *
- * @param Model $Model
- * @return boolean
+ * @param Model $Model Model using this behavior
+ * @param array $options Options passed from Model::save().
+ * @return mixed False if the operation should abort. Any other result will continue.
  */
 	public function beforeSave(Model $Model, $options = array()) {
 		if ($Model->exists() || !isset($Model->data[$Model->alias]['file'])) {
@@ -118,10 +119,10 @@ class MetaBehavior extends ModelBehavior {
  *
  * Adds metadata of corresponding file to each result.
  *
- * @param Model $Model
- * @param array $results
- * @param boolean $primary
- * @return array
+ * @param Model $Model Model using this behavior
+ * @param mixed $results The results of the find operation
+ * @param boolean $primary Whether this model is being queried directly (vs. being queried as an association)
+ * @return mixed An array value will replace the value of $results - any other value will be ignored.
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		if (empty($results)) {
@@ -191,4 +192,5 @@ class MetaBehavior extends ModelBehavior {
 		$this->__cached[$Model->alias][$checksum] = $data;
 		return $result;
 	}
+
 }

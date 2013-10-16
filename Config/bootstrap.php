@@ -150,7 +150,7 @@ if (strpos(ini_get('include_path'), $mm) === false) {
  * uses both a glob (for matching against file extensions) and a magic adapter (for
  * detecting the type from the content of files). Available `Glob` adapters are `Apache`,
  * `Freedesktop`, `Memory` and `Php`. These adapters are also available as a `Magic`
- * variant with the addtion of a `Fileinfo` magic adapter. Not all adapters require
+ * variant with the addition of a `Fileinfo` magic adapter. Not all adapters require
  * a file to be passed along with the configuration.
  *
  * @see TransferBehavior
@@ -185,7 +185,7 @@ if ($cached = Cache::read('mime_type_glob')) {
 }
 
 /**
- * Configure the adpters to be used by media process class. Adjust this
+ * Configure the adapters to be used by media process class. Adjust this
  * mapping of media names to adapters according to your environment. For example:
  * most PHP installations have GD enabled thus should choose the `Gd` adapter for
  * image transformations. However the `Imagick` adapter may be more desirable

@@ -41,10 +41,9 @@ class PolymorphicBehavior extends ModelBehavior {
 /**
  * setup method
  *
- * @param mixed $Model
- * @param array $config
+ * @param Model $Model Model using this behavior
+ * @param array $settings Configuration settings for $Model
  * @return void
- * @access public
  */
 	public function setup(Model $Model, $settings = array()) {
 		if (!isset($this->settings[$Model->alias])) {
@@ -57,11 +56,10 @@ class PolymorphicBehavior extends ModelBehavior {
 /**
  * afterFind method
  *
- * @param mixed $Model
- * @param mixed $results
- * @param bool $primary
- * @access public
- * @return void
+ * @param Model $Model Model using this behavior
+ * @param mixed $results The results of the find operation
+ * @param boolean $primary Whether this model is being queried directly (vs. being queried as an association)
+ * @return mixed An array value will replace the value of $results - any other value will be ignored.
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		extract($this->settings[$Model->alias]);
@@ -123,11 +121,11 @@ class PolymorphicBehavior extends ModelBehavior {
  *
  * Fall back. Assumes that find list is setup such that it returns users real names
  *
+ * @param Model $Model
  * @param mixed $id
- * @return string
- * @access public
+ * @return mixed
  */
-	public function display($Model, $id = null) {
+	public function display(Model $Model, $id = null) {
 		if (!$id) {
 			if (!$Model->id) {
 				return false;
@@ -136,4 +134,5 @@ class PolymorphicBehavior extends ModelBehavior {
 		}
 		return current($Model->find('list', array('conditions' => array($Model->alias . '.' . $Model->primaryKey => $id))));
 	}
+
 }
