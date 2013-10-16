@@ -245,9 +245,6 @@ class TransferBehavior extends ModelBehavior {
 					'type'   => 'http-url-remote'
 			));
 
-			if (!class_exists('HttpSocket')) {
-				App::uses('HttpSocket','Network/Http');
-			}
 			$Socket = new HttpSocket(array('timeout' => 5));
 			$Socket->get($resource['file']);
 
@@ -440,9 +437,6 @@ class TransferBehavior extends ModelBehavior {
 		/* @var $hasPerformed boolean */
 
 		if ($source['type'] === 'http-url-remote') {
-			if (!class_exists('HttpSocket')) {
-				App::import('Core','HttpSocket');
-			}
 			$Socket = new HttpSocket(array('timeout' => 5));
 			$Socket->request(array('method' => 'GET', 'uri' => $source['file']));
 
