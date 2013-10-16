@@ -24,6 +24,12 @@ App::uses('MediaAppModel', 'Media.Model');
  * A ready-to-use model combining multiple behaviors.
  *
  * @package       Media.Model
+ *
+ * @property CouplerBehavior $Coupler
+ * @property MetaBehavior $Meta
+ * @property GeneratorBehavior $Generator
+ * @property PolymorphicBehavior $Polymorphic
+ * @property TransferBehavior $Transfer
  */
 class Attachment extends MediaAppModel {
 

@@ -131,6 +131,7 @@ class CouplerBehavior extends ModelBehavior {
 		}
 
 		extract($this->settings[$Model->alias]);
+		/* @var $baseDirectory string */
 
 		if (isset($Model->data[$Model->alias]['file'])) {
 			$File = new File($Model->data[$Model->alias]['file']);
@@ -163,6 +164,7 @@ class CouplerBehavior extends ModelBehavior {
  */
 	public function beforeDelete(Model $Model, $cascade = true) {
 		extract($this->settings[$Model->alias]);
+		/* @var $baseDirectory string */
 
 		$result = $Model->find('first', array(
 			'conditions' => array($Model->primaryKey => $Model->id),
@@ -194,6 +196,7 @@ class CouplerBehavior extends ModelBehavior {
 			return $results;
 		}
 		extract($this->settings[$Model->alias]);
+		/* @var $baseDirectory string */
 
 		foreach ($results as $key => &$result) {
 			if (!isset($result[$Model->alias]['dirname'], $result[$Model->alias]['basename'])) {

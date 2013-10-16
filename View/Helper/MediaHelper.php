@@ -45,6 +45,8 @@ require_once 'Mime/Type.php';
  * @see           MediaHelper::__construct()
  * @link          http://book.cakephp.org/2.0/en/views/helpers.html
  * @package       Media.View.Helper
+ *
+ * @property HtmlHelper $Html
  */
 class MediaHelper extends AppHelper {
 
@@ -203,6 +205,13 @@ class MediaHelper extends AppHelper {
 		}
 		$options = array_merge($default, $options);
 		extract($options, EXTR_SKIP);
+		/* @var $autoplay boolean */
+		/* @var $preload boolean */
+		/* @var $controls boolean */
+		/* @var $loop boolean */
+		/* @var $fallback boolean */
+		/* @var $poster boolean */
+		/* @var $full boolean */
 
 		if (!$sources = $this->_sources((array) $paths, $full)) {
 			return;
@@ -315,6 +324,11 @@ class MediaHelper extends AppHelper {
 		}
 		$options = array_merge($default, $options);
 		extract($options + $default);
+		/* @var $autoplay boolean */
+		/* @var $controls boolean */
+		/* @var $loop boolean */
+		/* @var $fallback boolean */
+		/* @var $full boolean */
 
 		if (!$sources = $this->_sources((array) $paths, $full)) {
 			return;
@@ -486,6 +500,10 @@ class MediaHelper extends AppHelper {
 
 		$extension = null;
 		extract(pathinfo($path), EXTR_OVERWRITE);
+		/* @var $dirname string */
+		/* @var $basename string */
+		/* @var $extension string */
+		/* @var $filename string */
 
 		if (!isset($filename)) { /* PHP < 5.2.0 */
 			$filename = substr($basename, 0, isset($extension) ? - (strlen($extension) + 1) : 0);

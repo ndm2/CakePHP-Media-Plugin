@@ -26,6 +26,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
+/* @var $this View */
+
 if (!isset($this->Media) || !is_a($this->Media, 'MediaHelper')) {
 	$message = 'Attachments Element - The media helper is not loaded but required.';
 	trigger_error($message, E_USER_NOTICE);

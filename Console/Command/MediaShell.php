@@ -26,6 +26,9 @@ Configure::write('Cache.disable', true);
  * Media Shell Class
  *
  * @package       Media.Console.Command
+ *
+ * @property MakeTask $Make
+ * @property SyncTask $Sync
  */
 class MediaShell extends Shell {
 

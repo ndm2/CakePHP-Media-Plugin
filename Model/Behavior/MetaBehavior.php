@@ -107,6 +107,7 @@ class MetaBehavior extends ModelBehavior {
 			return true;
 		}
 		extract($this->settings[$Model->alias]);
+		/* @var $level integer */
 
 		$Model->data[$Model->alias] += $this->metadata(
 			$Model, $Model->data[$Model->alias]['file'], $level
@@ -129,6 +130,7 @@ class MetaBehavior extends ModelBehavior {
 			return $results;
 		}
 		extract($this->settings[$Model->alias]);
+		/* @var $level integer */
 
 		foreach ($results as $key => &$result) {
 			if (!isset($result[$Model->alias]['file'])) {

@@ -63,6 +63,9 @@ class PolymorphicBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		extract($this->settings[$Model->alias]);
+		/* @var $modelField string */
+		/* @var $foreignKey string */
+
 		if (App::import('Vendor', 'MiCache')) {
 			$models = MiCache::mi('models');
 		} else {

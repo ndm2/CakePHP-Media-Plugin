@@ -156,6 +156,15 @@ class GeneratorBehavior extends ModelBehavior {
  */
 	public function make($Model, $file) {
 		extract($this->settings[$Model->alias]);
+		/* @var $baseDirectory string */
+		/* @var $filterDirectory string */
+		/* @var $createDirectory boolean */
+		/* @var $createDirectoryMode integer */
+		/* @var $mode integer */
+		/* @var $filter array|string */
+		/* @var $mergeFilter boolean */
+		/* @var $overwrite boolean */
+		/* @var $guessExtension boolean */
 
 		list($file, $relativeFile) = $this->_file($Model, $file);
 		$relativeDirectory = DS . rtrim(dirname($relativeFile), '.');
@@ -246,6 +255,15 @@ class GeneratorBehavior extends ModelBehavior {
  */
 	public function makeVersion($Model, $file, $process) {
 		extract($this->settings[$Model->alias]);
+		/* @var $baseDirectory string */
+		/* @var $filterDirectory string */
+		/* @var $createDirectory boolean */
+		/* @var $createDirectoryMode integer */
+		/* @var $mode integer */
+		/* @var $filter array|string */
+		/* @var $mergeFilter boolean */
+		/* @var $overwrite boolean */
+		/* @var $guessExtension boolean */
 
 		/* Process builtin instructions */
 		if (isset($process['instructions']['clone'])) {
@@ -339,6 +357,16 @@ class GeneratorBehavior extends ModelBehavior {
  */
 	protected function _file($Model, $file) {
 		extract($this->settings[$Model->alias]);
+		/* @var $baseDirectory string */
+		/* @var $filterDirectory string */
+		/* @var $createDirectory boolean */
+		/* @var $createDirectoryMode integer */
+		/* @var $mode integer */
+		/* @var $filter array|string */
+		/* @var $mergeFilter boolean */
+		/* @var $overwrite boolean */
+		/* @var $guessExtension boolean */
+
 		$file = str_replace(array('\\', '/'), DS, $file);
 
 		if (!is_file($file)) {
