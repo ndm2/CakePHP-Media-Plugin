@@ -113,7 +113,6 @@ class TransferBehavior extends ModelBehavior {
 		'source'       => null,
 		'temporary'    => null,
 		'destination'  => null,
-		'isPrepared'   => false,
 		'hasPerformed' => false
 	);
 
@@ -431,16 +430,13 @@ class TransferBehavior extends ModelBehavior {
 			$this->runtime[$Model->alias] = $this->_defaultRuntime;
 			$this->runtime[$Model->alias]['hasPerformed'] = true;
 		}
-		if (!$this->runtime[$Model->alias]['isPrepared']) {
-			if (!$this->_prepare($Model, $file)) {
-				return false;
-			}
+		if (!$this->_prepare($Model, $file)) {
+			return false;
 		}
 		extract($this->runtime[$Model->alias]);
 		/* @var $source array */
 		/* @var $temporary string */
 		/* @var $destination string */
-		/* @var $isPrepared boolean */
 		/* @var $hasPerformed boolean */
 
 		if ($source['type'] === 'http-url-remote') {
@@ -501,8 +497,6 @@ class TransferBehavior extends ModelBehavior {
  * @return boolean true if transfer is ready to be performed, false on error
  */
 	protected function _prepare($Model, $resource) {
-		$this->runtime[$Model->alias]['isPrepared'] = true;
-
 		extract($this->settings[$Model->alias], EXTR_SKIP);
 		/* @var $trustClient boolean */
 		/* @var $transferDirectory string */
@@ -513,7 +507,6 @@ class TransferBehavior extends ModelBehavior {
 		/* @var $source array */
 		/* @var $temporary string */
 		/* @var $destination string */
-		/* @var $isPrepared boolean */
 		/* @var $hasPerformed boolean */
 
 		if ($source = $this->_source($Model, $resource)) {
@@ -654,7 +647,6 @@ class TransferBehavior extends ModelBehavior {
 		/* @var $source array */
 		/* @var $temporary string */
 		/* @var $destination string */
-		/* @var $isPrepared boolean */
 		/* @var $hasPerformed boolean */
 
 		if (MediaValidation::file($source['file'], true)) {
@@ -843,7 +835,6 @@ class TransferBehavior extends ModelBehavior {
 		/* @var $source array */
 		/* @var $temporary string */
 		/* @var $destination string */
-		/* @var $isPrepared boolean */
 		/* @var $hasPerformed boolean */
 		extract($this->settings[$Model->alias], EXTR_SKIP);
 		/* @var $trustClient boolean */
