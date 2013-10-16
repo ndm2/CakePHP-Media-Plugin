@@ -55,7 +55,7 @@ if (isset($this->data[$assocAlias][0]['basename'])) {
 }
 
 if (!isset($title)) {
-	$title = sprintf(__('%s'), Inflector::pluralize($assocAlias));
+	$title = __(Inflector::pluralize($assocAlias));
 }
 ?>
 <div class="attachments element">
@@ -66,23 +66,23 @@ if (!isset($title)) {
 		echo $this->Form->hidden($assocAlias . '.0.model', array('value' => $model));
 		echo $this->Form->hidden($assocAlias . '.0.group', array('value' => strtolower($assocAlias)));
 		echo $this->Form->input($assocAlias . '.0.file', array(
-			'label' => __('File', true),
+			'label' => __d('media', 'File'),
 			'type'  => 'file',
 			'error' => array(
-				'error'      => __('An error occured while transferring the file.', true),
-				'resource'   => __('The file is invalid.', true),
-				'access'     => __('The file cannot be processed.', true),
-				'location'   => __('The file cannot be transferred from or to location.', true),
-				'permission' => __('Executable files cannot be uploaded.', true),
-				'size'       => __('The file is too large.', true),
-				'pixels'     => __('The file is too large.', true),
-				'extension'  => __('The file has the wrong extension.', true),
-				'mimeType'   => __('The file has the wrong MIME type.', true),
+				'error'      => __d('media', 'An error occured while transferring the file.'),
+				'resource'   => __d('media', 'The file is invalid.'),
+				'access'     => __d('media', 'The file cannot be processed.'),
+				'location'   => __d('media', 'The file cannot be transferred from or to location.'),
+				'permission' => __d('media', 'Executable files cannot be uploaded.'),
+				'size'       => __d('media', 'The file is too large.'),
+				'pixels'     => __d('media', 'The file is too large.'),
+				'extension'  => __d('media', 'The file has the wrong extension.'),
+				'mimeType'   => __d('media', 'The file has the wrong MIME type.'),
 		)));
 		echo $this->Form->input($assocAlias . '.0.alternative', array(
-			'label' => __('Textual replacement', true),
+			'label' => __d('media', 'Textual replacement'),
 			'value' => '',
-			'error' => __('A textual replacement must be provided.', true)
+			'error' => __d('media', 'A textual replacement must be provided.')
 		));
 	?>
 	</div>
@@ -125,7 +125,7 @@ if (!isset($title)) {
 				);
 			}
 			echo $this->Form->input($assocAlias . '.' . $i . '.delete', array(
-				'label' => __('Release', true),
+				'label' => __d('media', 'Release'),
 				'type'  => 'checkbox',
 				'value' => 0
 			));
