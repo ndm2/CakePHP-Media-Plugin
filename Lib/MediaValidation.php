@@ -23,7 +23,7 @@ App::uses('Validation', 'Utility');
  *
  * @package       Media.Lib
  */
-class MediaValidation extends Validation {
+class MediaValidation {
 
 /**
  * Checks if MIME type is (not) one of given MIME types
