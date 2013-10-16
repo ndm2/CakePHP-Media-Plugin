@@ -774,7 +774,7 @@ class TransferBehavior extends ModelBehavior {
 			if (($type == 'temporary' && empty($$type)) || !isset(${$type}['extension'])) {
 				continue;
 			}
-			if (!MediaValidation::extension(${$type}['file'], $deny, $allow)) {
+			if (!MediaValidation::extension(${$type}['extension'], $deny, $allow)) {
 				return false;
 			}
 		}

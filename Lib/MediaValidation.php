@@ -65,12 +65,17 @@ class MediaValidation {
  * @return boolean
  */
 	public static function extension($check, $deny = false, $allow = true) {
-		list($deny, $allow) = self::_normalize($deny, $allow);
-
-		if ($deny === true || (is_array($deny) && Validation::extension($check, $deny))) {
+		if (!is_string($check) || !preg_match('/^[^\.]+?(\.[^\.]+)?$/', $check)) {
 			return false;
 		}
-		if ($allow !== true && (is_array($allow) && !Validation::extension($check, $allow))) {
+
+		list($deny, $allow) = self::_normalize($deny, $allow);
+
+		if ($deny === true || (is_array($deny) && in_array(strtolower($check), array_map('strtolower', $deny)))) {
+			return false;
+		}
+
+		if ($allow !== true && (is_array($allow) && !in_array(strtolower($check), array_map('strtolower', $allow)))) {
 			return false;
 		}
 		return true;
