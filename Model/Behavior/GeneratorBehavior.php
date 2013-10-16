@@ -116,7 +116,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param boolean $created
  * @return boolean
  */
-	public function afterSave(Model $Model, $created) {
+	public function afterSave(Model $Model, $created, $options = array()) {
 		$item = $Model->data[$Model->alias];
 
 		if (isset($item['dirname'], $item['basename'])) {
