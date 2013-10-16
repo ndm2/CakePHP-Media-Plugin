@@ -24,7 +24,7 @@ App::uses('MediaValidation', 'Media.Lib');
  *
  * @package       Media.Lib
  */
-class TransferValidation extends MediaValidation {
+class TransferValidation {
 
 /**
  * Checks if subject is transferable
