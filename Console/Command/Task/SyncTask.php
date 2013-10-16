@@ -288,11 +288,11 @@ class SyncTask extends MediaShell {
 /**
  * Handles orphaned records
  *
- * @return mixed
+ * @return boolean|null
  */
 	protected function _handleOrphanedRecord() {
 		if ($this->__File->exists()) {
-			return;
+			return null;
 		}
 		$message  = "Record is orphaned. It's pointing to non-existent ";
 		$message .= 'file `' . $this->shortPath($this->__File->pwd()) . '`.';
@@ -310,14 +310,14 @@ class SyncTask extends MediaShell {
 /**
  * Handles mismatching checksums
  *
- * @return mixed
+ * @return boolean|null
  */
 	protected function _handleChecksumMismatch() {
 		if (!$this->__File->exists()) {
-			return;
+			return null;
 		}
 		if ($this->__dbItem['checksum'] == $this->__File->md5(true)) {
-			return;
+			return null;
 		}
 		$message  = 'The checksums for file `' . $this->shortPath($this->__File->pwd()) . '`';
 		$message .= ' and its corresponding record mismatch.';
@@ -341,16 +341,18 @@ class SyncTask extends MediaShell {
 		if ($this->_fixDeleteRecord()) {
 			return true;
 		}
+
+		return null;
 	}
 
 /**
  * Handles orphaned files
  *
- * @return mixed
+ * @return boolean|null
  */
 	protected function _handleOrphanedFile() {
 		if ($this->_findByFile($this->__fsItem['file'], $this->__dbMap)) {
-			return;
+			return null;
 		}
 		$message  = 'File `' . $this->shortPath($this->__File->pwd()) . '`';
 		$message .= ' is orphaned.';
@@ -363,6 +365,8 @@ class SyncTask extends MediaShell {
 			$this->out('File deleted');
 			return true;
 		}
+
+		return null;
 	}
 
 	/* fix methods */

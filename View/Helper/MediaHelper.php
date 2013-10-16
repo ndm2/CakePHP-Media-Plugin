@@ -173,7 +173,7 @@ class MediaHelper extends AppHelper {
  *                       - width, height: For images the method will try to automatically determine
  *                                        the correct dimensions if no value is given for either
  *                                        one of these.
- * @return string|void
+ * @return string|boolean
  */
 	public function embed($paths, $options = array()) {
 		$default = array(
@@ -214,7 +214,7 @@ class MediaHelper extends AppHelper {
 		/* @var $full boolean */
 
 		if (!$sources = $this->_sources((array) $paths, $full)) {
-			return;
+			return false;
 		}
 		$attributes = array_intersect_key($options, $optionalAttributes);
 
@@ -272,6 +272,8 @@ class MediaHelper extends AppHelper {
 			default:
 				break;
 		}
+
+		return false;
 	}
 
 /**
@@ -295,7 +297,7 @@ class MediaHelper extends AppHelper {
  *                       - alt
  *                       - title
  *                       - width, height
- * @return string
+ * @return string|boolean
  */
 	public function embedAsObject($paths, $options = array()) {
 		$default = array(
@@ -331,7 +333,7 @@ class MediaHelper extends AppHelper {
 		/* @var $full boolean */
 
 		if (!$sources = $this->_sources((array) $paths, $full)) {
-			return;
+			return false;
 		}
 		$attributes  = array('type' => $sources[0]['mimeType'], 'data' => $sources[0]['url']);
 		$attributes += array_intersect_key($options, $optionalAttributes);
@@ -442,36 +444,39 @@ class MediaHelper extends AppHelper {
  * Get the name of a media for a path
  *
  * @param string $path Absolute or partial path to a file
- * @return string|void i.e. `image` or `video`
+ * @return string|null i.e. `image` or `video`
  */
 	public function name($path) {
 		if ($file = $this->file($path)) {
 			return Mime_Type::guessName($file);
 		}
+		return null;
 	}
 
 /**
  * Get MIME type for a path
  *
  * @param string $path Absolute or partial path to a file
- * @return string|void
+ * @return string|null
  */
 	public function mimeType($path) {
 		if ($file = $this->file($path)) {
 			return Mime_Type::guessType($file);
 		}
+		return null;
 	}
 
 /**
  * Get size of file
  *
  * @param string $path Absolute or partial path to a file
- * @return integer|void
+ * @return integer|null
  */
 	public function size($path)	{
 		if ($file = $this->file($path)) {
 			return filesize($file);
 		}
+		return null;
 	}
 
 /**
@@ -495,7 +500,7 @@ class MediaHelper extends AppHelper {
 		$bases = array_reverse(array_keys($this->_paths));
 
 		if (Folder::isAbsolute($path)) {
-			return file_exists($path) ? $path : null;
+			return file_exists($path) ? $path : false;
 		}
 
 		$extension = null;
@@ -536,14 +541,14 @@ class MediaHelper extends AppHelper {
  *
  * @param array $paths An array of  relative or absolute paths to files.
  * @param boolean $full When `true` will generate absolute URLs.
- * @return array An array of sources each one with the keys `name`, `mimeType`, `url` and `file`.
+ * @return array|boolean An array of sources each one with the keys `name`, `mimeType`, `url` and `file`.
  */
 	protected function _sources($paths, $full = false) {
 		$sources = array();
 
 		foreach ($paths as $path) {
 			if (!$url = $this->url($path, $full)) {
-				return;
+				return false;
 			}
 			if (strpos('://', $path) !== false) {
 				$file = parse_url($url, PHP_URL_PATH);

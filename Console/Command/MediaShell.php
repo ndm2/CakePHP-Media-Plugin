@@ -129,7 +129,7 @@ class MediaShell extends Shell {
 	public function init() {
 		$message = __d('media_console', 'Do you want to create missing media directories now?');
 		if ($this->in($message, 'y,n', 'n') == 'n') {
-			return false;
+			return;
 		}
 
 		$short = array('aud', 'doc', 'gen', 'img', 'vid');
