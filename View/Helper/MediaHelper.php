@@ -557,6 +557,12 @@ class MediaHelper extends AppHelper {
  * Generates attributes from options. Overwritten from Helper::_parseAttributes
  * to take new minimized HTML5 attributes used here into account.
  *
+ * @param array $options Array of options.
+ * @param array $exclude Array of options to be excluded, the options here will not be part of the return.
+ * @param string $insertBefore String to be inserted before options.
+ * @param string $insertAfter String to be inserted after options.
+ * @return string Composed attributes.
+ *
  * TODO Helper::_parseAttributes is deprecated, and is going to move to HtmlHelper::_parseAttributes in 3.0
  */
 	protected function _parseAttributes($options, $exclude = NULL, $insertBefore = ' ', $insertAfter = NULL) {
