@@ -364,21 +364,25 @@ class GeneratorBehavior extends ModelBehavior {
 		$name = Mime_Type::guessName($file);
 
 		$filter = $this->settings[$Model->alias]['filter'];
+		$filters = (array)Configure::read('Media.filter');
 
 		$default = false;
 		if (!is_array($filter)) {
-			$filters = Configure::read('Media.filter');
-
-			if (is_string($filter) && isset($filters[$filter])) {
+			if (array_key_exists($filter, $filters)) {
 				$filter = $filters[$filter];
 			} else {
-				$filter = $filters['default'];
+				$filter = $filters;
 				$default = true;
 			}
 		}
 
 		if (($default !== true) && ($this->settings[$Model->alias]['mergeFilter'] === true)) {
-			$filter = array_merge($filters['default'], (array)$filter);
+			$filter = array_merge($filters, $filter);
+		}
+
+		// TODO Maybe trigger a notice in case no filter is defined for the given MIME-Type.
+		if (!isset($filter[$name])) {
+			return array();
 		}
 
 		return $filter[$name];
