@@ -567,7 +567,7 @@ class MediaHelper extends AppHelper {
  * @param string $insertAfter String to be inserted after options.
  * @return string Composed attributes.
  *
- * TODO Helper::_parseAttributes is deprecated, and is going to move to HtmlHelper::_parseAttributes in 3.0
+ * NOTE Helper::_parseAttributes is deprecated, and is going to move to HtmlHelper::_parseAttributes in 3.0
  */
 	protected function _parseAttributes($options, $exclude = NULL, $insertBefore = ' ', $insertAfter = NULL) {
 		$attributes = array();
