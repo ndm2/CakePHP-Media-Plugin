@@ -160,7 +160,7 @@ class GeneratorBehavior extends ModelBehavior {
 		list($file, $relativeFile) = $this->_file($Model, $file);
 		$relativeDirectory = DS . rtrim(dirname($relativeFile), '.');
 
-		$filter = Configure::read('Media.filter.' . Mime_Type::guessName($file));;
+		$filter = $this->filter($Model, $file);
 		$result = true;
 
 		foreach ($filter as $version => $instructions) {
