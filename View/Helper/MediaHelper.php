@@ -507,6 +507,8 @@ class MediaHelper extends AppHelper {
 				return array_shift($files);
 			}
 		}
+
+		return false;
 	}
 
 /**
