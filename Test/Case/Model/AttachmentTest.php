@@ -24,8 +24,8 @@ if (!defined('MEDIA')) {
 
 App::uses('Attachment', 'Media.Model');
 
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'Config' . DS . 'bootstrap.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Fixture' . DS . 'TestData.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Config' . DS . 'bootstrap.php';
+require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'TestData.php';
 require_once 'models.php';
 require_once 'Media/Process.php';
 require_once 'Media/Info.php';
