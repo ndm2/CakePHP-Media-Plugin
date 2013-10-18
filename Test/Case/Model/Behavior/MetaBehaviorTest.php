@@ -16,6 +16,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
+App::uses('Set', 'Utility');
 require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
