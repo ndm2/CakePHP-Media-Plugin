@@ -59,7 +59,7 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings);
 
 		$file = $this->Data->getFile(array(
-			'application-pdf.pdf' => $this->Folder->pwd() . 'static/doc/application-pdf.pdf'
+			'application-pdf.pdf' => $this->Folder->pwd() . 'static' . DS . 'doc' . DS . 'application-pdf.pdf'
 		));
 		$item = array('file' => $file);
 		$Model->create();

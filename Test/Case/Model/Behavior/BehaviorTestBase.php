@@ -53,21 +53,21 @@ abstract class BaseBehaviorTest extends CakeTestCase {
 		parent::setUp();
 
 		$this->Folder = new Folder(TMP . 'tests' . DS, true);
-		$this->Folder->create($this->Folder->pwd() . 'static/img');
-		$this->Folder->create($this->Folder->pwd() . 'static/doc');
-		$this->Folder->create($this->Folder->pwd() . 'static/txt');
+		$this->Folder->create($this->Folder->pwd() . 'static' . DS . 'img');
+		$this->Folder->create($this->Folder->pwd() . 'static' . DS . 'doc');
+		$this->Folder->create($this->Folder->pwd() . 'static' . DS . 'txt');
 		$this->Folder->create($this->Folder->pwd() . 'filter');
 		$this->Folder->create($this->Folder->pwd() . 'transfer');
 
 		$this->Data = new TestData();
 		$this->file0 = $this->Data->getFile(array(
-			'image-png.png' => $this->Folder->pwd() . 'static/img/image-png.png'
+			'image-png.png' => $this->Folder->pwd() . 'static' . DS . 'img' . DS . 'image-png.png'
 		));
 		$this->file1 = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'static/img/image-jpg.jpg'
+			'image-jpg.jpg' => $this->Folder->pwd() . 'static' . DS . 'img' . DS . 'image-jpg.jpg'
 		));
 		$this->file2 = $this->Data->getFile(array(
-			'text-plain.txt' => $this->Folder->pwd() . 'static/txt/text-plain.txt'
+			'text-plain.txt' => $this->Folder->pwd() . 'static' . DS . 'txt' . DS . 'text-plain.txt'
 		));
 
 		$this->_mediaConfig = Configure::read('Media');
