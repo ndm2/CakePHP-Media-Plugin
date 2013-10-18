@@ -65,11 +65,11 @@ class MediaValidationTest extends CakeTestCase {
 
 		$check = 'tar.gz';
 		$result = MediaValidation::extension($check, false, array('tar', 'gz'));
-		$this->assertTrue($result);
+		$this->assertFalse($result);
 
 		$check = 'tar.gz';
 		$result = MediaValidation::extension($check, false, array('tar.gz'));
-		$this->assertFalse($result);
+		$this->assertTrue($result);
 
 		$check = 'png';
 		$result = MediaValidation::extension($check, array('png'));
