@@ -26,10 +26,10 @@ class SongFixture extends CakeTestFixture {
 	public $name = 'Song';
 
 	public $fields = array(
-		'id'       => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'extra' => 'auto_increment', 'length' => 10),
-		'dirname'  => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 255),
-		'basename' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 255),
-		'checksum' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 255),
+		'id'       => array('type' => 'integer', 'key' => 'primary'),
+		'dirname'  => array('type' => 'string', 'null' => true),
+		'basename' => array('type' => 'string'),
+		'checksum' => array('type' => 'string', 'null' => true),
 		'indexes'  => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
 

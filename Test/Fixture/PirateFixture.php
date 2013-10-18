@@ -26,10 +26,10 @@ class PirateFixture extends CakeTestFixture {
 	public $name = 'Pirate';
 
 	public $fields = array(
-		'id'    => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'extra' => 'auto_increment', 'length' => 10),
-		'name'  => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 255),
-		'group' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 255),
-		'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 255),
+		'id'    => array('type' => 'integer', 'key' => 'primary'),
+		'name'  => array('type' => 'string', 'null' => true),
+		'group' => array('type' => 'string'),
+		'model' => array('type' => 'string'),
 	);
 
 	public $records = array(

@@ -26,9 +26,9 @@ class MovieFixture extends CakeTestFixture {
 	public $name = 'Movie';
 
 	public $fields = array(
-		'id'       => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary', 'extra' => 'auto_increment', 'length' => 10),
-		'title'    => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 255),
-		'director' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 255),
+		'id'       => array('type' => 'integer', 'key' => 'primary'),
+		'title'    => array('type' => 'string', 'null' => true),
+		'director' => array('type' => 'string'),
 		'indexes'  => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
 
