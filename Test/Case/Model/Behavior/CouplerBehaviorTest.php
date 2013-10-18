@@ -69,14 +69,14 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 		$result = $Model->findById(5);
 		$expected = array(
 			'Song' => array (
-				'id' => '5',
-					'dirname' => 'static/doc',
-					'basename' => 'application-pdf.pdf',
-					'checksum' => null,
-					'file' => $file
-		));
+				'id'       => '5',
+				'dirname'  => 'static/doc',
+				'basename' => 'application-pdf.pdf',
+				'checksum' => null,
+				'file' => $file
+			)
+		);
 		$this->assertEqual($expected, $result);
 	}
 
 }
-

@@ -73,4 +73,3 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 	}
 
 }
-

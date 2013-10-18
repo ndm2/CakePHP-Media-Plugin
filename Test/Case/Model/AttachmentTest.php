@@ -65,7 +65,7 @@ class AttachmentTest extends CakeTestCase {
 
 		$file = $this->Data->getFile(array('image-jpg.jpg' => $this->Folder->pwd() . 'transfer' .  DS . 'ta.jpg'));
 		$data = array(
-			'Movie' => array('title' => 'Weekend', 'director' => 'Jean-Luc Godard'),
+			'Movie'      => array('title' => 'Weekend', 'director' => 'Jean-Luc Godard'),
 			'Attachment' => array('file' => $file, 'model' => 'Movie')
 		);
 
@@ -76,15 +76,15 @@ class AttachmentTest extends CakeTestCase {
 
 		$result = $Model->find('first', array('conditions' => array('title' => 'Weekend')));
 		$expected = array(
-			'id' => '1',
-			'model' => 'Movie',
+			'id'          => '1',
+			'model'       => 'Movie',
 			'foreign_key' => '4',
-			'dirname' => 'img',
-			'basename' => 'ta.jpg',
-			'checksum' => '1920c29e7fbe4d1ad2f9173ef4591133',
-			'group' => null,
+			'dirname'     => 'img',
+			'basename'    => 'ta.jpg',
+			'checksum'    => '1920c29e7fbe4d1ad2f9173ef4591133',
+			'group'       => null,
 			'alternative' => null,
-			'path' => 'img/ta.jpg'
+			'path'        => 'img/ta.jpg'
 		);
 		$this->assertEqual($result['Attachment'], $expected);
 
@@ -99,11 +99,12 @@ class AttachmentTest extends CakeTestCase {
 		$fileA = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
 		$fileB = $this->Data->getFile(array('image-png.png' => 'tb.png'));
 		$data = array(
-			'Movie' => array('title' => 'Weekend', 'director' => 'Jean-Luc Godard'),
+			'Movie'      => array('title' => 'Weekend', 'director' => 'Jean-Luc Godard'),
 			'Attachment' => array(
 				array('file' => $fileA, 'model' => 'Movie'),
 				array('file' => $fileB, 'model' => 'Movie')
-		));
+			)
+		);
 
 		$Model->create();
 		$result = $Model->saveAll($data, array('validate' => 'first'));
@@ -114,27 +115,28 @@ class AttachmentTest extends CakeTestCase {
 		$result = $Model->find('first', array('conditions' => array('title' => 'Weekend')));
 		$expected = array(
 			0 => array(
-				'id' => '1',
-				'model' => 'Movie',
+				'id'          => '1',
+				'model'       => 'Movie',
 				'foreign_key' => '4',
-				'dirname' => 'img',
-				'basename' => 'ta.jpg',
-				'checksum' => '1920c29e7fbe4d1ad2f9173ef4591133',
-				'group' => null,
+				'dirname'     => 'img',
+				'basename'    => 'ta.jpg',
+				'checksum'    => '1920c29e7fbe4d1ad2f9173ef4591133',
+				'group'       => null,
 				'alternative' => null,
-				'path' => 'img/ta.jpg'
+				'path'        => 'img/ta.jpg'
 			),
 			1 => array(
-				'id' => '2',
-				'model' => 'Movie',
+				'id'          => '2',
+				'model'       => 'Movie',
 				'foreign_key' => '4',
-				'dirname' => 'img',
-				'basename' => 'tb.png',
-				'checksum' => '7f9af648b511f2c83b1744f42254983f',
-				'group' => null,
+				'dirname'     => 'img',
+				'basename'    => 'tb.png',
+				'checksum'    => '7f9af648b511f2c83b1744f42254983f',
+				'group'       => null,
 				'alternative' => null,
-				'path' => 'img/tb.png'
-		));
+				'path'        => 'img/tb.png'
+			)
+		);
 		$this->assertEqual($result['Attachment'], $expected);
 
 		$result = $Model->delete($Model->getLastInsertID());
@@ -153,11 +155,11 @@ class AttachmentTest extends CakeTestCase {
 		$l = array('convert' => 'image/png', 'fit' => array(600, 440));
 
 		Configure::write('Media.filter', array(
-			'audio' => compact('s', 'm'),
+			'audio'    => compact('s', 'm'),
 			'document' => compact('s', 'm'),
-			'generic' => array(),
-			'image' => compact('s', 'm', 'l'),
-			'video' => compact('s', 'm')
+			'generic'  => array(),
+			'image'    => compact('s', 'm', 'l'),
+			'video'    => compact('s', 'm')
 		));
 
 		Media_Process::config(array('image' => null));
@@ -167,10 +169,11 @@ class AttachmentTest extends CakeTestCase {
 
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
 		$data = array(
-			'Movie' => array('title' => 'Weekend', 'director' => 'Jean-Luc Godard'),
+			'Movie'      => array('title' => 'Weekend', 'director' => 'Jean-Luc Godard'),
 			'Attachment' => array(
 				array('file' => $file, 'model' => 'Movie'),
-		));
+			)
+		);
 
 		$Model->create();
 		$result = false;
@@ -195,15 +198,15 @@ class AttachmentTest extends CakeTestCase {
 		$result = $Model->find('first', array('conditions' => array('title' => 'Weekend')));
 		$expected = array(
 			0 => array(
-				'id' => '1',
-				'model' => 'Movie',
+				'id'          => '1',
+				'model'       => 'Movie',
 				'foreign_key' => '4',
-				'dirname' => 'img',
-				'basename' => 'ta.jpg',
-				'checksum' => '1920c29e7fbe4d1ad2f9173ef4591133',
-				'group' => null,
+				'dirname'     => 'img',
+				'basename'    => 'ta.jpg',
+				'checksum'    => '1920c29e7fbe4d1ad2f9173ef4591133',
+				'group'       => null,
 				'alternative' => null,
-				'path' => 'img/ta.jpg'
+				'path'        => 'img/ta.jpg'
 			)
 		);
 		$this->assertEqual($result['Attachment'], $expected);
@@ -216,11 +219,12 @@ class AttachmentTest extends CakeTestCase {
 	public function testGroupedHasMany() {
 		$assoc = array(
 			'Photo' => array(
-				'className' => 'Media.Attachment',
+				'className'  => 'Media.Attachment',
 				'foreignKey' => 'foreign_key',
 				'conditions' => array('Photo.model' => 'Movie', 'Photo.group' => 'photo'),
-				'dependent' => true
-		));
+				'dependent'  => true
+			)
+		);
 		$Model = $this->_model('hasMany', $assoc);
 
 		$fileA = $this->Data->getFile(array('image-png.png' => 'ta.png'));
@@ -241,34 +245,36 @@ class AttachmentTest extends CakeTestCase {
 		$result = $Model->find('first', array('conditions' => array('title' => 'Weekend')));
 		$expected = array(
 			'Movie' => array(
-				'id' => '4',
-				'title' => 'Weekend',
+				'id'       => '4',
+				'title'    => 'Weekend',
 				'director' => 'Jean-Luc Godard',
 			),
 			'Actor' => array(),
 			'Photo' => array(
 				0 => array(
-					'id' => '1',
-					'model' => 'Movie',
+					'id'          => '1',
+					'model'       => 'Movie',
 					'foreign_key' => '4',
-					'dirname' => 'img',
-					'basename' => 'ta.png',
-					'checksum' => '7f9af648b511f2c83b1744f42254983f',
-					'group' => 'photo',
+					'dirname'     => 'img',
+					'basename'    => 'ta.png',
+					'checksum'    => '7f9af648b511f2c83b1744f42254983f',
+					'group'       => 'photo',
 					'alternative' => null,
-					'path' => 'img/ta.png'
+					'path'        => 'img/ta.png'
 				),
 				1 => array(
-					'id' => '2',
-					'model' => 'Movie',
+					'id'          => '2',
+					'model'       => 'Movie',
 					'foreign_key' => '4',
-					'dirname' => 'img',
-					'basename' => 'tb.png',
-					'checksum' => '7f9af648b511f2c83b1744f42254983f',
-					'group' => 'photo',
+					'dirname'     => 'img',
+					'basename'    => 'tb.png',
+					'checksum'    => '7f9af648b511f2c83b1744f42254983f',
+					'group'       => 'photo',
 					'alternative' => null,
-					'path' => 'img/tb.png'
-		)));
+					'path'        => 'img/tb.png'
+				)
+			)
+		);
 		$this->assertEqual($result, $expected);
 
 		$result = $Model->delete($Model->getLastInsertID());
@@ -283,10 +289,10 @@ class AttachmentTest extends CakeTestCase {
 		if ($assoc === null) {
 			$assoc = array(
 				'Attachment' => array(
-					'className' => 'Media.Attachment',
+					'className'  => 'Media.Attachment',
 					'foreignKey' => 'foreign_key',
 					'conditions' => array('Attachment.model' => 'Movie'),
-					'dependent' => true,
+					'dependent'  => true,
 			));
 		}
 		$Model->bindModel(array($assocType => $assoc), false);
@@ -298,7 +304,7 @@ class AttachmentTest extends CakeTestCase {
 			'transferDirectory' => $this->Folder->pwd() . 'transfer' . DS
 		));
 		$Model->{$assocModelName}->Behaviors->load('Media.Generator', array(
-			'baseDirectory' => $this->Folder->pwd() . 'transfer' . DS,
+			'baseDirectory'   => $this->Folder->pwd() . 'transfer' . DS,
 			'filterDirectory' => $this->Folder->pwd() . 'filter' . DS
 		));
 		$Model->{$assocModelName}->Behaviors->load('Media.Coupler');

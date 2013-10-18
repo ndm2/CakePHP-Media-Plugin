@@ -60,28 +60,31 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 
 		$expected = array(
 			'resource' => array(
-				'rule' => 'checkResource',
+				'rule'       => 'checkResource',
 				'allowEmpty' => true,
-			'required' => false,
-			'last' => true
-		));
+				'required'   => false,
+				'last'       => true
+			)
+		);
 		$this->assertEqual($Model->validate['file'], $expected);
 
 		$Model = ClassRegistry::init('Movie');
 		$Model->validate['file'] = array(
 			'resource' => array(
-				'rule' => 'checkResource',
+				'rule'     => 'checkResource',
 				'required' => true,
-		));
+			)
+		);
 		$Model->Behaviors->load('Media.Transfer');
 
 		$expected = array(
 			'resource' => array(
-				'rule' => 'checkResource',
+				'rule'       => 'checkResource',
 				'allowEmpty' => true,
-				'required' => true,
-				'last' => true
-		));
+				'required'   => true,
+				'last'       => true
+			)
+		);
 		$this->assertEqual($Model->validate['file'], $expected);
 	}
 
@@ -89,10 +92,11 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$Model = ClassRegistry::init('Movie');
 		$Model->validate['file'] = array(
 			'resource' => array(
-				'rule' => 'checkResource',
-				'required' => true,
+				'rule'       => 'checkResource',
+				'required'   => true,
 				'allowEmpty' => false,
-		));
+			)
+		);
 		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$item = array('title' => 'Spiderman I', 'file' => '');
@@ -106,12 +110,13 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$item = array(
 			'title' => 'Spiderman I',
 			'file' => array(
-				'name' => '',
-				'type' => '',
+				'name'     => '',
+				'type'     => '',
 				'tmp_name' => '',
-				'error' => UPLOAD_ERR_NO_FILE,
-				'size' => 0,
-		));
+				'error'    => UPLOAD_ERR_NO_FILE,
+				'size'     => 0,
+			)
+		);
 		$Model->create($item);
 		$this->assertFalse($Model->save());
 	}

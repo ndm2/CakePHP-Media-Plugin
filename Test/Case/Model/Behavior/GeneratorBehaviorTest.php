@@ -68,15 +68,15 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$expected[] = array(
 			$file,
 			array(
-				'directory' => $this->Folder->pwd() . 'filter' . DS . 's' . DS,
-				'version' => 's',
+				'directory'    => $this->Folder->pwd() . 'filter' . DS . 's' . DS,
+				'version'      => 's',
 				'instructions' => array('convert' => 'image/png', 'fit' => array(5, 5))
 		));
 		$expected[] = array(
 			$file,
 			array(
-				'directory' => $this->Folder->pwd() . 'filter' . DS . 'm' . DS,
-				'version' => 'm',
+				'directory'    => $this->Folder->pwd() . 'filter' . DS . 'm' . DS,
+				'version'      => 'm',
 				'instructions' => array('convert' => 'image/png', 'fit' => array(10, 10))
 		));
 		$Model->make($file);
@@ -170,8 +170,8 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		mkdir($directory);
 
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
-			'version' => 's',
-			'directory' => $directory,
+			'version'      => 's',
+			'directory'    => $directory,
 			'instructions' => array(
 				'convert' => 'image/png'
 			)
@@ -200,8 +200,8 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		mkdir($directory);
 
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
-			'version' => 's',
-			'directory' => $directory,
+			'version'      => 's',
+			'directory'    => $directory,
 			'instructions' => array(
 				'convert' => 'image/png'
 			)
@@ -221,8 +221,8 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 			'image-jpg.jpg' => $this->Folder->pwd() . 'copied.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
-			'version' => 's',
-			'directory' => $directory,
+			'version'      => 's',
+			'directory'    => $directory,
 			'instructions' => array(
 				'clone' => 'copy'
 			)
@@ -239,8 +239,8 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 			'image-jpg.jpg' => $this->Folder->pwd() . 'symlinked.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
-			'version' => 's',
-			'directory' => $directory,
+			'version'      => 's',
+			'directory'    => $directory,
 			'instructions' => array(
 				'clone' => 'symlink'
 			)
@@ -255,8 +255,8 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 			'image-jpg.jpg' => $this->Folder->pwd() . 'hardlinked.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
-			'version' => 's',
-			'directory' => $directory,
+			'version'      => 's',
+			'directory'    => $directory,
 			'instructions' => array(
 				'clone' => 'link'
 			)
@@ -287,8 +287,8 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 			'image-jpg.jpg' => $this->Folder->pwd() . 'image.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
-			'version' => 's',
-			'directory' => $directory,
+			'version'      => 's',
+			'directory'    => $directory,
 			'instructions' => array(
 				'setFormat' => 'png' // setFormat is an Imagick method.
 			)

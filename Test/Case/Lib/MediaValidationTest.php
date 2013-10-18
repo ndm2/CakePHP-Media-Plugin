@@ -42,11 +42,11 @@ class MediaValidationTest extends CakeTestCase {
 		$this->assertTrue($result);
 
 		$check = 'image/png';
-		$result = MediaValidation::mimeType($check,array('image/png'));
+		$result = MediaValidation::mimeType($check, array('image/png'));
 		$this->assertFalse($result);
 
 		$check = 'image/png';
-		$result = MediaValidation::mimeType($check,array('image/png'),array('image/png'));
+		$result = MediaValidation::mimeType($check, array('image/png'), array('image/png'));
 		$this->assertFalse($result);
 
 		$check = 'in/val/id';
@@ -127,31 +127,31 @@ class MediaValidationTest extends CakeTestCase {
 	}
 
 	public function testSize() {
-		$result = MediaValidation::size('1M','2M');
+		$result = MediaValidation::size('1M', '2M');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::size('1K','2M');
+		$result = MediaValidation::size('1K', '2M');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::size('1M','1K');
+		$result = MediaValidation::size('1M', '1K');
 		$this->assertFalse($result);
 
-		$result = MediaValidation::size('1048576','2M');
+		$result = MediaValidation::size('1048576', '2M');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::size(1048576,'2M');
+		$result = MediaValidation::size(1048576, '2M');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::size('1M','1M');
+		$result = MediaValidation::size('1M', '1M');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::size('1048576','1M');
+		$result = MediaValidation::size('1048576', '1M');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::size(1048576,10);
+		$result = MediaValidation::size(1048576, 10);
 		$this->assertFalse($result);
 
-		$result = MediaValidation::size('','2M');
+		$result = MediaValidation::size('', '2M');
 		$this->assertFalse($result);
 
 	}
@@ -160,7 +160,7 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::location(TMP);
 		$this->assertFalse($result);
 
-		$result = MediaValidation::location(TMP,true);
+		$result = MediaValidation::location(TMP, true);
 		$this->assertTrue($result);
 
 		$topMostDir = current(explode(DS, TMP)) . DS;
@@ -174,34 +174,34 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::location(TMP . DS . 'file.png', array($topMostDir));
 		$this->assertTrue($result);
 
-		$result = MediaValidation::location(TMP,array(TMP.'subdir'));
+		$result = MediaValidation::location(TMP, array(TMP . 'subdir'));
 		$this->assertFalse($result);
 
-		$result = MediaValidation::location('http://cakeforge.org',true);
+		$result = MediaValidation::location('http://cakeforge.org', true);
 		$this->assertTrue($result);
 
 		$result = MediaValidation::location('http://cakeforge.org');
 		$this->assertFalse($result);
 
-		$result = MediaValidation::location('http://cakeforge.org',array(TMP));
+		$result = MediaValidation::location('http://cakeforge.org', array(TMP));
 		$this->assertFalse($result);
 
-		$result = MediaValidation::location('http://cakeforge.org',array(TMP,'http://'));
+		$result = MediaValidation::location('http://cakeforge.org', array(TMP, 'http://'));
 		$this->assertTrue($result);
 
-		$result = MediaValidation::location('http://cakeforge.org','http://rosa');
+		$result = MediaValidation::location('http://cakeforge.org', 'http://rosa');
 		$this->assertFalse($result);
 
-		$result = MediaValidation::location('http://cakeforge.org','http://cakeforge.org');
+		$result = MediaValidation::location('http://cakeforge.org', 'http://cakeforge.org');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::location('http://cakeforge.org/bla/?x=?$§c $%.org','http://cakeforge.org');
+		$result = MediaValidation::location('http://cakeforge.org/bla/?x=?$§c $%.org', 'http://cakeforge.org');
 		$this->assertFalse($result);
 
-		$result = MediaValidation::location('http://cakeforge.org/bla','http://cakeforge.org');
+		$result = MediaValidation::location('http://cakeforge.org/bla', 'http://cakeforge.org');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::location('http://cakeforge.org/bla?x=do','http://cakeforge.org');
+		$result = MediaValidation::location('http://cakeforge.org/bla?x=do', 'http://cakeforge.org');
 		$this->assertTrue($result);
 	}
 
@@ -215,7 +215,7 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::access('0004', 'r');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::access('0111','r');
+		$result = MediaValidation::access('0111', 'r');
 		$this->assertFalse($result);
 
 		$result = MediaValidation::access('0222', 'w');
@@ -235,16 +235,16 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::permission(0111);
 		$this->assertFalse($result);
 
-		$result = MediaValidation::permission('0111','-x');
+		$result = MediaValidation::permission('0111', '-x');
 		$this->assertFalse($result);
 
-		$result = MediaValidation::permission('0111','-x');
+		$result = MediaValidation::permission('0111', '-x');
 		$this->assertFalse($result);
 
-		$result = MediaValidation::permission('0000','-x');
+		$result = MediaValidation::permission('0000', '-x');
 		$this->assertTrue($result);
 
-		$result = MediaValidation::permission('0666','-x');
+		$result = MediaValidation::permission('0666', '-x');
 		$this->assertTrue($result);
 	}
 
@@ -254,7 +254,7 @@ class MediaValidationTest extends CakeTestCase {
 		$this->assertTrue($result);
 
 		$file = $this->TestData->getFile('image-jpg.jpg');
-		$result = MediaValidation::file($file,false);
+		$result = MediaValidation::file($file, false);
 		$this->assertTrue($result);
 
 		$file = $this->TestData->settings['base'] . 'i-am-not-a-file.png';
@@ -266,7 +266,7 @@ class MediaValidationTest extends CakeTestCase {
 		$this->assertFalse($result);
 
 		$file = TMP;
-		$result = MediaValidation::file($file,false);
+		$result = MediaValidation::file($file, false);
 		$this->assertTrue($result);
 	}
 
@@ -276,7 +276,7 @@ class MediaValidationTest extends CakeTestCase {
 		$this->assertTrue($result);
 
 		$file = $this->TestData->getFile('image-jpg.jpg');
-		$result = MediaValidation::folder($file,false);
+		$result = MediaValidation::folder($file, false);
 		$this->assertTrue($result);
 
 		$file = $this->TestData->settings['base'] . 'i-am-not-a-file.png';
@@ -288,11 +288,11 @@ class MediaValidationTest extends CakeTestCase {
 		$this->assertTrue($result);
 
 		$file = TMP;
-		$result = MediaValidation::folder($file,false);
+		$result = MediaValidation::folder($file, false);
 		$this->assertTrue($result);
 
 		$file = TMP . DS . DS . DS;
-		$result = MediaValidation::folder($file,false);
+		$result = MediaValidation::folder($file, false);
 		$this->assertTrue($result);
 	}
 
