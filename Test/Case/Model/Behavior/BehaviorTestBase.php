@@ -82,4 +82,9 @@ abstract class BaseBehaviorTest extends CakeTestCase {
 		Configure::write('Media', $this->_mediaConfig);
 	}
 
+	protected function _isWindows()
+	{
+		return strtolower(substr(PHP_OS, 0, 3)) === 'win';
+	}
+
 }

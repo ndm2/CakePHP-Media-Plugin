@@ -163,13 +163,15 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::location(TMP,true);
 		$this->assertTrue($result);
 
-		$result = MediaValidation::location(TMP,array(DS));
+		$topMostDir = current(explode(DS, TMP)) . DS;
+
+		$result = MediaValidation::location(TMP, array($topMostDir));
 		$this->assertTrue($result);
 
-		$result = MediaValidation::location(TMP.DS.DS.DS,array(DS));
+		$result = MediaValidation::location(TMP . DS . DS . DS, array($topMostDir));
 		$this->assertTrue($result);
 
-		$result = MediaValidation::location(TMP.DS.'file.png',array(DS));
+		$result = MediaValidation::location(TMP . DS . 'file.png', array($topMostDir));
 		$this->assertTrue($result);
 
 		$result = MediaValidation::location(TMP,array(TMP.'subdir'));

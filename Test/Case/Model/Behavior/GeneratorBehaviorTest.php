@@ -117,6 +117,10 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 	}
 
 	public function testCreateDirectoryMode() {
+		if ($this->skipIf($this->_isWindows(), 'Modes are not supported on Windows.')) {
+			return;
+		}
+
 		Configure::write('Media.filter.image', array(
 			's' => array('convert' => 'image/png'),
 		));
@@ -226,6 +230,10 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$this->assertTrue($result);
 		$this->assertTrue(file_exists($directory . 'copied.jpg'));
 		$this->assertTrue(is_file($directory . 'copied.jpg'));
+
+		if($this->skipIf($this->_isWindows(), 'For some reason on Windows symlink does not work, and hard links cannot be unlinked immediately.')) {
+			return;
+		}
 
 		$file = $this->Data->getFile(array(
 			'image-jpg.jpg' => $this->Folder->pwd() . 'symlinked.jpg'

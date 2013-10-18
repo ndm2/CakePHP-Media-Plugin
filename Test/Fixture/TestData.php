@@ -126,7 +126,7 @@ class TestData extends Object {
 			$file = current($key);
 			$key = key($key);
 
-			if ($file[0] !== DS) {
+			if (!Folder::isAbsolute($file)) {
 				$file = $this->settings['base'] . $file;
 			}
 			$alias = $file;

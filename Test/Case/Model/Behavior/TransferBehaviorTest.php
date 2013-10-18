@@ -120,7 +120,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$Model =& ClassRegistry::init('Movie');
 		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
-		$file = $this->Data->getFile(array('image-jpg.jpg' => 'wei?rd$Ö- FILE_name_'));
+		$file = $this->Data->getFile(array('image-jpg.jpg' => 'wei³rd$Ö- FILE_name_'));
 		$item = array('title' => 'Spiderman I', 'file' => $file);
 		$Model->create();
 		$this->assertTrue($Model->save($item));
@@ -205,7 +205,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$Model =& ClassRegistry::init('TheVoid');
 		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
-		$file = $this->Data->getFile('image-jpg.jpg');
+		$file = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
 		$Model->transfer($file);
 		$result = $Model->Behaviors->Transfer->runtime['TheVoid']['source']['mimeType'];
 		$this->assertIdentical($result, 'image/jpeg');
@@ -217,7 +217,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 			'trustClient' => true
 		) + $this->_behaviorSettings['Transfer']);
 
-		$file = $this->Data->getFile('image-jpg.jpg');
+		$file = $this->Data->getFile(array('image-jpg.jpg' => 'tb.jpg'));
 		$Model->transfer($file);
 		$result = $Model->Behaviors->Transfer->runtime['TheVoid']['source']['mimeType'];
 		$this->assertIdentical($result, 'image/jpeg');
