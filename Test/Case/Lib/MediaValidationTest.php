@@ -257,15 +257,15 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::file($file,false);
 		$this->assertTrue($result);
 
-		$file = DS.'i-am-not-a-file.png';
+		$file = $this->TestData->settings['base'] . 'i-am-not-a-file.png';
 		$result = MediaValidation::file($file);
 		$this->assertFalse($result);
 
-		$file = DS;
+		$file = TMP;
 		$result = MediaValidation::file($file);
 		$this->assertFalse($result);
 
-		$file = DS;
+		$file = TMP;
 		$result = MediaValidation::file($file,false);
 		$this->assertTrue($result);
 	}
@@ -279,19 +279,19 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::folder($file,false);
 		$this->assertTrue($result);
 
-		$file = DS.'i-am-not-a-file.png';
+		$file = $this->TestData->settings['base'] . 'i-am-not-a-file.png';
 		$result = MediaValidation::folder($file);
 		$this->assertFalse($result);
 
-		$file = DS;
+		$file = TMP;
 		$result = MediaValidation::folder($file);
 		$this->assertTrue($result);
 
-		$file = DS;
+		$file = TMP;
 		$result = MediaValidation::folder($file,false);
 		$this->assertTrue($result);
 
-		$file = DS.DS.DS.DS;
+		$file = TMP . DS . DS . DS;
 		$result = MediaValidation::folder($file,false);
 		$this->assertTrue($result);
 	}
