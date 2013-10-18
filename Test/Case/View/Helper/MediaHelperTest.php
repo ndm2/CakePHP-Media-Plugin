@@ -53,6 +53,13 @@ class MockMediaHelper extends MediaHelper {
  */
 class MediaHelperTest extends CakeTestCase {
 
+/**
+ * Media helper instance
+ *
+ * @var MediaHelper
+ */
+	public $Media = null;
+
 	public function setUp() {
 		parent::setUp();
 
@@ -92,7 +99,7 @@ class MediaHelperTest extends CakeTestCase {
 			$this->TmpFolder->pwd() . 'theme' . DS  => 'media/theme/'
 		);
 		$this->View = new View(null);
-		$this->MediaHelper = new MediaHelper($this->View, $settings);
+		$this->Media = new MediaHelper($this->View, $settings);
 	}
 
 	public function tearDown() {
@@ -117,83 +124,83 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testUrl() {
-		$result = $this->Helper->url('img/image-png');
-		$this->assertEqual($result, 'media/static/img/image-png.png');
+		$result = $this->Media->url('img/image-png');
+		$this->assertEqual($result, '/media/static/img/image-png.png');
 
-		$result = $this->Helper->url('s/static/img/image-png');
-		$this->assertEqual($result, 'media/filter/s/static/img/image-png.png');
+		$result = $this->Media->url('s/static/img/image-png');
+		$this->assertEqual($result, '/media/filter/s/static/img/image-png.png');
 
-		$result = $this->Helper->url('img/image-png-x');
+		$result = $this->Media->url('img/image-png-x');
 		$this->assertNull($result);
 
-		$result = $this->Helper->url('img/image-png-xyz');
+		$result = $this->Media->url('img/image-png-xyz');
 		$this->assertNull($result);
 
-		$result = $this->Helper->url('s/transfer/img/image-png-x');
-		$this->assertEqual($result, 'media/filter/s/transfer/img/image-png-x.png');
+		$result = $this->Media->url('s/transfer/img/image-png-x');
+		$this->assertEqual($result, '/media/filter/s/transfer/img/image-png-x.png');
 
-		$result = $this->Helper->url($this->TmpFolder->pwd() . 'filter/s/transfer/img/image-png-x.png');
-		$this->assertEqual($result, 'media/filter/s/transfer/img/image-png-x.png');
+		$result = $this->Media->url($this->TmpFolder->pwd() . 'filter/s/transfer/img/image-png-x.png');
+		$this->assertEqual($result, '/media/filter/s/transfer/img/image-png-x.png');
 	}
 
 	public function testWebroot() {
-		$result = $this->Helper->webroot('img/image-png');
-		$this->assertEqual($result, 'media/static/img/image-png.png');
+		$result = $this->Media->webroot('img/image-png');
+		$this->assertEqual($result, '/media/static/img/image-png.png');
 
-		$result = $this->Helper->webroot('s/static/img/image-png');
-		$this->assertEqual($result, 'media/filter/s/static/img/image-png.png');
+		$result = $this->Media->webroot('s/static/img/image-png');
+		$this->assertEqual($result, '/media/filter/s/static/img/image-png.png');
 
-		$result = $this->Helper->webroot('img/image-png-x');
+		$result = $this->Media->webroot('img/image-png-x');
 		$this->assertNull($result);
 
-		$result = $this->Helper->webroot('img/image-png-xyz');
+		$result = $this->Media->webroot('img/image-png-xyz');
 		$this->assertNull($result);
 
-		$result = $this->Helper->webroot('s/transfer/img/image-png-x');
-		$this->assertEqual($result, 'media/filter/s/transfer/img/image-png-x.png');
+		$result = $this->Media->webroot('s/transfer/img/image-png-x');
+		$this->assertEqual($result, '/media/filter/s/transfer/img/image-png-x.png');
 
-		$result = $this->Helper->webroot($this->TmpFolder->pwd() . 'filter/s/transfer/img/image-png-x.png');
-		$this->assertEqual($result, 'media/filter/s/transfer/img/image-png-x.png');
+		$result = $this->Media->webroot($this->TmpFolder->pwd() . 'filter/s/transfer/img/image-png-x.png');
+		$this->assertEqual($result, '/media/filter/s/transfer/img/image-png-x.png');
 	}
 
 	public function testFile() {
-		$result = $this->Helper->file('static/img/not-existant.jpg');
+		$result = $this->Media->file('static/img/not-existant.jpg');
 		$this->assertFalse($result);
 
-		$result = $this->Helper->file('img/image-png');
+		$result = $this->Media->file('img/image-png');
 		$this->assertEqual($result, $this->file0);
 
-		$result = $this->Helper->file('s/static/img/image-png');
+		$result = $this->Media->file('s/static/img/image-png');
 		$this->assertEqual($result, $this->file1);
 
-		$result = $this->Helper->file('s/static/img/dot.ted.name');
+		$result = $this->Media->file('s/static/img/dot.ted.name');
 		$this->assertEqual($result, $this->file2);
 
-		$result = $this->Helper->file('img/image-png-x');
+		$result = $this->Media->file('img/image-png-x');
 		$this->assertEqual($result, $this->file3);
 
-		$result = $this->Helper->file('s/transfer/img/image-png-x');
+		$result = $this->Media->file('s/transfer/img/image-png-x');
 		$this->assertEqual($result, $this->file4);
 
-		$result = $this->Helper->file($this->TmpFolder->pwd() . 'filter/s/transfer/img/image-png-x.png');
+		$result = $this->Media->file($this->TmpFolder->pwd() . 'filter/s/transfer/img/image-png-x.png');
 		$this->assertEqual($result, $this->file4);
 
-		$result = $this->Helper->file('blanko/img/image-blanko');
+		$result = $this->Media->file('blanko/img/image-blanko');
 		$this->assertEqual($result, $this->file5);
 	}
 
 	public function testName() {
-		$this->assertEqual($this->Helper->name('img/image-png.png'), 'image');
-		$this->assertNull($this->Helper->name('static/img/not-existant.jpg'));
+		$this->assertEqual($this->Media->name('img/image-png.png'), 'image');
+		$this->assertNull($this->Media->name('static/img/not-existant.jpg'));
 	}
 
 	public function testMimeType() {
-		$this->assertEqual($this->Helper->mimeType('img/image-png.png'), 'image/png');
-		$this->assertNull($this->Helper->mimeType('static/img/not-existant.jpg'));
+		$this->assertEqual($this->Media->mimeType('img/image-png.png'), 'image/png');
+		$this->assertNull($this->Media->mimeType('static/img/not-existant.jpg'));
 	}
 
 	public function testSize() {
-		$this->assertEqual($this->Helper->size('img/image-png.png'), 10142);
-		$this->assertNull($this->Helper->size('static/img/not-existant.jpg'));
+		$this->assertEqual($this->Media->size('img/image-png.png'), 10142);
+		$this->assertNull($this->Media->size('static/img/not-existant.jpg'));
 	}
 }
