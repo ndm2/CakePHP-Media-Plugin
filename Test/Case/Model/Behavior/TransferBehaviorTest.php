@@ -123,7 +123,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'wei³rd$Ö- FILE_name_'));
 		$item = array('title' => 'Spiderman I', 'file' => $file);
 		$Model->create();
-		$this->assertTrue($Model->save($item));
+		$this->assertTrue(!!$Model->save($item));
 		$expected = $this->_transferDirectory . 'img' . DS . 'wei_rd_oe_file_name';
 		$this->assertEqual($Model->transferred(), $expected);
 	}
@@ -137,8 +137,8 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$file = $this->Data->getFile('image-jpg.jpg');
 		$Model->transfer($file);
 		$file = $Model->transferred();
-
-		$this->assertTrue($file);
+		$expected = $this->_transferDirectory . 'img' . DS . 'image_jpg.jpg';
+		$this->assertEqual($file, $expected);
 		$this->assertTrue(file_exists($file));
 	}
 
@@ -149,7 +149,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
 		$item = array('title' => 'Spiderman I', 'file' => $file);
 		$Model->create();
-		$this->assertTrue($Model->save($item));
+		$this->assertTrue(!!$Model->save($item));
 		$this->assertTrue(file_exists($file));
 		$expected = $this->_transferDirectory . 'img' . DS . 'ta.jpg';
 		$this->assertEqual($Model->transferred(), $expected);
@@ -158,10 +158,10 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'tb.jpg'));
-		$this->assertTrue($Model->transfer($file));
-		$this->assertTrue(file_exists($file));
 		$expected = $this->_transferDirectory . 'img' . DS . 'tb.jpg';
-		$this->assertEqual($Model->transferred(), $expected);
+		$this->assertEquals($Model->transfer($file), $expected);
+		$this->assertEquals($Model->transferred(), $expected);
+		$this->assertTrue(file_exists($file));
 
 		ClassRegistry::flush();
 
@@ -176,6 +176,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		$this->assertTrue(file_exists($file));
 		$expected = $this->_transferDirectory . 'img' . DS . 'tc.jpg';
 		$this->assertEqual($Model->Actor->transferred(), $expected);
+		$this->assertTrue(file_exists($expected));
 	}
 
 	public function testUrlRemoteToFileLocal() {
@@ -188,17 +189,19 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 
 		$item = array('title' => 'Spiderman I', 'file' => 'http://cakephp.org/img/cake-logo.png');
 		$Model->create();
-		$this->assertTrue($Model->save($item));
+		$this->assertTrue(!!$Model->save($item));
 		$expected = $this->_transferDirectory . 'img' . DS . 'cake_logo.png';
 		$this->assertEqual($Model->transferred(), $expected);
+		$this->assertTrue(file_exists($expected));
 
 		$Model = ClassRegistry::init('TheVoid');
 		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = 'http://cakephp.org/img/cake-logo.png';
-		$this->assertTrue($Model->transfer($file));
 		$expected = $this->_transferDirectory . 'img' . DS . 'cake_logo_2.png';
-		$this->assertEqual($Model->transferred(), $expected);
+		$this->assertEquals($Model->transfer($file), $expected);
+		$this->assertEquals($Model->transferred(), $expected);
+		$this->assertTrue(file_exists($expected));
 	}
 
 	public function testTrustClient() {

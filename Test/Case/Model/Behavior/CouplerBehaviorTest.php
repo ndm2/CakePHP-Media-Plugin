@@ -63,7 +63,7 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 		));
 		$item = array('file' => $file);
 		$Model->create();
-		$result = $Model->save($item);
+		$result = !!$Model->save($item);
 		$this->assertTrue($result);
 
 		$result = $Model->findById(5);

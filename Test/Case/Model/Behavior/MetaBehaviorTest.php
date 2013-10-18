@@ -63,7 +63,7 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings['Coupler']);
 		$Model->Behaviors->load('Media.Meta', $this->_behaviorSettings['Meta']);
 		$result = $Model->find('all');
-		$this->assertEqual(count($result), 3);
+		$this->assertEqual(count($result), 4);
 
 		/* Virtual */
 		$result = $Model->findById(1);
