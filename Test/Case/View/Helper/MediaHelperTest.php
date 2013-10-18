@@ -7,14 +7,13 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.tests.cases.views.helpers
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.View.Helper
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 if (!defined('MEDIA')) {
@@ -23,38 +22,40 @@ if (!defined('MEDIA')) {
 	trigger_error('MEDIA constant already defined and not pointing to tests directory.', E_USER_ERROR);
 }
 
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'Config' . DS . 'core.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Fixture' . DS . 'test_data.php';
+App::uses('ClassRegistry', 'Utility');
+App::uses('View', 'View');
+App::uses('MediaHelper', 'Media.View/Helper');
 
-App::import('Core', array('Helper', 'AppHelper', 'ClassRegistry'));
-App::import('Helper', 'Media.Media');
+require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'Config' . DS . 'bootstrap.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Fixture' . DS . 'TestData.php';
 
 /**
  * Mock Media Helper
  *
- * @package    media
- * @subpackage media.tests.cases.views.helpers
+ * @package       Media.Test.Case.View.Helper
  */
 class MockMediaHelper extends MediaHelper {
 
-	function versions() {
+	public function versions() {
 		return $this->_versions;
 	}
 
-	function directories() {
+	public function directories() {
 		return $this->_directories;
 	}
+
 }
 
 /**
  * Media Helper Test Case Class
  *
- * @package    media
- * @subpackage media.tests.cases.views.helpers
+ * @package       Media.Test.Case.View.Helper
  */
-class MediaHelperTestCase extends CakeTestCase {
+class MediaHelperTest extends CakeTestCase {
 
-	function setUp() {
+	public function setUp() {
+		parent::setUp();
+
 		$this->_config = Configure::read('Media');
 
 		$this->TmpFolder = new Folder(TMP . 'tests' . DS, true);
@@ -90,17 +91,20 @@ class MediaHelperTestCase extends CakeTestCase {
 			$this->TmpFolder->pwd() . 'transfer' . DS => false,
 			$this->TmpFolder->pwd() . 'theme' . DS  => 'media/theme/'
 		);
-		$this->Helper = new MediaHelper($settings);
+		$this->View = new View(null);
+		$this->MediaHelper = new MediaHelper($this->View, $settings);
 	}
 
-	function tearDown() {
+	public function tearDown() {
+		parent::tearDown();
+
 		Configure::write('Media', $this->_config);
 		$this->TestData->flushFiles();
 		$this->TmpFolder->delete();
 		ClassRegistry::flush();
 	}
 
-	function testConstruct() {
+	public function testConstruct() {
 		$settings = array(
 			$this->TmpFolder->pwd() . 'static' . DS => 'media/static/',
 			$this->TmpFolder->pwd() . 'theme' . DS  => 'media/theme/'
@@ -109,10 +113,10 @@ class MediaHelperTestCase extends CakeTestCase {
 			'image'	 => array('s' => array(), 'm' => array()),
 			'video' => array('s' => array(), 'xl' => array())
 		));
-		$Helper = new MockMediaHelper($settings);
+		$Helper = new MockMediaHelper($this->View, $settings);
 	}
 
-	function testUrl() {
+	public function testUrl() {
 		$result = $this->Helper->url('img/image-png');
 		$this->assertEqual($result, 'media/static/img/image-png.png');
 
@@ -132,7 +136,7 @@ class MediaHelperTestCase extends CakeTestCase {
 		$this->assertEqual($result, 'media/filter/s/transfer/img/image-png-x.png');
 	}
 
-	function testWebroot() {
+	public function testWebroot() {
 		$result = $this->Helper->webroot('img/image-png');
 		$this->assertEqual($result, 'media/static/img/image-png.png');
 
@@ -152,7 +156,7 @@ class MediaHelperTestCase extends CakeTestCase {
 		$this->assertEqual($result, 'media/filter/s/transfer/img/image-png-x.png');
 	}
 
-	function testFile() {
+	public function testFile() {
 		$result = $this->Helper->file('static/img/not-existant.jpg');
 		$this->assertFalse($result);
 
@@ -178,20 +182,18 @@ class MediaHelperTestCase extends CakeTestCase {
 		$this->assertEqual($result, $this->file5);
 	}
 
-	function testName() {
+	public function testName() {
 		$this->assertEqual($this->Helper->name('img/image-png.png'), 'image');
 		$this->assertNull($this->Helper->name('static/img/not-existant.jpg'));
 	}
 
-	function testMimeType() {
+	public function testMimeType() {
 		$this->assertEqual($this->Helper->mimeType('img/image-png.png'), 'image/png');
 		$this->assertNull($this->Helper->mimeType('static/img/not-existant.jpg'));
 	}
 
-	function testSize() {
+	public function testSize() {
 		$this->assertEqual($this->Helper->size('img/image-png.png'), 10142);
 		$this->assertNull($this->Helper->size('static/img/not-existant.jpg'));
 	}
 }
-
-?>

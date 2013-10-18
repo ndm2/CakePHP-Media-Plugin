@@ -7,27 +7,27 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.Model.Behavior
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-require_once dirname(__FILE__) . DS . 'base.test.php';
+
+require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
  * Meta Behavior Test Case Class
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
+ * @package       Media.Test.Case.Model.Behavior
  */
-class MetaBehaviorTestCase extends BaseBehaviorTestCase {
+class MetaBehaviorTest extends BaseBehaviorTest {
 
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
+
 		$this->_behaviorSettings['Coupler'] = array(
 			'baseDirectory' => $this->Folder->pwd()
 		);
@@ -36,17 +36,17 @@ class MetaBehaviorTestCase extends BaseBehaviorTestCase {
 		);
 	}
 
-	function testSetup() {
+	public function testSetup() {
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Meta');
+		$Model->Behaviors->load('Media.Meta');
 
 		$Model =& ClassRegistry::init('Song');
-		$Model->Behaviors->attach('Media.Meta');
+		$Model->Behaviors->load('Media.Meta');
 	}
 
-	function testSave() {
+	public function testSave() {
 		$Model =& ClassRegistry::init('Song');
-		$Model->Behaviors->attach('Media.Meta', $this->_behaviorSettings['Meta']);
+		$Model->Behaviors->load('Media.Meta', $this->_behaviorSettings['Meta']);
 
 		$data = array('Song' => array('file' => $this->file0));
 		$result = $Model->save($data);
@@ -58,10 +58,10 @@ class MetaBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($result['Song']['checksum'], md5_file($this->file0));
 	}
 
-	function testFind() {
+	public function testFind() {
 		$Model =& ClassRegistry::init('Song');
-		$Model->Behaviors->attach('Media.Coupler', $this->_behaviorSettings['Coupler']);
-		$Model->Behaviors->attach('Media.Meta', $this->_behaviorSettings['Meta']);
+		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings['Coupler']);
+		$Model->Behaviors->load('Media.Meta', $this->_behaviorSettings['Meta']);
 		$result = $Model->find('all');
 		$this->assertEqual(count($result), 3);
 
@@ -70,5 +70,6 @@ class MetaBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertTrue(Set::matches('/Song/size', $result));
 		$this->assertTrue(Set::matches('/Song/mime_type',$result));
 	}
+
 }
-?>
+

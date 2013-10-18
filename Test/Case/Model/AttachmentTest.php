@@ -7,42 +7,44 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.tests.cases.models
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.Model
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Model', 'Media.Attachment');
-require_once 'models.php';
-require_once dirname(dirname(dirname(__FILE__))) . DS . 'fixtures' . DS . 'test_data.php';
 
 if (!defined('MEDIA')) {
 	define('MEDIA', TMP . 'tests' . DS);
 } elseif (MEDIA != TMP . 'tests' . DS) {
 	trigger_error('MEDIA constant already defined and not pointing to tests directory.', E_USER_ERROR);
 }
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Config' . DS . 'core.php';
+
+App::uses('Attachment', 'Media.Model');
+
+require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'Config' . DS . 'bootstrap.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Fixture' . DS . 'TestData.php';
+require_once 'models.php';
 require_once 'Media/Process.php';
 require_once 'Media/Info.php';
 
 /**
  * Attachment Test Case Class
  *
- * @package    media
- * @subpackage media.tests.cases.models
+ * @package       Media.Test.Case.Model
  */
-class AttachmentTestCase extends CakeTestCase {
+class AttachmentTest extends CakeTestCase {
 
-	var $fixtures = array(
+	public $fixtures = array(
 		'plugin.media.movie', 'plugin.media.actor',
 		'plugin.media.attachment', 'plugin.media.pirate'
 	);
 
-	function setUp() {
+	public function setUp() {
+		parent::setUp();
+
 		$this->Data = new TestData();
 		$this->Folder = new Folder(TMP . 'tests' . DS, true);
 		new Folder($this->Folder->pwd() . 'transfer' . DS, true);
@@ -50,13 +52,15 @@ class AttachmentTestCase extends CakeTestCase {
 		new Folder($this->Folder->pwd() . 'filter' . DS, true);
 	}
 
-	function tearDown() {
+	public function tearDown() {
+		parent::tearDown();
+
 		$this->Data->flushFiles();
 		$this->Folder->delete();
 		ClassRegistry::flush();
 	}
 
-	function testHasOne() {
+	public function testHasOne() {
 		$Model = $this->_model('hasOne');
 
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
@@ -88,7 +92,7 @@ class AttachmentTestCase extends CakeTestCase {
 		$this->assertFalse(file_exists($this->Folder->pwd() . 'transfer' .  DS . 'ta.jpg'));
 	}
 
-	function testHasMany() {
+	public function testHasMany() {
 		$Model = $this->_model('hasMany');
 
 		$fileA = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
@@ -136,7 +140,7 @@ class AttachmentTestCase extends CakeTestCase {
 		$this->assertFalse(file_exists($this->Folder->pwd() . 'transfer' .  DS . 'tb.jpg'));
 	}
 
-	function testHasManyWithMissingMediaAdapters() {
+	public function testHasManyWithMissingMediaAdapters() {
 		$_backupConfig = Configure::read('Media');
 		$_backupProcess = Media_Process::config();
 		$_backupInfo = Media_Info::config();
@@ -194,7 +198,7 @@ class AttachmentTestCase extends CakeTestCase {
 		Configure::write('Media', $_backupConfig);
 	}
 
-	function testGroupedHasMany() {
+	public function testGroupedHasMany() {
 		$assoc = array(
 			'Photo' => array(
 				'className' => 'Media.Attachment',
@@ -256,7 +260,7 @@ class AttachmentTestCase extends CakeTestCase {
 		$this->assertFalse(file_exists($this->Folder->pwd() . 'transfer' . DS . 'photo' . DS . 'tb.png'));
 	}
 
-	function _model($assocType, $assoc = null) {
+	protected function _model($assocType, $assoc = null) {
 		$Model = ClassRegistry::init('Movie');
 
 		if ($assoc === null) {
@@ -271,19 +275,19 @@ class AttachmentTestCase extends CakeTestCase {
 		$Model->bindModel(array($assocType => $assoc), false);
 		$assocModelName = key($assoc);
 
-		$Model->{$assocModelName}->Behaviors->attach('Media.Transfer', array(
+		$Model->{$assocModelName}->Behaviors->load('Media.Transfer', array(
 			'transferDirectory' => $this->Folder->pwd() . 'transfer' . DS
 		));
-		$Model->{$assocModelName}->Behaviors->attach('Media.Generator', array(
+		$Model->{$assocModelName}->Behaviors->load('Media.Generator', array(
 			'baseDirectory' => $this->Folder->pwd() . 'transfer' . DS,
 			'filterDirectory' => $this->Folder->pwd() . 'filter' . DS
 		));
-		$Model->{$assocModelName}->Behaviors->attach('Media.Coupler');
-		$Model->{$assocModelName}->Behaviors->attach('Media.Polymorphic');
-		$Model->{$assocModelName}->Behaviors->attach('Media.Meta', array(
+		$Model->{$assocModelName}->Behaviors->load('Media.Coupler');
+		$Model->{$assocModelName}->Behaviors->load('Media.Polymorphic');
+		$Model->{$assocModelName}->Behaviors->load('Media.Meta', array(
 			'level' => 2
 		));
 		return $Model;
 	}
+
 }
-?>

@@ -7,42 +7,41 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.Model.Behavior
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::Import('Model', 'App');
-require_once CORE_TEST_CASES . DS . 'libs' . DS . 'model' .DS . 'models.php';
-require_once dirname(dirname(__FILE__)) . DS . 'models.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'fixtures' . DS . 'test_data.php';
 
 if (!defined('MEDIA')) {
 	define('MEDIA', TMP . 'tests' . DS);
 } elseif (MEDIA != TMP . 'tests' . DS) {
 	trigger_error('MEDIA constant already defined and not pointing to tests directory.', E_USER_ERROR);
 }
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'Config' . DS . 'core.php';
 
-SimpleTest::ignore('BaseBehaviorTestCase');
+App::uses('Model', 'Model');
+App::uses('Folder', 'Utility');
+
+require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'Config' . DS . 'bootstrap.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Fixture' . DS . 'TestData.php';
+require_once CORE_TEST_CASES . DS . 'Model' . DS . 'models.php';
+require_once dirname(dirname(__FILE__)) . DS . 'models.php';
 
 /**
  * Base Behavior Test Case Class
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
+ * @package       Media.Test.Case.Model.Behavior
  */
-class BaseBehaviorTestCase extends CakeTestCase {
+abstract class BaseBehaviorTest extends CakeTestCase {
 
-	var $fixtures = array('plugin.media.song', 'core.image');
+	public $fixtures = array('plugin.media.song', 'core.image');
 
-	var $_behaviorSettings = array();
+	protected $_behaviorSettings = array();
 
-	function start() {
+	public function start() {
 		parent::start();
 
 		if (in_array('plugin.media.song', $this->fixtures)) {
@@ -50,7 +49,9 @@ class BaseBehaviorTestCase extends CakeTestCase {
 		}
 	}
 
-	function setUp() {
+	public function setUp() {
+		parent::setUp();
+
 		$this->Folder = new Folder(TMP . 'tests' . DS, true);
 		$this->Folder->create($this->Folder->pwd() . 'static/img');
 		$this->Folder->create($this->Folder->pwd() . 'static/doc');
@@ -72,12 +73,13 @@ class BaseBehaviorTestCase extends CakeTestCase {
 		$this->_mediaConfig = Configure::read('Media');
 	}
 
-	function tearDown() {
+	public function tearDown() {
+		parent::tearDown();
+
 		$this->Data->flushFiles();
 		$this->Folder->delete();
 		ClassRegistry::flush();
 		Configure::write('Media', $this->_mediaConfig);
 	}
-}
 
-?>
+}

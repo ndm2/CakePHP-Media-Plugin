@@ -7,42 +7,43 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.Model.Behavior
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-require_once dirname(__FILE__) . DS . 'base.test.php';
-App::import('Behavior', 'Media.Transfer');
+
+App::uses('TransferBehavior', 'Media.Model/Behavior');
+require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
  * Test Transfer Behavior Class
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
+ * @package       Media.Test.Case.Model.Behavior
  */
 class TestTransferBehavior extends TransferBehavior {
-	function alternativeFile($file, $tries = 100) {
+
+	public function alternativeFile($file, $tries = 100) {
 		return $this->_alternativeFile($file, $tries);
 	}
+
 }
 
 /**
  * Transfer Behavior Test Case Class
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
+ * @package       Media.Test.Case.Model.Behavior
  */
-class TransferBehaviorTestCase extends BaseBehaviorTestCase {
+class TransferBehaviorTest extends BaseBehaviorTest {
 
-	var $fixtures = array('plugin.media.movie', 'plugin.media.actor');
+	public $fixtures = array('plugin.media.movie', 'plugin.media.actor');
 
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
+
 		$this->_transferDirectory = $this->Folder->pwd() . 'transfer' . DS;
 		$this->_behaviorSettings['Transfer'] = array(
 			'transferDirectory' => $this->_transferDirectory
@@ -50,12 +51,12 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->_remoteAvailable = @fsockopen('cakephp.org', 80);
 	}
 
-	function testSetupValidation() {
+	public function testSetupValidation() {
 		$Model =& ClassRegistry::init('Movie');
 		$Model->validate['file'] = array(
 			'resource' => array('rule' => 'checkResource')
 		);
-		$Model->Behaviors->attach('Media.Transfer');
+		$Model->Behaviors->load('Media.Transfer');
 
 		$expected = array(
 			'resource' => array(
@@ -72,7 +73,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 				'rule' => 'checkResource',
 				'required' => true,
 		));
-		$Model->Behaviors->attach('Media.Transfer');
+		$Model->Behaviors->load('Media.Transfer');
 
 		$expected = array(
 			'resource' => array(
@@ -84,7 +85,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($Model->validate['file'], $expected);
 	}
 
-	function testFailOnNoResource() {
+	public function testFailOnNoResource() {
 		$Model =& ClassRegistry::init('Movie');
 		$Model->validate['file'] = array(
 			'resource' => array(
@@ -92,7 +93,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 				'required' => true,
 				'allowEmpty' => false,
 		));
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$item = array('title' => 'Spiderman I', 'file' => '');
 		$Model->create($item);
@@ -115,9 +116,9 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertFalse($Model->save());
 	}
 
-	function testDestinationFile() {
+	public function testDestinationFile() {
 		$Model =& ClassRegistry::init('Movie');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'wei?rd$Ö- FILE_name_'));
 		$item = array('title' => 'Spiderman I', 'file' => $file);
@@ -127,9 +128,9 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($Model->transferred(), $expected);
 	}
 
-	function testTransferred() {
+	public function testTransferred() {
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$this->assertFalse($Model->transferred());
 
@@ -141,9 +142,9 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertTrue(file_exists($file));
 	}
 
-	function testFileLocalToFileLocal() {
+	public function testFileLocalToFileLocal() {
 		$Model =& ClassRegistry::init('Movie');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
 		$item = array('title' => 'Spiderman I', 'file' => $file);
@@ -154,7 +155,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($Model->transferred(), $expected);
 
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'tb.jpg'));
 		$this->assertTrue($Model->transfer($file));
@@ -165,7 +166,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		ClassRegistry::flush();
 
 		$Model =& ClassRegistry::init('Movie');
-		$Model->Actor->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Actor->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 		$file = $this->Data->getFile(array('image-jpg.jpg' => 'tc.jpg'));
 		$data = array(
 			'Movie' => array('title' => 'Changeling'),
@@ -177,13 +178,13 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($Model->Actor->transferred(), $expected);
 	}
 
-	function testUrlRemoteToFileLocal() {
+	public function testUrlRemoteToFileLocal() {
 		if ($this->skipIf(!$this->_remoteAvailable, 'Remote server not available. %s')) {
 			return;
 		}
 
 		$Model =& ClassRegistry::init('Movie');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$item = array('title' => 'Spiderman I', 'file' => 'http://cakephp.org/img/cake-logo.png');
 		$Model->create();
@@ -192,7 +193,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($Model->transferred(), $expected);
 
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = 'http://cakephp.org/img/cake-logo.png';
 		$this->assertTrue($Model->transfer($file));
@@ -200,9 +201,9 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($Model->transferred(), $expected);
 	}
 
-	function testTrustClient() {
+	public function testTrustClient() {
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = $this->Data->getFile('image-jpg.jpg');
 		$Model->transfer($file);
@@ -212,7 +213,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertNull($result);
 
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Transfer', array(
+		$Model->Behaviors->load('Media.Transfer', array(
 			'trustClient' => true
 		) + $this->_behaviorSettings['Transfer']);
 
@@ -224,13 +225,13 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertIdentical($result, 'image/jpeg');
 	}
 
-	function testTrustClientRemote() {
+	public function testTrustClientRemote() {
 		if ($this->skipIf(!$this->_remoteAvailable, 'Remote server not available. %s')) {
 			return;
 		}
 
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Transfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.Transfer', $this->_behaviorSettings['Transfer']);
 
 		$file = 'http://cakephp.org/img/cake-logo.png';
 		$Model->transfer($file);
@@ -240,7 +241,7 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertNull($result);
 
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Transfer', array(
+		$Model->Behaviors->load('Media.Transfer', array(
 			'trustClient' => true
 		) + $this->_behaviorSettings['Transfer']);
 
@@ -252,9 +253,9 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertIdentical($result, 'image/png');
 	}
 
-	function testAlternativeFile() {
+	public function testAlternativeFile() {
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.TestTransfer', $this->_behaviorSettings['Transfer']);
+		$Model->Behaviors->load('Media.TestTransfer', $this->_behaviorSettings['Transfer']);
 		$file = $this->Folder->pwd() . 'file.jpg';
 
 		$result = $Model->Behaviors->TestTransfer->alternativeFile($file);
@@ -290,5 +291,6 @@ class TransferBehaviorTestCase extends BaseBehaviorTestCase {
 		$result = $Model->Behaviors->TestTransfer->alternativeFile($file, 4);
 		$this->assertFalse($result);
 	}
+
 }
-?>
+

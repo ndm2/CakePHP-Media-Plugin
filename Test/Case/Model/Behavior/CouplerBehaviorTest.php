@@ -7,43 +7,44 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Test.Case.Model.Behavior
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-require_once dirname(__FILE__) . DS . 'base.test.php';
+
+App::uses('Set', 'Utility');
+require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
  * Coupler Behavior Test Case Class
  *
- * @package    media
- * @subpackage media.tests.cases.models.behaviors
+ * @package       Media.Test.Case.Model.Behavior
  */
-class CouplerBehaviorTestCase extends BaseBehaviorTestCase {
+class CouplerBehaviorTest extends BaseBehaviorTest {
 
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
+
 		$this->_behaviorSettings = array(
 			'baseDirectory' => $this->Folder->pwd()
 		);
 	}
 
-	function testSetup() {
+	public function testSetup() {
 		$Model =& ClassRegistry::init('TheVoid');
-		$Model->Behaviors->attach('Media.Coupler');
+		$Model->Behaviors->load('Media.Coupler');
 
 		$Model =& ClassRegistry::init('Song');
-		$Model->Behaviors->attach('Media.Coupler');
+		$Model->Behaviors->load('Media.Coupler');
 	}
 
-	function testFind() {
+	public function testFind() {
 		$Model =& ClassRegistry::init('Song');
-		$Model->Behaviors->attach('Media.Coupler', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings);
 		$result = $Model->find('all');
 		$this->assertEqual(count($result), 4);
 
@@ -53,9 +54,9 @@ class CouplerBehaviorTestCase extends BaseBehaviorTestCase {
 		$this->assertEqual($result['Song']['file'], $this->file0);
 	}
 
-	function testSave() {
+	public function testSave() {
 		$Model =& ClassRegistry::init('Song');
-		$Model->Behaviors->attach('Media.Coupler', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings);
 
 		$file = $this->Data->getFile(array(
 			'application-pdf.pdf' => $this->Folder->pwd() . 'static/doc/application-pdf.pdf'
@@ -76,5 +77,6 @@ class CouplerBehaviorTestCase extends BaseBehaviorTestCase {
 		));
 		$this->assertEqual($expected, $result);
 	}
+
 }
-?>
+
