@@ -35,15 +35,15 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 	}
 
 	public function testSetup() {
-		$Model =& ClassRegistry::init('TheVoid');
+		$Model = ClassRegistry::init('TheVoid');
 		$Model->Behaviors->load('Media.Coupler');
 
-		$Model =& ClassRegistry::init('Song');
+		$Model = ClassRegistry::init('Song');
 		$Model->Behaviors->load('Media.Coupler');
 	}
 
 	public function testFind() {
-		$Model =& ClassRegistry::init('Song');
+		$Model = ClassRegistry::init('Song');
 		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings);
 		$result = $Model->find('all');
 		$this->assertEqual(count($result), 4);
@@ -55,7 +55,7 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 	}
 
 	public function testSave() {
-		$Model =& ClassRegistry::init('Song');
+		$Model = ClassRegistry::init('Song');
 		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings);
 
 		$file = $this->Data->getFile(array(

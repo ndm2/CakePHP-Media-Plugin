@@ -37,15 +37,15 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 	}
 
 	public function testSetup() {
-		$Model =& ClassRegistry::init('TheVoid');
+		$Model = ClassRegistry::init('TheVoid');
 		$Model->Behaviors->load('Media.Meta');
 
-		$Model =& ClassRegistry::init('Song');
+		$Model = ClassRegistry::init('Song');
 		$Model->Behaviors->load('Media.Meta');
 	}
 
 	public function testSave() {
-		$Model =& ClassRegistry::init('Song');
+		$Model = ClassRegistry::init('Song');
 		$Model->Behaviors->load('Media.Meta', $this->_behaviorSettings['Meta']);
 
 		$data = array('Song' => array('file' => $this->file0));
@@ -59,7 +59,7 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 	}
 
 	public function testFind() {
-		$Model =& ClassRegistry::init('Song');
+		$Model = ClassRegistry::init('Song');
 		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings['Coupler']);
 		$Model->Behaviors->load('Media.Meta', $this->_behaviorSettings['Meta']);
 		$result = $Model->find('all');
