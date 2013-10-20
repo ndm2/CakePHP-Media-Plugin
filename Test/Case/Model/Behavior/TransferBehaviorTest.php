@@ -185,7 +185,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 	}
 
 	public function testUrlRemoteToFileLocal() {
-		if ($this->skipIf(!$this->_remoteAvailable, 'Remote server not available. %s')) {
+		if ($this->skipIf(!$this->_remoteAvailable, 'Remote server not available.')) {
 			return;
 		}
 
@@ -234,7 +234,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 	}
 
 	public function testTrustClientRemote() {
-		if ($this->skipIf(!$this->_remoteAvailable, 'Remote server not available. %s')) {
+		if ($this->skipIf(!$this->_remoteAvailable, 'Remote server not available.')) {
 			return;
 		}
 

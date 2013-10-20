@@ -162,7 +162,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 	public function testMakeVersion() {
 		$config = Media_Process::config();
 
-		$message = '%s Need media processing adapter for image.';
+		$message = 'Need media processing adapter for image.';
 		$skipped = $this->skipIf(!isset($config['image']), $message);
 
 		if ($skipped) {
@@ -192,7 +192,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 	public function testMakeVersionAccrossMedia() {
 		$config = Media_Process::config();
 
-		$message = '%s Need media processing adapters configured for both image and document.';
+		$message = 'Need media processing adapters configured for both image and document.';
 		$skipped = $this->skipIf(!isset($config['image'], $config['document']), $message);
 
 		if ($skipped) {
@@ -279,7 +279,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 	public function testMakeVersionUnkownMethodArePassedthru() {
 		$config = Media_Process::config();
 
-		$message = '%s Need imagick media processing adapters configured for both image.';
+		$message = 'Need imagick media processing adapters configured for both image.';
 		$skipped = $this->skipIf(!isset($config['image']) || $config['image'] != 'Imagick', $message);
 
 		if ($skipped) {
