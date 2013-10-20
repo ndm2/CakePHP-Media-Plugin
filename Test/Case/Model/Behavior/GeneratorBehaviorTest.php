@@ -98,10 +98,19 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 			'image-jpg.jpg' => $this->Folder->pwd() . 'image-jpg.jpg'
 		));
 
-		$this->expectError();
-		$this->expectError();
-
-		$Model->make($file);
+		$expected = null;
+		try
+		{
+			$Model->make($file);
+		}
+		catch(Exception $exception)
+		{
+			$expected = $exception;
+		}
+		if($expected === null)
+		{
+			$this->fail('Expected Model::make to raise an error.');
+		}
 
 		$this->assertFalse(is_dir($this->Folder->pwd() . 'filter' . DS . 's'));
 		$this->assertFalse(is_dir($this->Folder->pwd() . 'filter' . DS . 'm'));
