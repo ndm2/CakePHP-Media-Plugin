@@ -76,7 +76,7 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 				'file' => $file
 			)
 		);
-		$this->assertEqual($expected, $result);
+		$this->assertEqual($result, $expected);
 	}
 
 }

@@ -307,7 +307,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$mimeType = Mime_Type::guessType($directory . 'image.jpg', array(
 			'paranoid' => true
 		));
-		$this->assertEqual('image/png', $mimeType);
+		$this->assertEqual($mimeType, 'image/png');
 	}
 
 }
