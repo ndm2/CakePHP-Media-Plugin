@@ -31,12 +31,8 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Fixture' . DS 
  */
 class MockMediaHelper extends MediaHelper {
 
-	public function versions() {
-		return $this->_versions;
-	}
-
-	public function directories() {
-		return $this->_directories;
+	public function paths() {
+		return $this->_paths;
 	}
 
 }
@@ -113,16 +109,21 @@ class MediaHelperTest extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 
-	public function testConstruct() {
+	public function testConstructWithCustomPaths() {
 		$settings = array(
-			$this->Data->settings['static'] => 'media/static/',
+			$this->Data->settings['static']               => 'media/static/',
 			$this->Data->settings['base'] . 'theme' . DS  => 'media/theme/'
 		);
-		Configure::write('Media.filter', array(
-			'image' => array('s' => array(), 'm' => array()),
-			'video' => array('s' => array(), 'xl' => array())
-		));
-		$Helper = new MockMediaHelper($this->View, $settings);
+		$MediaHelper = new MockMediaHelper($this->View, $settings);
+
+		$result = $MediaHelper->paths();
+		$expected = array(
+			$this->Data->settings['static']               => MEDIA_STATIC_URL,
+			MEDIA_TRANSFER                                => MEDIA_TRANSFER_URL,
+			MEDIA_FILTER                                  => MEDIA_FILTER_URL,
+			$this->Data->settings['base'] . 'theme' . DS  => 'media/theme/'
+		);
+		$this->assertEqual($result, $expected);
 	}
 
 	public function testUrl() {
