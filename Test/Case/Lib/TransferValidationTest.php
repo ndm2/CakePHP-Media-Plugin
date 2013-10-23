@@ -19,7 +19,6 @@
 App::uses('TransferValidation', 'Media.Lib');
 
 require_once dirname(dirname(__FILE__)) . DS . 'constants.php';
-require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'TestData.php';
 
 /**
  * Transfer Validation Test Case Class
@@ -28,19 +27,99 @@ require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'TestDa
  */
 class TransferValidationTest extends CakeTestCase {
 
-/**
- * @var TestData
- */
-	public $Data;
+	public function testResource() {
+		$upload = array(
+			'name'     => 'file.name',
+			'type'     => 'mime/type',
+			'tmp_name' => 'efhf42983q7ghdsui',
+			'error'    => '',
+			'size'     => 1234
+		);
+		$result = TransferValidation::resource($upload);
+		$this->assertTrue($result);
 
-	public function setUp() {
-		parent::setUp();
-		$this->Data = new TestData();
+		// TODO implement
+		//$uploadedFile = null;
+		//$result = TransferValidation::resource($uploadedFile);
+		//$this->assertTrue($result);
+
+		$file = __FILE__;
+		$result = TransferValidation::resource($file);
+		$this->assertTrue($result);
+
+		$url = 'http://example.com';
+		$result = TransferValidation::resource($url);
+		$this->assertTrue($result);
 	}
 
-	public function tearDown() {
-		parent::tearDown();
-		$this->Data->cleanUp();
+	public function testBlank() {
+		$upload = array();
+		$result = TransferValidation::blank($upload);
+		$this->assertTrue($result);
+
+		$upload = array(
+			'name'     => '',
+			'type'     => '',
+			'tmp_name' => '',
+			'error'    => UPLOAD_ERR_NO_FILE,
+			'size'     => 0
+		);
+		$result = TransferValidation::blank($upload);
+		$this->assertTrue($result);
+
+		$upload = '';
+		$result = TransferValidation::blank($upload);
+		$this->assertTrue($result);
+
+		$upload = array(
+			'name'     => 'file.name',
+			'type'     => 'mime/type',
+			'tmp_name' => 'efhf42983q7ghdsui',
+			'error'    => '',
+			'size'     => 1234
+		);
+		$result = TransferValidation::blank($upload);
+		$this->assertFalse($result);
+
+		$upload = 'Lorem ipsum';
+		$result = TransferValidation::blank($upload);
+		$this->assertFalse($result);
+	}
+
+	public function testFileUpload() {
+		$upload = array(
+			'name'     => 'file.name',
+			'type'     => 'mime/type',
+			'tmp_name' => 'efhf42983q7ghdsui',
+			'error'    => '',
+			'size'     => 1234
+		);
+		$result = TransferValidation::fileUpload($upload);
+		$this->assertTrue($result);
+
+		$upload = array(
+			'name' => 'file.name'
+		);
+		$result = TransferValidation::fileUpload($upload);
+		$this->assertFalse($result);
+	}
+
+	// TODO implement
+	public function testUploadedFile() {
+	}
+
+	public function testUrl() {
+		$url = 'https://example.com';
+		$result = TransferValidation::url($url, array('scheme' => 'http'));
+		$this->assertFalse($result);
+
+		$url = 'http://example.com';
+		$result = TransferValidation::url($url, array('scheme' => 'http'));
+		$this->assertTrue($result);
+
+		$url = null;
+		$result = TransferValidation::url($url);
+		$this->assertFalse($result);
 	}
 
 }
