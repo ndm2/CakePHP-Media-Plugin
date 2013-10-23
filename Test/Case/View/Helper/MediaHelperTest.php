@@ -100,6 +100,9 @@ class MediaHelperTest extends CakeTestCase {
 		);
 		$this->View = new View(null);
 		$this->Media = new MediaHelper($this->View, $settings);
+		$this->Media->request = new CakeRequest(null, false);
+		$this->Media->request->base = '';
+		$this->Media->request->here = $this->Media->request->webroot = '/';
 	}
 
 	public function tearDown() {
