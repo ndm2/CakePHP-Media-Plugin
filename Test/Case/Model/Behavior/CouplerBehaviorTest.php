@@ -17,7 +17,6 @@
  */
 
 App::uses('Set', 'Utility');
-//require_once dirname(dirname(dirname(__FILE__))) . DS . 'constants.php';
 require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
