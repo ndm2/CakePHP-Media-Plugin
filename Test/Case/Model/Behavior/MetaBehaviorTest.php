@@ -17,6 +17,8 @@
  */
 
 App::uses('Set', 'Utility');
+
+require_once dirname(dirname(dirname(__FILE__))) . DS . 'constants.php';
 require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
@@ -26,15 +28,24 @@ require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
  */
 class MetaBehaviorTest extends BaseBehaviorTest {
 
+	public $record1File;
+
 	public function setUp() {
 		parent::setUp();
 
-		$this->_behaviorSettings['Coupler'] = array(
-			'baseDirectory' => $this->Folder->pwd()
+		$this->behaviorSettings = array(
+			'Coupler' => array(
+				'baseDirectory' => $this->Data->settings['base']
+			),
+			'Meta' => array(
+				'level' => 1
+			)
 		);
-		$this->_behaviorSettings['Meta'] = array(
-			'level' => 1
-		);
+
+		$this->record1File = $this->Data->getFile(array(
+			'image-png.png' => $this->Data->settings['static'] . 'img/image-png.png'
+		));
+
 	}
 
 	public function testSetup() {
@@ -47,22 +58,22 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 
 	public function testSave() {
 		$Model = ClassRegistry::init('Song');
-		$Model->Behaviors->load('Media.Meta', $this->_behaviorSettings['Meta']);
+		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
 
-		$data = array('Song' => array('file' => $this->file0));
-		$result = $Model->save($data);
+		$data = array('Song' => array('file' => $this->record1File));
+		$this->assertTrue(!!$Model->save($data));
 		$Model->Behaviors->detach('Media.Meta');
 
 		$id = $Model->getLastInsertID();
 		$result = $Model->findById($id);
 		$Model->delete($id);
-		$this->assertEqual($result['Song']['checksum'], md5_file($this->file0));
+		$this->assertEqual($result['Song']['checksum'], md5_file($this->record1File));
 	}
 
 	public function testFind() {
 		$Model = ClassRegistry::init('Song');
-		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings['Coupler']);
-		$Model->Behaviors->load('Media.Meta', $this->_behaviorSettings['Meta']);
+		$Model->Behaviors->load('Media.Coupler', $this->behaviorSettings['Coupler']);
+		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
 		$result = $Model->find('all');
 		$this->assertEqual(count($result), 4);
 

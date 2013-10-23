@@ -16,6 +16,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
+require_once dirname(dirname(dirname(__FILE__))) . DS . 'constants.php';
 require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
@@ -25,21 +26,13 @@ require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
  */
 class GeneratorBehaviorTest extends BaseBehaviorTest {
 
-	protected $_backup;
-
 	public function setUp() {
 		parent::setUp();
 
-		$this->_behaviorSettings = array(
-			'baseDirectory' => $this->Folder->pwd(),
-			'filterDirectory' => $this->Folder->pwd() . 'filter' . DS
+		$this->behaviorSettings = array(
+			'baseDirectory'   => $this->Data->settings['base'],
+			'filterDirectory' => $this->Data->settings['filter']
 		);
-		$this->_backup['configMedia'] = Configure::read('Media');
-	}
-
-	public function tearDown() {
-		parent::tearDown();
-		Configure::write('Media', $this->_backup['configMedia']);
 	}
 
 	public function testSetup() {
@@ -59,23 +52,23 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$Model = ClassRegistry::init('Unicorn', 'Model'); // has makeVersion mocked
 		$Model->Behaviors->load('Media.Generator', array(
 			'createDirectory' => true
-		) + $this->_behaviorSettings);
+		) + $this->behaviorSettings);
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'image-jpg.jpg'
+			'image-jpg.jpg' => 'image-jpg.jpg'
 		));
 
 		$expected[] = array(
 			$file,
 			array(
-				'directory'    => $this->Folder->pwd() . 'filter' . DS . 's' . DS,
+				'directory'    => $this->Data->settings['filter'] . 's' . DS,
 				'version'      => 's',
 				'instructions' => array('convert' => 'image/png', 'fit' => array(5, 5))
 		));
 		$expected[] = array(
 			$file,
 			array(
-				'directory'    => $this->Folder->pwd() . 'filter' . DS . 'm' . DS,
+				'directory'    => $this->Data->settings['filter'] . 'm' . DS,
 				'version'      => 'm',
 				'instructions' => array('convert' => 'image/png', 'fit' => array(10, 10))
 		));
@@ -92,10 +85,10 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$Model = ClassRegistry::init('Unicorn', 'Model');
 		$Model->Behaviors->load('Media.Generator', array(
 			'createDirectory' => false
-		) + $this->_behaviorSettings);
+		) + $this->behaviorSettings);
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'image-jpg.jpg'
+			'image-jpg.jpg' => 'image-jpg.jpg'
 		));
 
 		$expected = null;
@@ -112,17 +105,17 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 			$this->fail('Expected Model::make to raise an error.');
 		}
 
-		$this->assertFalse(is_dir($this->Folder->pwd() . 'filter' . DS . 's'));
-		$this->assertFalse(is_dir($this->Folder->pwd() . 'filter' . DS . 'm'));
+		$this->assertFalse(is_dir($this->Data->settings['filter'] . 's'));
+		$this->assertFalse(is_dir($this->Data->settings['filter'] . 'm'));
 
 		$Model->Behaviors->load('Media.Generator', array(
 			'createDirectory' => true
-		) +  $this->_behaviorSettings);
+		) +  $this->behaviorSettings);
 
 		$Model->make($file);
 
-		$this->assertTrue(is_dir($this->Folder->pwd() . 'filter' . DS . 's'));
-		$this->assertTrue(is_dir($this->Folder->pwd() . 'filter' . DS . 'm'));
+		$this->assertTrue(is_dir($this->Data->settings['filter'] . 's'));
+		$this->assertTrue(is_dir($this->Data->settings['filter'] . 'm'));
 	}
 
 	public function testCreateDirectoryMode() {
@@ -137,26 +130,26 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$Model = ClassRegistry::init('Unicorn', 'Model');
 		$Model->Behaviors->load('Media.Generator', array(
 			'createDirectoryMode' => 0755
-		) + $this->_behaviorSettings);
+		) + $this->behaviorSettings);
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'image-jpg.jpg'
+			'image-jpg.jpg' => 'image-jpg.jpg'
 		));
 
 		$Model->make($file);
-		$this->assertEqual(decoct(fileperms($this->Folder->pwd() . 'filter' . DS . 's')), 40755);
+		$this->assertEqual(decoct(fileperms($this->Data->settings['filter'] . 's')), 40755);
 
 		$Model->Behaviors->load('Media.Generator', array(
 			'createDirectoryMode' => 0777
-		) + $this->_behaviorSettings);
+		) + $this->behaviorSettings);
 
 		$Model->make($file);
-		$this->assertEqual(decoct(fileperms($this->Folder->pwd() . 'filter' . DS . 's')), 40755);
+		$this->assertEqual(decoct(fileperms($this->Data->settings['filter'] . 's')), 40755);
 
-		rmdir($this->Folder->pwd() . 'filter' . DS . 's');
+		rmdir($this->Data->settings['filter'] . 's');
 
 		$Model->make($file);
-		$this->assertEqual(decoct(fileperms($this->Folder->pwd() . 'filter' . DS . 's')), 40777);
+		$this->assertEqual(decoct(fileperms($this->Data->settings['filter'] . 's')), 40777);
 	}
 
 	public function testMakeVersion() {
@@ -170,12 +163,12 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		}
 
 		$Model = ClassRegistry::init('Unicorn', 'Model');
-		$Model->Behaviors->load('Media.Generator', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'image-jpg.jpg'
+			'image-jpg.jpg' => 'image-jpg.jpg'
 		));
-		$directory = $this->Folder->pwd() . 'filter' . DS . 's' . DS;
+		$directory = $this->Data->settings['filter'] . 's' . DS;
 		mkdir($directory);
 
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
@@ -200,12 +193,12 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		}
 
 		$Model = ClassRegistry::init('Unicorn', 'Model');
-		$Model->Behaviors->load('Media.Generator', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
 
 		$file = $this->Data->getFile(array(
-			'application-pdf.pdf' => $this->Folder->pwd() . 'application-pdf.pdf'
+			'application-pdf.pdf' => 'application-pdf.pdf'
 		));
-		$directory = $this->Folder->pwd() . 'filter' . DS . 's' . DS;
+		$directory = $this->Data->settings['filter'] . 's' . DS;
 		mkdir($directory);
 
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
@@ -221,13 +214,13 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 
 	public function testMakeVersionCloning() {
 		$Model = ClassRegistry::init('Unicorn', 'Model');
-		$Model->Behaviors->load('Media.Generator', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
 
-		$directory = $this->Folder->pwd() . 'filter' . DS . 's' . DS;
+		$directory = $this->Data->settings['filter'] . 's' . DS;
 		mkdir($directory);
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'copied.jpg'
+			'image-jpg.jpg' => 'copied.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
 			'version'      => 's',
@@ -245,7 +238,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		}
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'symlinked.jpg'
+			'image-jpg.jpg' => 'symlinked.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
 			'version'      => 's',
@@ -261,7 +254,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		unlink($directory . 'symlinked.jpg');
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'hardlinked.jpg'
+			'image-jpg.jpg' => 'hardlinked.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
 			'version'      => 's',
@@ -287,13 +280,13 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		}
 
 		$Model = ClassRegistry::init('Unicorn', 'Model');
-		$Model->Behaviors->load('Media.Generator', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
 
-		$directory = $this->Folder->pwd() . 'filter' . DS . 's' . DS;
+		$directory = $this->Data->settings['filter'] . 's' . DS;
 		mkdir($directory);
 
 		$file = $this->Data->getFile(array(
-			'image-jpg.jpg' => $this->Folder->pwd() . 'image.jpg'
+			'image-jpg.jpg' => 'image.jpg'
 		));
 		$result = $Model->Behaviors->Generator->makeVersion($Model, $file, array(
 			'version'      => 's',

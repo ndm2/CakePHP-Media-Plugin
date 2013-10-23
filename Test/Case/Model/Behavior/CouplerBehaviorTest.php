@@ -17,6 +17,7 @@
  */
 
 App::uses('Set', 'Utility');
+//require_once dirname(dirname(dirname(__FILE__))) . DS . 'constants.php';
 require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
 
 /**
@@ -29,8 +30,8 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 	public function setUp() {
 		parent::setUp();
 
-		$this->_behaviorSettings = array(
-			'baseDirectory' => $this->Folder->pwd()
+		$this->behaviorSettings = array(
+			'baseDirectory' => $this->Data->settings['base']
 		);
 	}
 
@@ -44,23 +45,28 @@ class CouplerBehaviorTest extends BaseBehaviorTest {
 
 	public function testFind() {
 		$Model = ClassRegistry::init('Song');
-		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Coupler', $this->behaviorSettings);
 		$result = $Model->find('all');
 		$this->assertEqual(count($result), 4);
+
+		$file = $this->Data->getFile(array(
+			'image-png.png' => $this->Data->settings['static'] . 'img/image-png.png'
+		));
 
 		/* Virtual */
 		$result = $Model->findById(1);
 		$this->assertTrue(Set::matches('/Song/file', $result));
-		$this->assertEqual($result['Song']['file'], $this->file0);
+		$this->assertEqual($result['Song']['file'], $file);
 	}
 
 	public function testSave() {
 		$Model = ClassRegistry::init('Song');
-		$Model->Behaviors->load('Media.Coupler', $this->_behaviorSettings);
+		$Model->Behaviors->load('Media.Coupler', $this->behaviorSettings);
 
 		$file = $this->Data->getFile(array(
-			'application-pdf.pdf' => $this->Folder->pwd() . 'static' . DS . 'doc' . DS . 'application-pdf.pdf'
+			'application-pdf.pdf' => $this->Data->settings['static'] . 'doc/application-pdf.pdf'
 		));
+
 		$item = array('file' => $file);
 		$Model->create();
 		$result = !!$Model->save($item);

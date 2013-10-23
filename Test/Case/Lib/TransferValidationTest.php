@@ -17,6 +17,8 @@
  */
 
 App::uses('TransferValidation', 'Media.Lib');
+
+require_once dirname(dirname(__FILE__)) . DS . 'constants.php';
 require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'TestData.php';
 
 /**
@@ -26,14 +28,19 @@ require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'TestDa
  */
 class TransferValidationTest extends CakeTestCase {
 
+/**
+ * @var TestData
+ */
+	public $Data;
+
 	public function setUp() {
 		parent::setUp();
-		$this->TestData = new TestData();
+		$this->Data = new TestData();
 	}
 
 	public function tearDown() {
 		parent::tearDown();
-		$this->TestData->flushFiles();
+		$this->Data->cleanUp();
 	}
 
 }

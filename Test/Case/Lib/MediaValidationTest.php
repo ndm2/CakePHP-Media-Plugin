@@ -17,6 +17,8 @@
  */
 
 App::uses('MediaValidation', 'Media.Lib');
+
+require_once dirname(dirname(__FILE__)) . DS . 'constants.php';
 require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'TestData.php';
 
 /**
@@ -26,14 +28,19 @@ require_once dirname(dirname(dirname(__FILE__))) . DS . 'Fixture' . DS . 'TestDa
  */
 class MediaValidationTest extends CakeTestCase {
 
+/**
+ * @var TestData
+ */
+	public $Data;
+
 	public function setUp() {
 		parent::setUp();
-		$this->TestData = new TestData();
+		$this->Data = new TestData();
 	}
 
 	public function tearDown() {
 		parent::tearDown();
-		$this->TestData->flushFiles();
+		$this->Data->cleanUp();
 	}
 
 	public function testMimeType() {
@@ -253,11 +260,11 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::file($file);
 		$this->assertTrue($result);
 
-		$file = $this->TestData->getFile('image-jpg.jpg');
+		$file = $this->Data->getFile('image-jpg.jpg');
 		$result = MediaValidation::file($file, false);
 		$this->assertTrue($result);
 
-		$file = $this->TestData->settings['base'] . 'i-am-not-a-file.png';
+		$file = $this->Data->settings['base'] . 'i-am-not-a-file.png';
 		$result = MediaValidation::file($file);
 		$this->assertFalse($result);
 
@@ -275,11 +282,11 @@ class MediaValidationTest extends CakeTestCase {
 		$result = MediaValidation::folder($file);
 		$this->assertTrue($result);
 
-		$file = $this->TestData->getFile('image-jpg.jpg');
+		$file = $this->Data->getFile('image-jpg.jpg');
 		$result = MediaValidation::folder($file, false);
 		$this->assertTrue($result);
 
-		$file = $this->TestData->settings['base'] . 'i-am-not-a-file.png';
+		$file = $this->Data->settings['base'] . 'i-am-not-a-file.png';
 		$result = MediaValidation::folder($file);
 		$this->assertFalse($result);
 

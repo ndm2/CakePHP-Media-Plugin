@@ -20,6 +20,8 @@ App::uses('Object', 'Core');
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 
+require_once dirname(dirname(__FILE__)) . DS . 'Case' . DS . 'constants.php';
+
 /**
  * Test Data Class
  *
@@ -72,9 +74,32 @@ class TestData extends Object {
  * @param array $settings
  */
 	public function __construct(array $settings = array()) {
-		$default = array('base' => TMP . 'tests' . DS);
-		$this->settings = $settings + $default;
-		new Folder($this->settings['base'], true);
+		$default = array(
+			'base' => MEDIA
+		);
+		$settings += $default;
+
+		$base = $settings['base'];
+		$this->settings = $settings + array(
+			'static'   => $base . 'static' . DS,
+			'filter'   => $base . 'filter' . DS,
+			'transfer' => $base . 'transfer' . DS
+		);
+
+		extract($this->settings);
+		/* @var $base string */
+		/* @var $static string */
+		/* @var $filter string */
+		/* @var $transfer string */
+
+		$this->Folder = new Folder($base, true);
+		$this->Folder->create($static . 'img');
+		$this->Folder->create($static . 'doc');
+		$this->Folder->create($static . 'txt');
+		$this->Folder->create($filter);
+		$this->Folder->create($transfer . 'img');
+		$this->Folder->create($transfer . 'doc');
+		$this->Folder->create($transfer . 'txt');
 	}
 
 /**
@@ -82,7 +107,7 @@ class TestData extends Object {
  *
  */
 	public function __destruct() {
-		$this->flushFiles();
+		$this->cleanUp();
 	}
 
 /**
@@ -153,20 +178,22 @@ class TestData extends Object {
 	}
 
 /**
- * Deletes all files which have been retrieved
- * through TestData::getFile.
+ * Deletes all files which have been retrieved through TestData::getFile,
+ * as well as all folders that were created.
  *
  * Most often called from the tearDown method of a test case.
  *
  * @return void
  */
-	public function flushFiles() {
-		foreach ($this->Files as $File) {
+	public function cleanUp() {
+		foreach ($this->Files as $File) { /* @var $File File */
 			if ($File->exists()) {
 				$File->delete();
 			}
 		}
 		$this->Files = array();
+
+		$this->Folder->delete();
 	}
 
 }
