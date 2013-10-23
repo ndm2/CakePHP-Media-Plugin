@@ -43,6 +43,210 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$Model->Behaviors->load('Media.Generator');
 	}
 
+	public function testGlobalFilterViaConfigure() {
+		Configure::write('Media.filter', array('image' => array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		)));
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testPerModelFilterViaConfigure() {
+		Configure::write('Media.filter.TheVoid', array('image' => array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		)));
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testPerModelFilterViaModel() {
+		Configure::write('Media.filter', array());
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', array(
+			'filter' => array('image' => array(
+				's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+				'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+			))
+		) + $this->behaviorSettings);
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testDynamicallySetFilterForPerModelFilterViaConfigure() {
+		Configure::write('Media.filter.FooBar', array('image' => array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		)));
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
+		$Model->setFilter('FooBar');
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testDynamicallySetFilterForPerModelFilterViaModel() {
+		Configure::write('Media.filter', array());
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
+		$Model->setFilter(array('image' => array(
+				's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+				'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+			))
+		);
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testDynamicallyUnsetFilterForPerModelFilterViaModel() {
+		Configure::write('Media.filter', array('image' => array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		)));
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', array(
+			'filter' => array('image' => array(
+				'l' => array('convert' => 'image/png', 'fit' => array(20, 20))
+			))
+		) + $this->behaviorSettings);
+		$Model->setFilter(null);
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testMergeFilter() {
+		Configure::write('Media.filter', array('image' => array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		)));
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', array(
+			'mergeFilter' => true,
+			'filter' => array('audio' => array(
+				'original' => array('clone' => 'copy')
+			))
+		) + $this->behaviorSettings);
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testNoModelTypeNameConflict() {
+		Configure::write('Media.filter', array(
+			'image' => array(
+				'l' => array('convert' => 'image/png', 'fit' => array(20, 20))
+			),
+			'Image' => array(
+				'image' => array(
+					's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+					'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+				))
+		));
+
+		$Model = ClassRegistry::init('Image');
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
+
+		$file = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
+		$filter = $Model->filter($file);
+
+		$expected = array(
+			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
+			'm' => array('convert' => 'image/png', 'fit' => array(10, 10))
+		);
+
+		$this->assertEqual($filter, $expected);
+	}
+
+	public function testNonExistentFilter() {
+		Configure::write('Media.filter', array());
+
+		$Model = ClassRegistry::init('TheVoid');
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
+
+		$file = $this->Data->getFile('image-jpg.jpg');
+		$filter = $Model->filter($file);
+
+		$this->assertEqual($filter, array());
+	}
+
+	public function testMakeWithNoFiltersConfigured() {
+		Configure::write('Media.filter', array());
+
+		$Model = ClassRegistry::init('Song');
+		$Model->Behaviors->load('Media.Generator', $this->behaviorSettings);
+
+		$file = $this->Data->getFile(array('image-jpg.jpg' => 'ta.jpg'));
+
+		$this->assertTrue($Model->make($file));
+	}
+
 	public function testMakeThroughModel() {
 		Configure::write('Media.filter.image', array(
 			's' => array('convert' => 'image/png', 'fit' => array(5, 5)),
