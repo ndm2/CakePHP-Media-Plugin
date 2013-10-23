@@ -347,7 +347,7 @@ class MediaHelper extends AppHelper {
 					'classid' => 'clsid:6BF52A52-394A-11d3-B153-00C04F79FAA6'
 				);
 				$parameters = array(
-					'src'         => $url,
+					'src'         => $sources[0]['url'],
 					'autostart'   => $autoplay,
 					'controller'  => $controls,
 					'pluginspage' => 'http://www.microsoft.com/Windows/MediaPlayer/'
