@@ -170,6 +170,14 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbed() {
+		$result = $this->Media->embed('img/image-png', array(
+			'id' => 'my-image',
+			'class' => 'image',
+			'data-custom' => 42
+		));
+		$expected = '<img src="/media/static/img/image-png.png"  id="my-image" class="image" data-custom="42" height="54" width="70" />';
+		$this->assertEqual($result, $expected);
+
 		$this->Data->getFile(array(
 			'audio-mp3.mp3' => $this->Data->settings['static'] . 'aud/audio-mp3.mp3'
 		));
@@ -198,6 +206,14 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbedAsObject() {
+		$result = $this->Media->embedAsObject('img/image-png', array(
+			'id' => 'my-image',
+			'class' => 'image',
+			'data-custom' => 42
+		));
+		$expected = '<object type="image/png" data="/media/static/img/image-png.png" id="my-image" class="image" data-custom="42" ><param name="src" value="/media/static/img/image-png.png" /></object>';
+		$this->assertEqual($result, $expected);
+
 		$this->Data->getFile(array(
 			'video-wmv.wmv' => $this->Data->settings['static'] . 'vid/video-wmv.wmv'
 		));

@@ -165,14 +165,11 @@ class MediaHelper extends AppHelper {
  *                       - url: If given wraps the result with a link.
  *                       - full: Will generate absolute URLs when `true`, defaults to `false`.
  *
- *                       The following HTML attributes may also be passed:
- *                       - id
- *                       - class
- *                       - alt: This attribute is required for images.
- *                       - title
  *                       - width, height: For images the method will try to automatically determine
  *                                        the correct dimensions if no value is given for either
  *                                        one of these.
+ *
+ *                       Additional options will be mapped to HTML attributes.
  * @return string|boolean
  */
 	public function embed($paths, $options = array()) {
@@ -184,15 +181,6 @@ class MediaHelper extends AppHelper {
 			'fallback' => null,
 			'poster'   => null,
 			'full'     => false
-		);
-		$optionalAttributes = array(
-			'alt'      => null,
-			'id'       => null,
-			'title'    => null,
-			'class'    => null,
-			'width'    => null,
-			'height'   => null,
-			'itemprop' => null
 		);
 
 		if (isset($options['url'])) {
@@ -216,7 +204,7 @@ class MediaHelper extends AppHelper {
 		if (!$sources = $this->_sources((array) $paths, $full)) {
 			return false;
 		}
-		$attributes = array_intersect_key($options, $optionalAttributes);
+		$attributes = array_diff_key($options, $default);
 
 		switch($sources[0]['name']) {
 			case 'audio':
@@ -291,12 +279,7 @@ class MediaHelper extends AppHelper {
  *                       - url: If given wraps the result with a link.
  *                       - full: Will generate absolute URLs when `true`, defaults to `false`.
  *
- *                       The following HTML attributes may also be passed:
- *                       - id
- *                       - class
- *                       - alt
- *                       - title
- *                       - width, height
+ *                       Additional options will be mapped to HTML attributes.
  * @return string|boolean
  */
 	public function embedAsObject($paths, $options = array()) {
@@ -306,14 +289,6 @@ class MediaHelper extends AppHelper {
 			'loop'     => false,
 			'fallback' => null,
 			'full'     => false
-		);
-		$optionalAttributes = array(
-			'alt'    => null,
-			'id'     => null,
-			'title'  => null,
-			'class'  => null,
-			'width'  => null,
-			'height' => null
 		);
 
 		if (isset($options['url'])) {
@@ -336,7 +311,7 @@ class MediaHelper extends AppHelper {
 			return false;
 		}
 		$attributes  = array('type' => $sources[0]['mimeType'], 'data' => $sources[0]['url']);
-		$attributes += array_intersect_key($options, $optionalAttributes);
+		$attributes += array_diff_key($options, $default);
 
 		switch ($sources[0]['mimeType']) {
 			/* Windows Media */
