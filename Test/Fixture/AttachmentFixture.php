@@ -1,6 +1,6 @@
 <?php
 /**
- * Media Schema File
+ * Attachment Fixture File
  *
  * Copyright (c) 2007-2012 David Persson
  *
@@ -12,52 +12,31 @@
  *
  * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
  * @link          http://github.com/davidpersson/media
- * @package       Media.Config.Schema
+ * @package       Media.Test.Fixture
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
- * Media Schema Class
+ * Attachment Fixture Class
  *
- * @package       Media.Config.Schema
+ * @package       Media.Test.Fixture
  */
-class MediaSchema extends CakeSchema {
+class AttachmentFixture extends CakeTestFixture {
 
-/**
- * before
- *
- * @param array $event
- * @return boolean
- */
-	public function before($event = array()) {
-		return true;
-	}
+	public $name = 'Attachment';
 
-/**
- * after
- *
- * @param array $event
- */
-	public function after($event = array()) {
-	}
-
-/**
- * attachments
- *
- * @var array
- */
-	public $attachments = array(
+	public $fields = array(
 		'id'          => array('type' => 'integer', 'key' => 'primary'),
 		'model'       => array('type' => 'string'),
-		'foreign_key' => array('type' => 'integer', 'length' => 10),
+		'foreign_key' => array('type' => 'integer'),
 		'dirname'     => array('type' => 'string', 'null' => true),
 		'basename'    => array('type' => 'string'),
-		'checksum'    => array('type' => 'string', 'null' => true),
+		'checksum'    => array('type' => 'string'),
 		'group'       => array('type' => 'string', 'null' => true),
-		'alternative' => array('type' => 'string', 'null' => true),
-		'created'     => array('type' => 'datetime', 'null' => true),
-		'modified'    => array('type' => 'datetime', 'null' => true),
+		'alternative' => array('type' => 'string', 'null' => true, 'length' => 50),
 		'indexes'     => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
+
+	public $records = array();
 
 }

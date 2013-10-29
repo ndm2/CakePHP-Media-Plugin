@@ -7,22 +7,21 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.models.behaviors
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Model.Behavior
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::uses('Inflector', 'Utility');
-App::uses('Cache', 'Cache');
 
-//require_once 'Mime/Type.php';
-//require_once 'Media/Info.php';
-App::uses('Type', 'mm/Mime');
-App::uses('Info', 'mm/Media');
+App::uses('Cache', 'Cache');
+App::uses('Inflector', 'Utility');
+App::uses('ModelBehavior', 'Model');
+
+require_once 'Mime/Type.php';
+require_once 'Media/Info.php';
 
 /**
  * Coupler Behavior Class
@@ -38,8 +37,7 @@ App::uses('Info', 'mm/Media');
  *      $result = $this->Document->metadata('/tmp/cern.jpg', 2);
  * }}}
  *
- * @package    media
- * @subpackage media.models.behaviors
+ * @package       Media.Model.Behavior
  */
 class MetaBehavior extends ModelBehavior {
 
@@ -100,14 +98,16 @@ class MetaBehavior extends ModelBehavior {
  *
  * Adds metadata to be stored in table if a record is about to be created.
  *
- * @param Model $Model
- * @return boolean
+ * @param Model $Model Model using this behavior
+ * @param array $options Options passed from Model::save().
+ * @return mixed False if the operation should abort. Any other result will continue.
  */
-	public function beforeSave(Model $Model) {
+	public function beforeSave(Model $Model, $options = array()) {
 		if ($Model->exists() || !isset($Model->data[$Model->alias]['file'])) {
 			return true;
 		}
 		extract($this->settings[$Model->alias]);
+		/* @var $level integer */
 
 		$Model->data[$Model->alias] += $this->metadata(
 			$Model, $Model->data[$Model->alias]['file'], $level
@@ -120,16 +120,17 @@ class MetaBehavior extends ModelBehavior {
  *
  * Adds metadata of corresponding file to each result.
  *
- * @param Model $Model
- * @param array $results
- * @param boolean $primary
- * @return array
+ * @param Model $Model Model using this behavior
+ * @param mixed $results The results of the find operation
+ * @param boolean $primary Whether this model is being queried directly (vs. being queried as an association)
+ * @return mixed An array value will replace the value of $results - any other value will be ignored.
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		if (empty($results)) {
 			return $results;
 		}
 		extract($this->settings[$Model->alias]);
+		/* @var $level integer */
 
 		foreach ($results as $key => &$result) {
 			if (!isset($result[$Model->alias]['file'])) {
@@ -193,6 +194,5 @@ class MetaBehavior extends ModelBehavior {
 		$this->__cached[$Model->alias][$checksum] = $data;
 		return $result;
 	}
-}
 
-?>
+}

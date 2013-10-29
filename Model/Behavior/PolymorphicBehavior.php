@@ -1,36 +1,29 @@
 <?php
-/* SVN FILE: $Id: polymorphic.php 1375 2009-08-03 09:05:08Z AD7six $ */
-
 /**
  * Polymorphic Behavior.
  *
  * Allow the model to be associated with any other model object
  *
- * PHP versions 4 and 5
+ * PHP 5
+ * CakePHP 2
  *
  * Copyright (c) 2008, Andy Dawson
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
  * @copyright     Copyright (c) 2008, Andy Dawson
  * @link          www.ad7six.com
- * @package       base
- * @subpackage    base.models.behaviors
- * @since         v 0.1
- * @version       $Revision: 1375 $
- * @modifiedby    $LastChangedBy: AD7six $
- * @lastmodified  $Date: 2009-08-03 09:05:08 +0000 (Mon, 03 Aug 2009) $
+ * @package       Base.Model.Behavior
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
+App::uses('ModelBehavior', 'Model');
 
 /**
  * PolymorphicBehavior class
  *
- * @uses          ModelBehavior
- * @package       base
- * @subpackage    base.models.behaviors
+ * @package       Base.Model.Behavior
  */
 class PolymorphicBehavior extends ModelBehavior {
 
@@ -48,10 +41,9 @@ class PolymorphicBehavior extends ModelBehavior {
 /**
  * setup method
  *
- * @param mixed $Model
- * @param array $config
+ * @param Model $Model Model using this behavior
+ * @param array $settings Configuration settings for $Model
  * @return void
- * @access public
  */
 	public function setup(Model $Model, $settings = array()) {
 		if (!isset($this->settings[$Model->alias])) {
@@ -64,14 +56,16 @@ class PolymorphicBehavior extends ModelBehavior {
 /**
  * afterFind method
  *
- * @param mixed $Model
- * @param mixed $results
- * @param bool $primary
- * @access public
- * @return void
+ * @param Model $Model Model using this behavior
+ * @param mixed $results The results of the find operation
+ * @param boolean $primary Whether this model is being queried directly (vs. being queried as an association)
+ * @return mixed An array value will replace the value of $results - any other value will be ignored.
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		extract($this->settings[$Model->alias]);
+		/* @var $modelField string */
+		/* @var $foreignKey string */
+
 		if (App::import('Vendor', 'MiCache')) {
 			$models = MiCache::mi('models');
 		} else {
@@ -130,11 +124,11 @@ class PolymorphicBehavior extends ModelBehavior {
  *
  * Fall back. Assumes that find list is setup such that it returns users real names
  *
+ * @param Model $Model
  * @param mixed $id
- * @return string
- * @access public
+ * @return mixed
  */
-	public function display($Model, $id = null) {
+	public function display(Model $Model, $id = null) {
 		if (!$id) {
 			if (!$Model->id) {
 				return false;
@@ -143,5 +137,5 @@ class PolymorphicBehavior extends ModelBehavior {
 		}
 		return current($Model->find('list', array('conditions' => array($Model->alias . '.' . $Model->primaryKey => $id))));
 	}
+
 }
-?>

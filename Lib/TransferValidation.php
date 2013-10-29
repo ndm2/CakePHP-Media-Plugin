@@ -7,25 +7,24 @@
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
  *
- * PHP version 5
- * CakePHP version 1.3
+ * PHP 5
+ * CakePHP 2
  *
- * @package    media
- * @subpackage media.libs
- * @copyright  2007-2012 David Persson <davidpersson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/media
+ * @copyright     2007-2012 David Persson <davidpersson@gmx.de>
+ * @link          http://github.com/davidpersson/media
+ * @package       Media.Lib
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
 App::uses('Validation', 'Utility');
 App::uses('MediaValidation', 'Media.Lib');
 
 /**
  * Transfer Validation Class
  *
- * @package    media
- * @subpackage media.libs
+ * @package       Media.Lib
  */
-class TransferValidation extends MediaValidation {
+class TransferValidation {
 
 /**
  * Checks if subject is transferable
@@ -85,7 +84,8 @@ class TransferValidation extends MediaValidation {
 /**
  * Checks if subject is an uploaded file
  *
- * @param mixed $check
+ * @param mixed $check Absolute path to file
+ * @return boolean
  */
 	public static function uploadedFile($check) {
 		return MediaValidation::file($check) && is_uploaded_file($check);
@@ -94,8 +94,9 @@ class TransferValidation extends MediaValidation {
 /**
  * Validates url
  *
- * @param string string to check
- * @param array options for allowing different url parts currently only scheme is supported
+ * @param string $check String to check
+ * @param array $options Options for allowing different url parts currently only scheme is supported
+ * @return boolean
  */
 	public static function url($check, $options = array()) {
 		if (!is_string($check)) {
@@ -108,5 +109,5 @@ class TransferValidation extends MediaValidation {
 		}
 		return Validation::url($check);
 	}
+
 }
-?>
