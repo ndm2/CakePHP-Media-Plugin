@@ -97,6 +97,81 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 			)
 		);
 		$this->assertEqual($Model->validate['file'], $expected);
+
+		$Model = ClassRegistry::init('Movie');
+		$Model->validate['file'] = array(
+			'resource' => array(
+				'rule'     => 'checkResource',
+				'required' => true,
+			),
+			'access'   => array(
+				'rule' => 'checkAccess'
+			)
+		);
+		$Model->Behaviors->load('Media.Transfer');
+
+		$expected = array(
+			'resource' => array(
+				'rule'       => 'checkResource',
+				'allowEmpty' => true,
+				'required'   => true,
+				'last'       => true
+			),
+			'access'   => array(
+				'rule' => 'checkAccess',
+				'allowEmpty' => true,
+				'required'   => false,
+				'last'       => true
+			)
+		);
+		$this->assertEqual($Model->validate['file'], $expected);
+
+		$Model = ClassRegistry::init('Movie');
+		$Model->validate['file'] = array(
+			'rule' => 'checkResource'
+		);
+		$Model->Behaviors->load('Media.Transfer');
+
+		$expected = array(
+			'checkResource' => array(
+				'rule'       => 'checkResource',
+				'allowEmpty' => true,
+				'required'   => false,
+				'last'       => true
+			)
+		);
+		$this->assertEqual($Model->validate['file'], $expected);
+
+		$Model = ClassRegistry::init('Movie');
+		$Model->validate['file'] = array(
+			'rule' => 'checkResource',
+			'required' => true
+		);
+		$Model->Behaviors->load('Media.Transfer');
+
+		$expected = array(
+			'checkResource' => array(
+				'rule'       => 'checkResource',
+				'allowEmpty' => true,
+				'required'   => true,
+				'last'       => true
+			)
+		);
+		$this->assertEqual($Model->validate['file'], $expected);
+
+		$Model = ClassRegistry::init('Movie');
+		$Model->validate['file'] = 'checkResource';
+		$Model->Behaviors->load('Media.Transfer');
+
+		$expected = array(
+			'checkResource' => array(
+				'rule'       => 'checkResource',
+				'allowEmpty' => true,
+				'required'   => false,
+				'last'       => true
+			)
+		);
+		$this->assertEqual($Model->validate['file'], $expected);
 	}
 
 	public function testFailOnNoResource() {
