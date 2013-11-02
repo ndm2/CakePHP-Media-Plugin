@@ -51,7 +51,7 @@ Do you want to create it now?
 </pre>
 
 5. Set the permissions for the Media folder:
-<pre>chmod 777 -R webroot/media/{transfer,filter}</pre>
+<pre>chmod -R 777 webroot/media/{transfer,filter}</pre>
 
 ##Upload and View Image
 1. Set the model as media transfer user
