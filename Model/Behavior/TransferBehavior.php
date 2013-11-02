@@ -129,9 +129,22 @@ class TransferBehavior extends ModelBehavior {
 	public function setup(Model $Model, $settings = array()) {
 		/* If present validation rules get some sane default values */
 		if (isset($Model->validate['file'])) {
-			$default = array('allowEmpty' => true, 'required' => false, 'last' => true);
+			$validate = &$Model->validate;
 
-			foreach ($Model->validate['file'] as &$rule) {
+			if (!is_array($validate['file'])) {
+				$validate['file'] = array(
+					'rule' => $validate['file']
+				);
+			}
+
+			if (is_array($validate['file']) && isset($validate['file']['rule'])) {
+				$validate['file'] = array(
+					$validate['file']['rule'] => $validate['file']
+				);
+			}
+
+			$default = array('allowEmpty' => true, 'required' => false, 'last' => true);
+			foreach ($validate['file'] as &$rule) {
 				$rule = array_merge($default, $rule);
 			}
 		}
