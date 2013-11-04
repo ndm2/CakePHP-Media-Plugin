@@ -26,9 +26,9 @@ class AllBehaviorsTest extends PHPUnit_Framework_TestSuite {
  * @return CakeTestSuite
  */
 	public static function suite() {
-		$suite = new CakeTestSuite('All Behaviour');
+		$suite = new CakeTestSuite('All Behaviors');
 
-		$path = dirname(__FILE__) . DS . 'Model' . DS . 'Behaviour' . DS;
+		$path = dirname(__FILE__) . DS . 'Model' . DS . 'Behavior' . DS;
 		$suite->addTestDirectory($path);
 
 		return $suite;
