@@ -22,10 +22,6 @@ require_once dirname(__FILE__) . DS . 'BehaviorTestBase.php';
  */
 class GeneratedDeletableBehaviorTest extends BaseBehaviorTest {
 
-	public $fixtures = array(
-		'plugin.media.song'
-	);
-
 	public function testDeleteVersions() {
 		Configure::write('Media.filter.image', array(
 			's' => array('convert' => 'image/png'),
