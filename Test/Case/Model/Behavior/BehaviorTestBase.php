@@ -22,7 +22,6 @@ App::uses('Folder', 'Utility');
 require_once dirname(dirname(dirname(__FILE__))) . DS . 'constants.php';
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'Config' . DS . 'bootstrap.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'Fixture' . DS . 'TestData.php';
-require_once CORE_TEST_CASES . DS . 'Model' . DS . 'models.php';
 require_once dirname(dirname(__FILE__)) . DS . 'models.php';
 
 /**
@@ -32,7 +31,9 @@ require_once dirname(dirname(__FILE__)) . DS . 'models.php';
  */
 abstract class BaseBehaviorTest extends CakeTestCase {
 
-	public $fixtures = array('plugin.media.song', 'core.image');
+	public $fixtures = array(
+		'plugin.media.song'
+	);
 
 	public $behaviorSettings = array();
 
