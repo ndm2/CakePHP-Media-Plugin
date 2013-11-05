@@ -1,6 +1,6 @@
 <?php
 /**
- * All behaviors test suite file
+ * All tests test suite file
  *
  * PHP 5
  * CakePHP 2
@@ -14,11 +14,11 @@
  */
 
 /**
- * All behaviors test suite class
+ * All tests test suite class
  *
  * @package       Media.Test.Case
  */
-class AllBehaviorsTest extends PHPUnit_Framework_TestSuite {
+class AllTests extends PHPUnit_Framework_TestSuite {
 
 /**
  * Defines the tests for this suite.
@@ -26,10 +26,13 @@ class AllBehaviorsTest extends PHPUnit_Framework_TestSuite {
  * @return CakeTestSuite
  */
 	public static function suite() {
-		$suite = new CakeTestSuite('All Behaviors');
+		$suite = new PHPUnit_Framework_TestSuite('All Tests');
 
-		$path = dirname(__FILE__) . DS . 'Model' . DS . 'Behavior' . DS;
-		$suite->addTestDirectory($path);
+		$path = dirname(__FILE__) . DS;
+		$suite->addTestFile($path . 'AllBehaviorsTest.php');
+		$suite->addTestFile($path . 'AllHelpersTest.php');
+		$suite->addTestFile($path . 'AllLibsTest.php');
+		$suite->addTestFile($path . 'AllModelsTest.php');
 
 		return $suite;
 	}

@@ -18,7 +18,7 @@
 
 App::uses('Folder', 'Utility');
 App::uses('Set', 'Utility');
-App::uses('AppHelper', 'View/Helper');
+App::uses('HtmlHelper', 'View/Helper');
 
 require_once 'Mime/Type.php';
 
@@ -45,17 +45,8 @@ require_once 'Mime/Type.php';
  * @see           MediaHelper::__construct()
  * @link          http://book.cakephp.org/2.0/en/views/helpers.html
  * @package       Media.View.Helper
- *
- * @property HtmlHelper $Html
  */
-class MediaHelper extends AppHelper {
-
-/**
- * Helpers
- *
- * @var array
- */
-	public $helpers = array('Html');
+class MediaHelper extends HtmlHelper {
 
 /**
  * Tags
@@ -187,7 +178,7 @@ class MediaHelper extends AppHelper {
 			$link = $options['url'];
 			unset($options['url']);
 
-			return $this->Html->link($this->embed($paths, $options), $link, array(
+			return $this->link($this->embed($paths, $options), $link, array(
 				'escape' => false
 			));
 		}
@@ -230,7 +221,7 @@ class MediaHelper extends AppHelper {
 			case 'image':
 				$attributes = $this->_addDimensions($sources[0]['file'], $attributes);
 
-				return $this->Html->useTag('image',
+				return $this->useTag('image',
 					$sources[0]['url'],
 					$this->_parseAttributes($attributes)
 				);
@@ -295,7 +286,7 @@ class MediaHelper extends AppHelper {
 			$link = $options['url'];
 			unset($options['url']);
 
-			return $this->Html->link($this->embed($paths, $options), $link, array(
+			return $this->link($this->embed($paths, $options), $link, array(
 				'escape' => false
 			));
 		}
@@ -564,8 +555,6 @@ class MediaHelper extends AppHelper {
  * @param string $insertBefore String to be inserted before options.
  * @param string $insertAfter String to be inserted after options.
  * @return string Composed attributes.
- *
- * NOTE Helper::_parseAttributes is deprecated, and is going to move to HtmlHelper::_parseAttributes in 3.0
  */
 	protected function _parseAttributes($options, $exclude = NULL, $insertBefore = ' ', $insertAfter = NULL) {
 		$attributes = array();

@@ -329,7 +329,7 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testSize() {
-		$this->assertEqual($this->Media->size('img/image-png.png'), 10142);
+		$this->assertEqual($this->Media->size('img/image-png.png'), 2032);
 		$this->assertNull($this->Media->size('static/img/not-existant.jpg'));
 	}
 

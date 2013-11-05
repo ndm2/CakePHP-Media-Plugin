@@ -80,7 +80,7 @@ class AttachmentTest extends CakeTestCase {
 			'foreign_key' => '4',
 			'dirname'     => 'img',
 			'basename'    => 'ta.jpg',
-			'checksum'    => '1920c29e7fbe4d1ad2f9173ef4591133',
+			'checksum'    => '073addc9c90e4d20a9a19d8a31e01b39',
 			'group'       => null,
 			'alternative' => null,
 			'path'        => 'img/ta.jpg'
@@ -119,7 +119,7 @@ class AttachmentTest extends CakeTestCase {
 				'foreign_key' => '4',
 				'dirname'     => 'img',
 				'basename'    => 'ta.jpg',
-				'checksum'    => '1920c29e7fbe4d1ad2f9173ef4591133',
+				'checksum'    => '073addc9c90e4d20a9a19d8a31e01b39',
 				'group'       => null,
 				'alternative' => null,
 				'path'        => 'img/ta.jpg'
@@ -130,7 +130,7 @@ class AttachmentTest extends CakeTestCase {
 				'foreign_key' => '4',
 				'dirname'     => 'img',
 				'basename'    => 'tb.png',
-				'checksum'    => '7f9af648b511f2c83b1744f42254983f',
+				'checksum'    => '0ec724ac451b85f09e4652d29eff943e',
 				'group'       => null,
 				'alternative' => null,
 				'path'        => 'img/tb.png'
@@ -202,7 +202,7 @@ class AttachmentTest extends CakeTestCase {
 				'foreign_key' => '4',
 				'dirname'     => 'img',
 				'basename'    => 'ta.jpg',
-				'checksum'    => '1920c29e7fbe4d1ad2f9173ef4591133',
+				'checksum'    => '073addc9c90e4d20a9a19d8a31e01b39',
 				'group'       => null,
 				'alternative' => null,
 				'path'        => 'img/ta.jpg'
@@ -256,7 +256,7 @@ class AttachmentTest extends CakeTestCase {
 					'foreign_key' => '4',
 					'dirname'     => 'img',
 					'basename'    => 'ta.png',
-					'checksum'    => '7f9af648b511f2c83b1744f42254983f',
+					'checksum'    => '0ec724ac451b85f09e4652d29eff943e',
 					'group'       => 'photo',
 					'alternative' => null,
 					'path'        => 'img/ta.png'
@@ -267,7 +267,7 @@ class AttachmentTest extends CakeTestCase {
 					'foreign_key' => '4',
 					'dirname'     => 'img',
 					'basename'    => 'tb.png',
-					'checksum'    => '7f9af648b511f2c83b1744f42254983f',
+					'checksum'    => '0ec724ac451b85f09e4652d29eff943e',
 					'group'       => 'photo',
 					'alternative' => null,
 					'path'        => 'img/tb.png'
