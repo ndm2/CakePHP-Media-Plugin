@@ -69,10 +69,15 @@ class MediaHelperTest extends CakeTestCase {
 		parent::setUp();
 
 		$this->Data = new TestData();
+		$this->Data->settings['special'] = $this->Data->settings['base']  . 'special' . DS;
+		$this->Data->Folder->create($this->Data->settings['special'] . 'img');
 		$this->Data->Folder->create($this->Data->settings['filter'] . 's' . DS . 'static' . DS . 'img');
 		$this->Data->Folder->create($this->Data->settings['filter'] . 's' . DS . 'transfer' . DS . 'img');
 		$this->Data->Folder->create($this->Data->settings['base'] . 'theme' . DS . 'blanko' . DS . 'img' . DS);
 
+		$this->Data->getFile(array(
+			'image-png.png' => $this->Data->settings['special'] . 'img/special-image-&-png.png'
+		));
 		$this->file0 = $this->Data->getFile(array(
 			'image-png.png' => $this->Data->settings['static'] . 'img/image-png.png'
 		));
@@ -93,6 +98,7 @@ class MediaHelperTest extends CakeTestCase {
 		));
 
 		$settings = array(
+			$this->Data->settings['special'] => 'http://fo&o:bar@example.com/media/special[folder]/',
 			$this->Data->settings['static'] => 'media/static/',
 			$this->Data->settings['filter'] => 'media/filter/',
 			$this->Data->settings['transfer'] => false,
@@ -130,6 +136,9 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testUrl() {
+		$result = $this->Media->url('img/special-image-&-png');
+		$this->assertEqual($result, 'http://fo&o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png');
+
 		$result = $this->Media->url('img/image-png');
 		$this->assertEqual($result, '/media/static/img/image-png.png');
 
@@ -150,6 +159,9 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testWebroot() {
+		$result = $this->Media->webroot('img/special-image-&-png');
+		$this->assertEqual($result, 'http://fo&o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png');
+
 		$result = $this->Media->webroot('img/image-png');
 		$this->assertEqual($result, '/media/static/img/image-png.png');
 
@@ -170,6 +182,24 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbed() {
+		$this->Data->getFile(array(
+			'audio-mp3.mp3' => $this->Data->settings['special'] . 'img/special-audio-&-mp3.mp3'
+		));
+		$result = $this->Media->embed('img/special-audio-&-mp3');
+		$expected = '<audio controls="controls"><source src="http://fo&amp;o:bar@example.com/media/special%5Bfolder%5D/img/special-audio-%26-mp3.mp3" type="audio/mpeg" /></audio>';
+		$this->assertEqual($result, $expected);
+
+		$result = $this->Media->embed('img/special-image-&-png');
+		$expected = '<img src="http://fo&amp;o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png"  height="54" width="70" />';
+		$this->assertEqual($result, $expected);
+
+		$this->Data->getFile(array(
+			'video-wmv.wmv' => $this->Data->settings['special'] . 'img/special-video-&-wmv.wmv'
+		));
+		$result = $this->Media->embed('img/special-video-&-wmv');
+		$expected = '<video controls="controls"><source src="http://fo&amp;o:bar@example.com/media/special%5Bfolder%5D/img/special-video-%26-wmv.wmv" type="video/x-ms-wmv" /></video>';
+		$this->assertEqual($result, $expected);
+
 		$result = $this->Media->embed('img/image-png', array(
 			'id' => 'my-image',
 			'class' => 'image',
@@ -206,6 +236,10 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbedAsObject() {
+		$result = $this->Media->embedAsObject('img/special-image-&-png');
+		$expected = '<object type="image/png" data="http://fo&amp;o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png" ><param name="src" value="http://fo&amp;o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png" /></object>';
+		$this->assertEqual($result, $expected);
+
 		$result = $this->Media->embedAsObject('img/image-png', array(
 			'id' => 'my-image',
 			'class' => 'image',

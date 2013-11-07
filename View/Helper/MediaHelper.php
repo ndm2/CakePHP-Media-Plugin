@@ -97,13 +97,16 @@ class MediaHelper extends HtmlHelper {
  * @param string $path Absolute or partial path to a file
  * @param boolean $full Forces the URL to be fully qualified
  * @return string|void An URL to the file
+ *
+ * NOTE FULL_BASE_URL is deprecated as of 2.4, maybe add logic to utilize App.fullBaseUrl config value,
+ * NOTE that would make testing the use of _encodeUrl() possible
  */
 	public function url($path = null, $full = false) {
 		if (!$path = $this->webroot($path)) {
 			return null;
 		}
 		if ($full && strpos($path, '://') === false) {
-			$path = FULL_BASE_URL . $path;
+			$path = $this->_encodeUrl(FULL_BASE_URL) . $path;
 		}
 		return $path;
 	}
@@ -132,10 +135,11 @@ class MediaHelper extends HtmlHelper {
 		}
 		$path = str_replace('\\', '/', $path);
 
-		if (strpos($path, '://') !== false) {
-			return $path;
+		if (strpos($path, '://') === false) {
+			$path = $this->request->webroot . $path;
 		}
-		return $this->request->webroot . $path;
+
+		return $this->_encodeUrl($path);
 	}
 
 /**
@@ -222,7 +226,7 @@ class MediaHelper extends HtmlHelper {
 				$attributes = $this->_addDimensions($sources[0]['file'], $attributes);
 
 				return $this->useTag('image',
-					$sources[0]['url'],
+					h($sources[0]['url']),
 					$this->_parseAttributes($attributes)
 				);
 			case 'video':
@@ -593,6 +597,20 @@ class MediaHelper extends HtmlHelper {
 			);
 		}
 		return implode("\n", $parameters);
+	}
+
+/**
+ * Encodes an URL for use in HTML attributes.
+ *
+ * @param string $url The url to encode.
+ * @return string The url encoded for URL contexts.
+ */
+	protected function _encodeUrl($url) {
+		$path = parse_url($url, PHP_URL_PATH);
+		$parts = array_map('rawurldecode', explode('/', $path));
+		$parts = array_map('rawurlencode', $parts);
+		$encoded = implode('/', $parts);
+		return str_replace($path, $encoded, $url);
 	}
 
 }
