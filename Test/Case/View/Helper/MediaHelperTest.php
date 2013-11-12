@@ -206,6 +206,21 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbed() {
+		$result = $this->Media->embed('img/image-png', array(
+			'url' => 'http://example.com'
+		));
+		$expected = '<a href="http://example.com"><img src="/media/static/img/image-png.png"  height="54" width="70"/></a>';
+		$this->assertEqual($result, $expected);
+
+		$result = $this->Media->embed('img/image-png', array(
+			'checked'  => true,
+			'disabled' => true,
+			'noresize' => true,
+			'required' => true
+		));
+		$expected = '<img src="/media/static/img/image-png.png"  checked="checked" disabled="disabled" noresize="noresize" required="required" height="54" width="70"/>';
+		$this->assertEqual($result, $expected);
+
 		$this->Data->getFile(array(
 			'audio-mp3.mp3' => $this->Data->settings['special'] . 'img/special-audio-&-mp3.mp3'
 		));
@@ -260,6 +275,21 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbedAsObject() {
+		$result = $this->Media->embedAsObject('img/image-png', array(
+			'url' => 'http://example.com'
+		));
+		$expected = '<a href="http://example.com"><img src="/media/static/img/image-png.png"  height="54" width="70"/></a>';
+		$this->assertEqual($result, $expected);
+
+		$result = $this->Media->embedAsObject('img/image-png', array(
+			'checked'  => true,
+			'disabled' => true,
+			'noresize' => true,
+			'required' => true
+		));
+		$expected = '<object type="image/png" data="/media/static/img/image-png.png" checked="checked" disabled="disabled" noresize="noresize" required="required"><param name="src" value="/media/static/img/image-png.png"/></object>';
+		$this->assertEqual($result, $expected);
+
 		$result = $this->Media->embedAsObject('img/special-image-&-png');
 		$expected = '<object type="image/png" data="http://fo&amp;o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png"><param name="src" value="http://fo&amp;o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png"/></object>';
 		$this->assertEqual($result, $expected);
