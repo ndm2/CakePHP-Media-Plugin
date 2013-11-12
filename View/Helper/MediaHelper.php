@@ -58,16 +58,26 @@ class MediaHelper extends AppHelper {
 	public $helpers = array('Html');
 
 /**
- * Tags
+ * Default settings
+ *
+ * configFile
+ *  The name of a file containing an array of HtmlHelper configuration options you wish to redefine/merge,
+ *  see HtmlHelper::loadConfig().
+ *
+ * paths
+ *  An array of base directory paths mapped to URLs. Used for determining the absolute path to a file
+ *  in `file()` and for determining the URL corresponding to an absolute path. Paths are expected to
+ *  end with a trailing slash.
  *
  * @var array
  */
-	public $tags = array(
-		'audio'  => '<audio%s>%s%s</audio>',
-		'video'  => '<video%s>%s%s</video>',
-		'source' => '<source%s/>',
-		'object' => '<object%s>%s%s</object>',
-		'param'  => '<param%s/>'
+	protected $_defaultSettings = array(
+		'configFile' => null,
+		'paths'      => array(
+			MEDIA_STATIC   => MEDIA_STATIC_URL,
+			MEDIA_TRANSFER => MEDIA_TRANSFER_URL,
+			MEDIA_FILTER   => MEDIA_FILTER_URL
+		)
 	);
 
 /**
@@ -76,11 +86,7 @@ class MediaHelper extends AppHelper {
  *
  * @var array
  */
-	public $_paths = array(
-		MEDIA_STATIC   => MEDIA_STATIC_URL,
-		MEDIA_TRANSFER => MEDIA_TRANSFER_URL,
-		MEDIA_FILTER   => MEDIA_FILTER_URL
-	);
+	public $_paths = array();
 
 /**
  * Constructor
@@ -88,14 +94,27 @@ class MediaHelper extends AppHelper {
  * Merges user supplied map settings with default map
  *
  * @param View $View The View this helper is being attached to.
- * @param array $settings An array of base directory paths mapped to URLs. Used for determining
- *                        the absolute path to a file in `file()` and for determining the URL
- *                        corresponding to an absolute path. Paths are expected to end with a
- *                        trailing slash.
+ * @param array $settings See defaultSettings for configuration options
  */
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
-		$this->_paths = array_merge($this->_paths, (array) $settings);
+
+		$configFile = 'media_helper.php';
+		$path = dirname(dirname(dirname(__FILE__))) . DS . 'Config' . DS;
+
+		if (isset($settings['configFile'])) {
+			$configFile = $settings['configFile'];
+			unset($settings['configFile']);
+			$path = null;
+		}
+
+		$this->Html->loadConfig($configFile, $path);
+
+		$paths = (array)$settings;
+		if (isset($paths['paths'])) {
+			$paths = $paths['paths'];
+		}
+		$this->_paths = array_merge($this->_defaultSettings['paths'], $paths);
 	}
 
 /**
@@ -215,17 +234,18 @@ class MediaHelper extends AppHelper {
 				$body = null;
 
 				foreach ($sources as $source) {
-					$body .= sprintf(
-						$this->tags['source'],
-						$this->_parseAttributes(array(
-							'src' => $source['url'],
+					$body .= $this->Html->useTag(
+						'source',
+						array(
+							'src'  => $source['url'],
 							'type' => $source['mimeType']
-					)));
+						)
+					);
 				}
 				$attributes += compact('autoplay', 'controls', 'preload', 'loop');
-				return sprintf(
-					$this->tags['audio'],
-					$this->_parseAttributes($attributes),
+				return $this->Html->useTag(
+					'audio',
+					$attributes,
 					$body,
 					$fallback
 				);
@@ -236,18 +256,19 @@ class MediaHelper extends AppHelper {
 
 				return $this->Html->useTag('image',
 					h($sources[0]['url']),
-					$this->_parseAttributes($attributes)
+					$attributes
 				);
 			case 'video':
 				$body = null;
 
 				foreach ($sources as $source) {
-					$body .= sprintf(
-						$this->tags['source'],
-						$this->_parseAttributes(array(
+					$body .= $this->Html->useTag(
+						'source',
+						array(
 							'src'  => $source['url'],
 							'type' => $source['mimeType']
-					)));
+						)
+					);
 				}
 				if ($poster) {
 					$attributes = $this->_addDimensions($this->file($poster), $attributes);
@@ -255,9 +276,9 @@ class MediaHelper extends AppHelper {
 				}
 
 				$attributes += compact('autoplay', 'controls', 'preload', 'loop', 'poster');
-				return sprintf(
-					$this->tags['video'],
-					$this->_parseAttributes($attributes),
+				return $this->Html->useTag(
+					'video',
+					$attributes,
 					$body,
 					$fallback
 				);
@@ -411,9 +432,9 @@ class MediaHelper extends AppHelper {
 				);
 				break;
 		}
-		return sprintf(
-			$this->tags['object'],
-			$this->_parseAttributes($attributes),
+		return $this->Html->useTag(
+			'object',
+			$attributes,
 			$this->_parseParameters($parameters),
 			$fallback
 		);
@@ -560,31 +581,6 @@ class MediaHelper extends AppHelper {
 	}
 
 /**
- * Generates attributes from options. Overwritten from Helper::_parseAttributes
- * to take new minimized HTML5 attributes used here into account.
- *
- * @param array $options Array of options.
- * @param array $exclude Array of options to be excluded, the options here will not be part of the return.
- * @param string $insertBefore String to be inserted before options.
- * @param string $insertAfter String to be inserted after options.
- * @return string Composed attributes.
- */
-	protected function _parseAttributes($options, $exclude = NULL, $insertBefore = ' ', $insertAfter = NULL) {
-		$attributes = array();
-		$this->_minimizedAttributes = array('autoplay', 'controls', 'autobuffer', 'loop');
-
-		foreach ($options as $key => $value) {
-			if (in_array($key, $this->_minimizedAttributes)) {
-				if ($value === 1 || $value === true || $value === 'true' || $value == $key) {
-					$attributes[] = sprintf('%s="%s"', $key, $key);
-					unset($options[$key]);
-				}
-			}
-		}
-		return parent::_parseAttributes($options) . ' ' . implode(' ', $attributes);
-	}
-
-/**
  * Generates `param` tags
  *
  * @param array $options
@@ -600,9 +596,12 @@ class MediaHelper extends AppHelper {
 			} elseif ($value === false) {
 				$value = 'false';
 			}
-			$parameters[] = sprintf(
-				$this->tags['param'],
-				$this->_parseAttributes(array('name' => $key, 'value' => $value))
+			$parameters[] = $this->Html->useTag(
+				'param',
+				array(
+					'name' => $key,
+					'value' => $value
+				)
 			);
 		}
 		return implode("\n", $parameters);
