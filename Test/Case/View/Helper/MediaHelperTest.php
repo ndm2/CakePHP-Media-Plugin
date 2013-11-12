@@ -133,17 +133,34 @@ class MediaHelperTest extends CakeTestCase {
 			$this->Data->settings['base'] . 'theme' . DS  => 'media/theme/'
 		);
 		$this->assertEqual($result, $expected);
+
+		$settings = array(
+			'paths' => array(
+				$this->Data->settings['static']               => 'media/static/',
+				$this->Data->settings['base'] . 'theme' . DS  => 'media/theme/'
+			)
+		);
+		$MediaHelper = new MockMediaHelper($this->View, $settings);
+
+		$result = $MediaHelper->paths();
+		$expected = array(
+			$this->Data->settings['static']               => MEDIA_STATIC_URL,
+			MEDIA_TRANSFER                                => MEDIA_TRANSFER_URL,
+			MEDIA_FILTER                                  => MEDIA_FILTER_URL,
+			$this->Data->settings['base'] . 'theme' . DS  => 'media/theme/'
+		);
+		$this->assertEqual($result, $expected);
 	}
 
 	public function testConstructWithCustomPathsAndConfigFile() {
 		$settings = array(
 			'configFile' => 'media_helper.php',
-			'paths' => array(
+			'paths'      => array(
 				$this->Data->settings['static']               => 'media/static/',
 				$this->Data->settings['base'] . 'theme' . DS  => 'media/theme/'
-			),
+			)
 		);
-		$MediaHelper = new MockMediaHelper($this->View, $settings);
+		$MediaHelper = new MockMediaHelper(new View(null), $settings);
 
 		$result = $MediaHelper->paths();
 		$expected = array(
@@ -156,6 +173,30 @@ class MediaHelperTest extends CakeTestCase {
 
 		$result = $MediaHelper->Html->useTag('foo', array('bar' => 'baz', 'qux' => true));
 		$expected = '<foo bar="baz" qux="qux"/>';
+		$this->assertEqual($result, $expected);
+
+		$result = $MediaHelper->Html->useTag('image', 'foo', array('bar' => 'baz', 'ismap' => true));
+		$expected = '<img src="foo"  bar="baz" ismap="ismap"/>';
+		$this->assertEqual($result, $expected);
+
+		$result = $MediaHelper->Html->useTag('audio', array('foo' => 'bar'), '<source/>', '<fallback/>');
+		$expected = '<audio foo="bar"><source/><fallback/></audio>';
+		$this->assertEqual($result, $expected);
+
+		$result = $MediaHelper->Html->useTag('video', array('foo' => 'bar'), '<source/>', '<fallback/>');
+		$expected = '<video foo="bar"><source/><fallback/></video>';
+		$this->assertEqual($result, $expected);
+
+		$result = $MediaHelper->Html->useTag('source', array('foo' => 'bar'));
+		$expected = '<source foo="bar"/>';
+		$this->assertEqual($result, $expected);
+
+		$result = $MediaHelper->Html->useTag('object', array('foo' => 'bar'), '<param/>', '<fallback/>');
+		$expected = '<object foo="bar"><param/><fallback/></object>';
+		$this->assertEqual($result, $expected);
+
+		$result = $MediaHelper->Html->useTag('param', array('foo' => 'bar'));
+		$expected = '<param foo="bar"/>';
 		$this->assertEqual($result, $expected);
 	}
 

@@ -99,16 +99,13 @@ class MediaHelper extends AppHelper {
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 
-		$configFile = 'media_helper.php';
 		$path = dirname(dirname(dirname(__FILE__))) . DS . 'Config' . DS;
+		$this->Html->loadConfig('media_helper.php', $path);
 
 		if (isset($settings['configFile'])) {
-			$configFile = $settings['configFile'];
+			$this->Html->loadConfig($settings['configFile']);
 			unset($settings['configFile']);
-			$path = null;
 		}
-
-		$this->Html->loadConfig($configFile, $path);
 
 		$paths = (array)$settings;
 		if (isset($paths['paths'])) {
