@@ -46,6 +46,15 @@ before_script:
         'trace' => true
       ));
     }" >> ./app/Config/bootstrap.php
+  - echo "<?php
+    \$config = array(
+      'tags' => array(
+        'foo' => '<foo%s/>'
+      ),
+      'minimizedAttributes' => array(
+        'qux'
+      )
+    );" > ./app/Config/media_helper.php
 
 script:
   - ./lib/Cake/Console/cake $CAKEPHP_SHELL_NAME Media AllTests --stderr
