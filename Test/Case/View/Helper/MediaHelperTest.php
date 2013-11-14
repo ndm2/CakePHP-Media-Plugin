@@ -201,6 +201,9 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testUrl() {
+		$result = $this->Media->url('http://example.com/img/image-png');
+		$this->assertNull($result);
+
 		$result = $this->Media->url('img/special-image-&-png');
 		$this->assertEqual($result, 'http://fo&o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png');
 
@@ -224,6 +227,9 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testWebroot() {
+		$result = $this->Media->webroot('http://example.com/img/image-png');
+		$this->assertNull($result);
+
 		$result = $this->Media->webroot('img/special-image-&-png');
 		$this->assertEqual($result, 'http://fo&o:bar@example.com/media/special%5Bfolder%5D/img/special-image-%26-png.png');
 
@@ -247,6 +253,9 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbed() {
+		$result = $this->Media->embed('http://example.com/img/image-png');
+		$this->assertFalse($result);
+
 		$result = $this->Media->embed('img/image-png', array(
 			'url' => 'http://example.com'
 		));
@@ -316,6 +325,9 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testEmbedAsObject() {
+		$result = $this->Media->embedAsObject('http://example.com/img/image-png');
+		$this->assertFalse($result);
+
 		$result = $this->Media->embedAsObject('img/image-png', array(
 			'url' => 'http://example.com'
 		));
@@ -422,6 +434,9 @@ class MediaHelperTest extends CakeTestCase {
 	}
 
 	public function testFile() {
+		$result = $this->Media->file('http://example.com/img/image-png');
+		$this->assertFalse($result);
+
 		$result = $this->Media->file('static/img/not-existant.jpg');
 		$this->assertFalse($result);
 

@@ -491,6 +491,10 @@ class MediaHelper extends AppHelper {
  *                        an absolute path to the file.
  */
 	public function file($path) {
+		if (strpos($path, '://') !== false) {
+			return false;
+		}
+
 		$path = str_replace('/', DS, trim($path));
 
 		// Most recent paths are probably searched more often
@@ -547,11 +551,7 @@ class MediaHelper extends AppHelper {
 			if (!$url = $this->url($path, $full)) {
 				return false;
 			}
-			if (strpos('://', $path) !== false) {
-				$file = parse_url($url, PHP_URL_PATH);
-			} else {
-				$file = $this->file($path);
-			}
+			$file = $this->file($path);
 			$mimeType = Mime_Type::guessType($file);
 			$name = Mime_Type::guessName($mimeType);
 
