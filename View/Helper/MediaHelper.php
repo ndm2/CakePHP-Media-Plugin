@@ -547,11 +547,7 @@ class MediaHelper extends AppHelper {
 			if (!$url = $this->url($path, $full)) {
 				return false;
 			}
-			if (strpos('://', $path) !== false) {
-				$file = parse_url($url, PHP_URL_PATH);
-			} else {
-				$file = $this->file($path);
-			}
+			$file = $this->file($path);
 			$mimeType = Mime_Type::guessType($file);
 			$name = Mime_Type::guessName($mimeType);
 
