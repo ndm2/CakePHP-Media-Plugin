@@ -491,6 +491,10 @@ class MediaHelper extends AppHelper {
  *                        an absolute path to the file.
  */
 	public function file($path) {
+		if (strpos($path, '://') !== false) {
+			return false;
+		}
+
 		$path = str_replace('/', DS, trim($path));
 
 		// Most recent paths are probably searched more often
