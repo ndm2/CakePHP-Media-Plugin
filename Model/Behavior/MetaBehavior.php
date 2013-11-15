@@ -103,7 +103,7 @@ class MetaBehavior extends ModelBehavior {
  * @return mixed False if the operation should abort. Any other result will continue.
  */
 	public function beforeSave(Model $Model, $options = array()) {
-		if ($Model->exists() || !isset($Model->data[$Model->alias]['file'])) {
+		if (!isset($Model->data[$Model->alias]['file'])) {
 			return true;
 		}
 		extract($this->settings[$Model->alias]);
