@@ -24,7 +24,7 @@ require_once 'Mime/Type.php';
 require_once 'Media/Info.php';
 
 /**
- * Coupler Behavior Class
+ * Meta Behavior Class
  *
  * If you set metadataLevel to a value greater then zero, you’ll get additional
  * metadata on each consecutive find operation.
