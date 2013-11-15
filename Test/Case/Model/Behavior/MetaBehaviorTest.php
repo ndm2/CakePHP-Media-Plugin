@@ -83,4 +83,33 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		$this->assertTrue(Set::matches('/Song/mime_type',$result));
 	}
 
+	public function testRegenerate() {
+		$Model = ClassRegistry::init('Song');
+		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
+
+		$data = array('Song' => array('file' => $this->record1File));
+		$this->assertTrue(!!$Model->save($data));
+		$Model->Behaviors->unload('Media.Meta');
+
+		$id = $Model->getLastInsertID();
+		$result = $Model->findById($id);
+		$checksum = $result['Song']['checksum'];
+		$this->assertEqual($result['Song']['checksum'], md5_file($this->record1File));
+
+
+		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
+
+		$file = $this->Data->getFile(
+			array('image-jpg.jpg' => $this->Data->settings['transfer'] . 'ta.jpg')
+		);
+
+		$data = array('Song' => array('id' => $id, 'file' => $file));
+		$this->assertTrue(!!$Model->save($data));
+		$Model->Behaviors->unload('Media.Meta');
+
+		$result = $Model->findById($id);
+		$this->assertNotEquals($result['Song']['checksum'], $checksum);
+		$this->assertEqual($result['Song']['checksum'], md5_file($file));
+	}
+
 }
