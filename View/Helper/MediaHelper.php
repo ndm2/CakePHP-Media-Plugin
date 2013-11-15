@@ -511,10 +511,6 @@ class MediaHelper extends AppHelper {
 		/* @var $extension string */
 		/* @var $filename string */
 
-		if (!isset($filename)) { /* PHP < 5.2.0 */
-			$filename = substr($basename, 0, isset($extension) ? - (strlen($extension) + 1) : 0);
-		}
-
 		foreach ($bases as $base) {
 			if (file_exists($base . $path)) {
 				return $base . $path;
