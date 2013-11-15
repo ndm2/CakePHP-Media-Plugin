@@ -164,6 +164,8 @@ class MetaBehavior extends ModelBehavior {
 		}
 		$checksum = $File->md5(true);
 
+		$data = array();
+
 		if (isset($this->__cached[$Model->alias][$checksum])) {
 			$data = $this->__cached[$Model->alias][$checksum];
 		}
