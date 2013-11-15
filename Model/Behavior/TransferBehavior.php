@@ -317,10 +317,6 @@ class TransferBehavior extends ModelBehavior {
 			return null;
 		}
 
-		if (!isset($resource['filename'])) { /* PHP < 5.2.0 */
-			$length = isset($resource['extension']) ? strlen($resource['extension']) + 1 : 0;
-			$resource['filename'] = substr($resource['basename'], 0, - $length);
-		}
 		return $resource;
 	}
 
@@ -890,17 +886,13 @@ class TransferBehavior extends ModelBehavior {
 		/* @var $extension string */
 		/* @var $filename string */
 
-		if (!isset($filename)) { /* PHP < 5.2.0 */
-			$filename = substr($basename, 0, isset($extension) ? - (strlen($extension) + 1) : 0);
-		}
 		$newFilename = $filename;
 
 		$Folder = new Folder($dirname);
 		$names = $Folder->find($filename . '.*');
 
-		foreach ($names as &$name) { /* PHP < 5.2.0 */
-			$length = strlen(pathinfo($name, PATHINFO_EXTENSION));
-			$name = substr(basename($name), 0, $length ? - ($length + 1) : 0);
+		foreach ($names as &$name) {
+			$name = pathinfo($name, PATHINFO_FILENAME);
 		}
 
 		for ($count = 2; in_array($newFilename, $names); $count++) {
