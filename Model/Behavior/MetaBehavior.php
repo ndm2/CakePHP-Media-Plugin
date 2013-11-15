@@ -157,7 +157,6 @@ class MetaBehavior extends ModelBehavior {
 		if ($level < 1) {
 			return array();
 		}
-		extract($this->settings[$Model->alias]);
 		$File = new File($file);
 
 		if (!$File->readable()) {
