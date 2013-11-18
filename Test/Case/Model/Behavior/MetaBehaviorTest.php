@@ -197,7 +197,6 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		Cache::write($keyPrefix . $Model->alias, $expected, $config);
 
 		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
-		$Model->metadata($this->record1File, 2);
 
 		$result = $Model->metadata($this->record1File, 2);
 		$expected = array(
