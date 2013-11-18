@@ -96,7 +96,7 @@ class PolymorphicBehavior extends ModelBehavior {
 			}
 		} elseif (isset($results[$Model->alias][$modelField])) {
 			$associated = array();
-			$model = Inflector::classify($result[$Model->alias][$modelField]);
+			$model = Inflector::classify($results[$Model->alias][$modelField]);
 			$foreignId = $results[$Model->alias][$foreignKey];
 			if ($model && $foreignId) {
 				$result = $results[$Model->alias];
