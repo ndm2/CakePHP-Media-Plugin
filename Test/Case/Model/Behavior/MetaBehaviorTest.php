@@ -77,7 +77,7 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 
 		$data = array('Song' => array('file' => $this->record1File));
 		$this->assertTrue(!!$Model->save($data));
-		$Model->Behaviors->detach('Media.Meta');
+		$Model->Behaviors->unload('Media.Meta');
 
 		$id = $Model->getLastInsertID();
 		$result = $Model->findById($id);
