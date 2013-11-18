@@ -55,7 +55,7 @@ class SongFixture extends CakeTestFixture {
 		array(
 			'id'       => 4,
 			'dirname'  => 'static/txt',
-			'basename' => 'not-existent.txt',
+			'basename' => 'non-existent.txt',
 			'checksum' => null
 		)
 	);

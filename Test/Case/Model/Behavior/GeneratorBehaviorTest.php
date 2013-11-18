@@ -386,7 +386,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$this->assertTrue(file_exists($directory . 'image-jpg.png'));
 	}
 
-	public function testMakeVersionAccrossMedia() {
+	public function testMakeVersionAcrossMedia() {
 		$config = Media_Process::config();
 
 		$message = 'Need media processing adapters configured for both image and document.';
@@ -473,7 +473,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		unlink($directory . 'hardlinked.jpg');
 	}
 
-	public function testMakeVersionUnkownMethodArePassedthru() {
+	public function testMakeVersionUnknownMethodsArePassedThrough() {
 		$config = Media_Process::config();
 
 		$message = 'Need imagick media processing adapters configured for both image.';
