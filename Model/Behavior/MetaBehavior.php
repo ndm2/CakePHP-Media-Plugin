@@ -176,7 +176,7 @@ class MetaBehavior extends ModelBehavior {
  * @param integer $level level of amount of info to add, `0` disable, `1` for basic, `2` for detailed info
  * @return mixed Array with results or false if file is not readable
  */
-	public function metadata($Model, $file, $level = 1) {
+	public function metadata(Model $Model, $file, $level = 1) {
 		if ($level < 1) {
 			return array();
 		}

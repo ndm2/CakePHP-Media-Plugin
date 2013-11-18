@@ -154,7 +154,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param string $file Path to a file relative to `baseDirectory`  or an absolute path to a file
  * @return boolean
  */
-	public function make($Model, $file) {
+	public function make(Model $Model, $file) {
 		extract($this->settings[$Model->alias]);
 		/* @var $baseDirectory string */
 		/* @var $filterDirectory string */
@@ -253,7 +253,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param array $process directory, version, instructions
  * @return boolean `true` if version for the file was successfully stored
  */
-	public function makeVersion($Model, $file, $process) {
+	public function makeVersion(Model $Model, $file, $process) {
 		extract($this->settings[$Model->alias]);
 		/* @var $baseDirectory string */
 		/* @var $filterDirectory string */
@@ -355,7 +355,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param string $file
  * @return array
  */
-	protected function _file($Model, $file) {
+	protected function _file(Model $Model, $file) {
 		extract($this->settings[$Model->alias]);
 		/* @var $baseDirectory string */
 		/* @var $filterDirectory string */
@@ -390,7 +390,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param string $file
  * @return array
  */
-	public function filter($Model, $file) {
+	public function filter(Model $Model, $file) {
 		$name = Mime_Type::guessName($file);
 
 		$filter = $this->settings[$Model->alias]['filter'];

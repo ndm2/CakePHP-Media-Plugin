@@ -220,7 +220,7 @@ class TransferBehavior extends ModelBehavior {
  * @param array|string $resource Transfer resource
  * @return array|void
  */
-	public function transferMeta($Model, $resource) {
+	public function transferMeta(Model $Model, $resource) {
 		extract($this->settings[$Model->alias]);
 		/* @var $trustClient boolean */
 		/* @var $transferDirectory string */
@@ -430,7 +430,7 @@ class TransferBehavior extends ModelBehavior {
  * @param mixed $file File from which source, temporary and destination are derived
  * @return string|boolean Destination file on success, false on failure
  */
-	public function transfer($Model, $file) {
+	public function transfer(Model $Model, $file) {
 		if ($this->runtime[$Model->alias]['hasPerformed']) {
 			$this->runtime[$Model->alias] = $this->_defaultRuntime;
 			$this->runtime[$Model->alias]['hasPerformed'] = true;
@@ -487,7 +487,7 @@ class TransferBehavior extends ModelBehavior {
  * @param Model $Model
  * @return string|boolean
  */
-	public function transferred($Model) {
+	public function transferred(Model $Model) {
 		extract($this->runtime[$Model->alias], EXTR_SKIP);
 		return isset($destination['file']) ? $destination['file'] : false;
 	}
@@ -499,7 +499,7 @@ class TransferBehavior extends ModelBehavior {
  * @param array|string $resource Transfer resource
  * @return boolean true if transfer is ready to be performed, false on error
  */
-	protected function _prepare($Model, $resource) {
+	protected function _prepare(Model $Model, $resource) {
 		extract($this->settings[$Model->alias], EXTR_SKIP);
 		/* @var $trustClient boolean */
 		/* @var $transferDirectory string */
@@ -566,7 +566,7 @@ class TransferBehavior extends ModelBehavior {
  * @return array|boolean Parsed results on success, false on error
  * @todo evaluate errors in file uploads
  */
-	protected function _source($Model, $resource) {
+	protected function _source(Model $Model, $resource) {
 		if (TransferValidation::fileUpload($resource)) {
 			return array_merge(
 				$this->transferMeta($Model, $resource),
@@ -587,7 +587,7 @@ class TransferBehavior extends ModelBehavior {
  * @param array|string $resource Transfer resource good for deriving the temporary data from it
  * @return array|boolean Parsed results on success, false on error
  */
-	protected function _temporary($Model, $resource) {
+	protected function _temporary(Model $Model, $resource) {
 		if (TransferValidation::fileUpload($resource)
 		&& TransferValidation::uploadedFile($resource['tmp_name'])) {
 			return array_merge(
@@ -607,7 +607,7 @@ class TransferBehavior extends ModelBehavior {
  * @param array|string $resource Transfer resource good for deriving the destination data from it
  * @return array|boolean Parsed results on success, false on error
  */
-	protected function _destination($Model, $resource) {
+	protected function _destination(Model $Model, $resource) {
 		if (MediaValidation::file($resource, false)) {
 			return $this->transferMeta($Model, $resource);
 		}
@@ -633,7 +633,7 @@ class TransferBehavior extends ModelBehavior {
  * @param array $field
  * @return boolean
  */
-	public function checkResource($Model, $field) {
+	public function checkResource(Model $Model, $field) {
 		return TransferValidation::resource(current($field));
 	}
 
@@ -645,7 +645,7 @@ class TransferBehavior extends ModelBehavior {
  * @param array $field
  * @return boolean
  */
-	public function checkAccess($Model, $field) {
+	public function checkAccess(Model $Model, $field) {
 		extract($this->runtime[$Model->alias]);
 		/* @var $source array */
 		/* @var $temporary string */
@@ -686,7 +686,7 @@ class TransferBehavior extends ModelBehavior {
  * @param mixed $allow True or * allows any location, an array containing absolute paths to locations
  * @return boolean
  */
-	public function checkLocation($Model, $field, $allow = true) {
+	public function checkLocation(Model $Model, $field, $allow = true) {
 		extract($this->runtime[$Model->alias]);
 
 		foreach ((array)$allow as $allowed) {
@@ -721,7 +721,7 @@ class TransferBehavior extends ModelBehavior {
  * 	false to allow any permissions
  * @return boolean
  */
-	public function checkPermission($Model, $field, $match = true) {
+	public function checkPermission(Model $Model, $field, $match = true) {
 		extract($this->runtime[$Model->alias]);
 
 		foreach (array('source', 'temporary') as $type) {
@@ -747,7 +747,7 @@ class TransferBehavior extends ModelBehavior {
  * @param mixed $max String (e.g. 8M) containing maximum allowed size, false allows any size
  * @return boolean
  */
-	public function checkSize($Model, $field, $max = false) {
+	public function checkSize(Model $Model, $field, $max = false) {
 		extract($this->runtime[$Model->alias]);
 
 		foreach (array('source', 'temporary') as $type) {
@@ -773,7 +773,7 @@ class TransferBehavior extends ModelBehavior {
  * @param mixed $max String (e.g. 40000 or 200x100) containing maximum allowed amount of pixels
  * @return boolean
  */
-	public function checkPixels($Model, $field, $max = false) {
+	public function checkPixels(Model $Model, $field, $max = false) {
 		extract($this->runtime[$Model->alias]);
 
 		foreach (array('source', 'temporary') as $type) { /* pixels value is optional */
@@ -800,7 +800,7 @@ class TransferBehavior extends ModelBehavior {
  * 	false allows no extension
  * @return boolean
  */
-	public function checkExtension($Model, $field, $deny = false, $allow = true) {
+	public function checkExtension(Model $Model, $field, $deny = false, $allow = true) {
 		extract($this->runtime[$Model->alias]);
 
 		foreach (array('source', 'temporary', 'destination') as $type) {
@@ -833,7 +833,7 @@ class TransferBehavior extends ModelBehavior {
  * 	false allows no MIME type
  * @return boolean
  */
-	public function checkMimeType($Model, $field, $deny = false, $allow = true) {
+	public function checkMimeType(Model $Model, $field, $deny = false, $allow = true) {
 		extract($this->runtime[$Model->alias]);
 		/* @var $source array */
 		/* @var $temporary string */
