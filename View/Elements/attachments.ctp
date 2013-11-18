@@ -50,10 +50,10 @@ if (!isset($model)) {
 	$model = $this->Form->model();
 }
 
-$modelId = $this->Form->value($this->Form->model().'.id');
+$modelId = $this->Form->value($this->Form->model() . '.id');
 
-if (isset($this->data[$assocAlias][0]['basename'])) {
-	array_unshift($this->data[$assocAlias],array());
+if (isset($this->request->data[$assocAlias][0]['basename'])) {
+	array_unshift($this->request->data[$assocAlias], array());
 }
 
 if (!isset($title)) {
@@ -71,7 +71,7 @@ if (!isset($title)) {
 			'label' => __d('media', 'File'),
 			'type'  => 'file',
 			'error' => array(
-				'error'      => __d('media', 'An error occured while transferring the file.'),
+				'error'      => __d('media', 'An error occurred while transferring the file.'),
 				'resource'   => __d('media', 'The file is invalid.'),
 				'access'     => __d('media', 'The file cannot be processed.'),
 				'location'   => __d('media', 'The file cannot be transferred from or to location.'),
@@ -90,11 +90,11 @@ if (!isset($title)) {
 	</div>
 	<!-- Existing Attachments -->
 	<div class="existing">
-	<?php if (isset($this->data[$assocAlias])): ?>
-		<?php for ($i = 1; $i < count($this->data[$assocAlias]); $i++): ?>
+	<?php if (isset($this->request->data[$assocAlias])): ?>
+		<?php for ($i = 1; $i < count($this->request->data[$assocAlias]); $i++): ?>
 		<div>
 		<?php
-			$item = $this->data[$assocAlias][$i];
+			$item = $this->request->data[$assocAlias][$i];
 
 			echo $this->Form->hidden($assocAlias . '.' . $i . '.id', array('value' => $item['id']));
 			echo $this->Form->hidden($assocAlias . '.' . $i . '.model', array('value' => $model));

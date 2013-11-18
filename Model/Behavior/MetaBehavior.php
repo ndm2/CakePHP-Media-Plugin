@@ -91,7 +91,7 @@ class MetaBehavior extends ModelBehavior {
 			$this->settings[$Model->alias] = $this->_defaultSettings;
 		}
 
-		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array) $settings);
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array)$settings);
 
 		extract(MetaBehavior::$cacheConfig);
 		/* @var $config string */
@@ -155,7 +155,7 @@ class MetaBehavior extends ModelBehavior {
 		extract($this->settings[$Model->alias]);
 		/* @var $level integer */
 
-		foreach ($results as $key => &$result) {
+		foreach ($results as &$result) {
 			if (!isset($result[$Model->alias]['file'])) {
 				continue;
 			}
@@ -176,7 +176,7 @@ class MetaBehavior extends ModelBehavior {
  * @param integer $level level of amount of info to add, `0` disable, `1` for basic, `2` for detailed info
  * @return mixed Array with results or false if file is not readable
  */
-	public function metadata($Model, $file, $level = 1) {
+	public function metadata(Model $Model, $file, $level = 1) {
 		if ($level < 1) {
 			return array();
 		}
@@ -209,7 +209,8 @@ class MetaBehavior extends ModelBehavior {
 				foreach ($Info->all() as $key => $value) {
 					$data[2][Inflector::underscore($key)] = $value;
 				}
-			} catch (Exception $E) {}
+			} catch (Exception $E) {
+			}
 		}
 
 		for ($i = $level, $result = array(); $i > 0; $i--) {

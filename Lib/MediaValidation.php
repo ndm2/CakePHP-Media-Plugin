@@ -46,7 +46,7 @@ class MediaValidation {
 		if ($deny === true || (is_array($deny) && in_array($check, $deny))) {
 			return false;
 		}
-		if($allow !== true && (is_array($allow) && !in_array($check, $allow))) {
+		if ($allow !== true && (is_array($allow) && !in_array($check, $allow))) {
 			return false;
 		}
 		return true;
@@ -101,7 +101,7 @@ class MediaValidation {
 		$maxSizes = array();
 
 		if ($max !== false && $max = self::_toComputableSize($max)) {
-			 $maxSizes[] = $max;
+			$maxSizes[] = $max;
 		}
 		if ($max = self::_toComputableSize(ini_get('post_max_size'))) {
 			$maxSizes[] = $max;
@@ -132,7 +132,7 @@ class MediaValidation {
 			$check = $width * $height;
 		}
 		if (strpos($max, 'x') !== false) {
-			list($width, $height) = explode('x' , $max);
+			list($width, $height) = explode('x', $max);
 			$max = $width * $height;
 		}
 		return $check <= $max;
@@ -167,7 +167,7 @@ class MediaValidation {
 					return true;
 				}
 			}
-		} elseif(MediaValidation::file($check, false)) {
+		} elseif (MediaValidation::file($check, false)) {
 			$check = dirname($check);
 			if (!Folder::isAbsolute($check)) {
 				return false;
@@ -288,12 +288,12 @@ class MediaValidation {
  * @param mixed Array containing multiple strings, or a single string
  * @return mixed
  */
-	public static function _normalize() {
+	protected static function _normalize() {
 		$args = func_get_args();
 
 		if (count($args) > 1) {
 			$result = array();
-			foreach($args as $param) {
+			foreach ($args as $param) {
 				$result[] = self::_normalize($param);
 			}
 			return $result;
@@ -334,9 +334,9 @@ class MediaValidation {
 		}
 
 		$sizeUnit = strtoupper(substr($sizeString, -1));
-	    $size = (integer)substr($sizeString, 0, -1);
+		$size = (integer)substr($sizeString, 0, -1);
 
-	    switch ($sizeUnit) {
+		switch ($sizeUnit) {
 			case 'Y': $size *= 1024; /* Yotta */
 			case 'Z': $size *= 1024; /* Zetta */
 			case 'E': $size *= 1024; /* Exa */
@@ -345,8 +345,8 @@ class MediaValidation {
 			case 'G': $size *= 1024; /* Giga */
 			case 'M': $size *= 1024; /* Mega */
 			case 'K': $size *= 1024; /* Kilo */
-	    }
-	    return $size;
+		}
+		return $size;
 	}
 
 }

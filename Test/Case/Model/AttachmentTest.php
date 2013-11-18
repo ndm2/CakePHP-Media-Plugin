@@ -178,16 +178,12 @@ class AttachmentTest extends CakeTestCase {
 		$result = false;
 		$expected = null;
 
-		try
-		{
+		try {
 			$result = $Model->saveAll($data, array('validate' => 'first'));
-		}
-		catch(Exception $exception)
-		{
+		} catch (Exception $exception) {
 			$expected = $exception;
 		}
-		if($expected === null)
-		{
+		if ($expected === null) {
 			$this->fail('Expected Model::saveAll to raise an error.');
 		}
 

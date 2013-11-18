@@ -77,7 +77,7 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 
 		$data = array('Song' => array('file' => $this->record1File));
 		$this->assertTrue(!!$Model->save($data));
-		$Model->Behaviors->detach('Media.Meta');
+		$Model->Behaviors->unload('Media.Meta');
 
 		$id = $Model->getLastInsertID();
 		$result = $Model->findById($id);
@@ -95,7 +95,7 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		/* Virtual */
 		$result = $Model->findById(1);
 		$this->assertTrue(Set::matches('/Song/size', $result));
-		$this->assertTrue(Set::matches('/Song/mime_type',$result));
+		$this->assertTrue(Set::matches('/Song/mime_type', $result));
 	}
 
 	public function testRegenerate() {
@@ -110,7 +110,6 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		$result = $Model->findById($id);
 		$checksum = $result['Song']['checksum'];
 		$this->assertEqual($result['Song']['checksum'], md5_file($this->record1File));
-
 
 		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
 
@@ -198,7 +197,6 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		Cache::write($keyPrefix . $Model->alias, $expected, $config);
 
 		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
-		$Model->metadata($this->record1File, 2);
 
 		$result = $Model->metadata($this->record1File, 2);
 		$expected = array(

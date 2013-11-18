@@ -50,7 +50,7 @@ class PolymorphicBehavior extends ModelBehavior {
 			$this->settings[$Model->alias] = $this->_defaultSettings;
 		}
 
-		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array) $settings);
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array)$settings);
 	}
 
 /**
@@ -73,7 +73,6 @@ class PolymorphicBehavior extends ModelBehavior {
 		}
 		if ($primary && isset($results[0][$Model->alias][$modelField]) && isset($results[0][$Model->alias][$foreignKey]) && $Model->recursive > 0) {
 			foreach ($results as $key => $result) {
-				$associated = array();
 				$model = Inflector::classify($result[$Model->alias][$modelField]);
 				$foreignId = $result[$Model->alias][$foreignKey];
 				if ($model && $foreignId && in_array($model, $models)) {
@@ -94,9 +93,8 @@ class PolymorphicBehavior extends ModelBehavior {
 					$results[$key][$model] = $associated[$model];
 				}
 			}
-		} elseif(isset($results[$Model->alias][$modelField])) {
-			$associated = array();
-			$model = Inflector::classify($result[$Model->alias][$modelField]);
+		} elseif (isset($results[$Model->alias][$modelField])) {
+			$model = Inflector::classify($results[$Model->alias][$modelField]);
 			$foreignId = $results[$Model->alias][$foreignKey];
 			if ($model && $foreignId) {
 				$result = $results[$Model->alias];

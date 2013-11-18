@@ -39,7 +39,7 @@ class MakeTask extends MediaShell {
 	public function execute() {
 		if (isset($this->params['model'])) {
 			$this->model = $this->params['model'];
-		 } else {
+		} else {
 			$this->model = $this->in(__d('media_console', 'Model'), null, 'Media.Attachment');
 		}
 		$this->_Model = ClassRegistry::init($this->model);

@@ -71,7 +71,7 @@ class Attachment extends MediaAppModel {
  * settings for single rules.
  *
  * `checkExtension()` and `checkMimeType()` take both a blacklist and
- * a whitelist. If you are on windows make sure that you addtionally
+ * a whitelist. If you are on windows make sure that you additionally
  * specify the `'tmp'` extension in case you are using a whitelist.
  *
  * @var array

@@ -86,7 +86,7 @@ class MediaHelper extends AppHelper {
  *
  * @var array
  */
-	public $_paths = array();
+	protected $_paths = array();
 
 /**
  * Constructor
@@ -171,7 +171,7 @@ class MediaHelper extends AppHelper {
  * Generates HTML5 markup for one ore more media files
  *
  * Determines correct dimensions for all images automatically. Dimensions for all
- * other media should be passed explictly within the options array in order to prevent
+ * other media should be passed explicitly within the options array in order to prevent
  * the browser refloating the layout.
  *
  * @param string|array $paths Absolute or partial path to a file (or an array thereof)
@@ -221,7 +221,7 @@ class MediaHelper extends AppHelper {
 		/* @var $poster boolean */
 		/* @var $full boolean */
 
-		if (!$sources = $this->_sources((array) $paths, $full)) {
+		if (!$sources = $this->_sources((array)$paths, $full)) {
 			return false;
 		}
 		$attributes = array_diff_key($options, $default);
@@ -329,7 +329,7 @@ class MediaHelper extends AppHelper {
 		/* @var $fallback boolean */
 		/* @var $full boolean */
 
-		if (!$sources = $this->_sources((array) $paths, $full)) {
+		if (!$sources = $this->_sources((array)$paths, $full)) {
 			return false;
 		}
 		$attributes  = array('type' => $sources[0]['mimeType'], 'data' => $sources[0]['url']);
@@ -469,7 +469,7 @@ class MediaHelper extends AppHelper {
  * @param string $path Absolute or partial path to a file
  * @return integer|null
  */
-	public function size($path)	{
+	public function size($path) {
 		if ($file = $this->file($path)) {
 			return filesize($file);
 		}

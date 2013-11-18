@@ -104,7 +104,7 @@ class GeneratorBehavior extends ModelBehavior {
 			$this->settings[$Model->alias] = $this->_defaultSettings;
 		}
 
-		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array) $settings);
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array)$settings);
 	}
 
 /**
@@ -136,7 +136,7 @@ class GeneratorBehavior extends ModelBehavior {
  * Also creates the destination directory if enabled by settings.
  *
  * If the `makeVersion()` method is implemented in the current model it'll be used
- * for generating a specifc version of the file (i.e. `s`, `m` or `l`) otherwise
+ * for generating a specific version of the file (i.e. `s`, `m` or `l`) otherwise
  * the method within this behavior is going to be used.
  *
  * If you already have generated versions of files and change the filter
@@ -154,7 +154,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param string $file Path to a file relative to `baseDirectory`  or an absolute path to a file
  * @return boolean
  */
-	public function make($Model, $file) {
+	public function make(Model $Model, $file) {
 		extract($this->settings[$Model->alias]);
 		/* @var $baseDirectory string */
 		/* @var $filterDirectory string */
@@ -227,7 +227,7 @@ class GeneratorBehavior extends ModelBehavior {
  *                    Most methods are made available through the `Media_Process_*`
  *                    classes. The class is chosen depending on the type of media
  *                    being processed. Since each one of those classes exposes
- *                    different methods the availaibility of those depends on the
+ *                    different methods the availability of those depends on the
  *                    type of media being processed.
  *
  *                    Please see the documentation for the mm library for further
@@ -242,7 +242,7 @@ class GeneratorBehavior extends ModelBehavior {
  *                    `array('clone' => <type>)`
  *
  *                    In case an instruction method is neither builtin nor available
- *                    through one of the `Media_Proces_*` classes, the `passthru()`
+ *                    through one of the `Media_Process_*` classes, the `passthru()`
  *                    method is invoked on that media object. The concrete implementation
  *                    of `passthru()` and therefore how it deals with the data passed
  *                    to it *highly* depends on the adapter in use.
@@ -253,7 +253,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param array $process directory, version, instructions
  * @return boolean `true` if version for the file was successfully stored
  */
-	public function makeVersion($Model, $file, $process) {
+	public function makeVersion(Model $Model, $file, $process) {
 		extract($this->settings[$Model->alias]);
 		/* @var $baseDirectory string */
 		/* @var $filterDirectory string */
@@ -292,7 +292,7 @@ class GeneratorBehavior extends ModelBehavior {
 				$args = null;
 			}
 			if (method_exists($Media, $method)) {
-				$result = call_user_func_array(array($Media, $method), (array) $args);
+				$result = call_user_func_array(array($Media, $method), (array)$args);
 			} else {
 				$result = $Media->passthru($method, $args);
 			}
@@ -355,7 +355,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param string $file
  * @return array
  */
-	protected function _file($Model, $file) {
+	protected function _file(Model $Model, $file) {
 		extract($this->settings[$Model->alias]);
 		/* @var $baseDirectory string */
 		/* @var $filterDirectory string */
@@ -390,7 +390,7 @@ class GeneratorBehavior extends ModelBehavior {
  * @param string $file
  * @return array
  */
-	public function filter($Model, $file) {
+	public function filter(Model $Model, $file) {
 		$name = Mime_Type::guessName($file);
 
 		$filter = $this->settings[$Model->alias]['filter'];
@@ -416,6 +416,6 @@ class GeneratorBehavior extends ModelBehavior {
 		}
 
 		return $filter[$name];
-    }
+	}
 
 }

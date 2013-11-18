@@ -69,7 +69,7 @@ class MediaHelperTest extends CakeTestCase {
 		parent::setUp();
 
 		$this->Data = new TestData();
-		$this->Data->settings['special'] = $this->Data->settings['base']  . 'special' . DS;
+		$this->Data->settings['special'] = $this->Data->settings['base'] . 'special' . DS;
 		$this->Data->Folder->create($this->Data->settings['special'] . 'img');
 		$this->Data->Folder->create($this->Data->settings['filter'] . 's' . DS . 'static' . DS . 'img');
 		$this->Data->Folder->create($this->Data->settings['filter'] . 's' . DS . 'transfer' . DS . 'img');
@@ -437,7 +437,7 @@ class MediaHelperTest extends CakeTestCase {
 		$result = $this->Media->file('http://example.com/img/image-png');
 		$this->assertFalse($result);
 
-		$result = $this->Media->file('static/img/not-existant.jpg');
+		$result = $this->Media->file('static/img/non-existent.jpg');
 		$this->assertFalse($result);
 
 		$result = $this->Media->file('img/image-png');
@@ -464,17 +464,17 @@ class MediaHelperTest extends CakeTestCase {
 
 	public function testName() {
 		$this->assertEqual($this->Media->name('img/image-png.png'), 'image');
-		$this->assertNull($this->Media->name('static/img/not-existant.jpg'));
+		$this->assertNull($this->Media->name('static/img/non-existent.jpg'));
 	}
 
 	public function testMimeType() {
 		$this->assertEqual($this->Media->mimeType('img/image-png.png'), 'image/png');
-		$this->assertNull($this->Media->mimeType('static/img/not-existant.jpg'));
+		$this->assertNull($this->Media->mimeType('static/img/non-existent.jpg'));
 	}
 
 	public function testSize() {
 		$this->assertEqual($this->Media->size('img/image-png.png'), 2032);
-		$this->assertNull($this->Media->size('static/img/not-existant.jpg'));
+		$this->assertNull($this->Media->size('static/img/non-existent.jpg'));
 	}
 
 }

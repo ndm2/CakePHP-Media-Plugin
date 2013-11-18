@@ -104,8 +104,8 @@ class TransferValidationTest extends CakeTestCase {
 		$this->assertFalse($result);
 	}
 
-	// TODO implement
 	public function testUploadedFile() {
+		// TODO implement
 	}
 
 	public function testUrl() {
