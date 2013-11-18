@@ -444,6 +444,7 @@ class TransferBehavior extends ModelBehavior {
 		/* @var $destination string */
 		/* @var $hasPerformed boolean */
 
+		$Socket = null;
 		if ($source['type'] === 'http-url-remote') {
 			$Socket = new HttpSocket(array('timeout' => 5));
 			$Socket->request(array('method' => 'GET', 'uri' => $source['file']));
