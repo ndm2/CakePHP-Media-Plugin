@@ -37,7 +37,7 @@ class TransferValidation {
 		 || TransferValidation::uploadedFile($check) /* This must appear above file */
 		 || MediaValidation::file($check)
 		 || TransferValidation::url($check)) {
-		  	return !TransferValidation::blank($check);
+			return !TransferValidation::blank($check);
 		}
 		return false;
 	}
@@ -71,11 +71,11 @@ class TransferValidation {
 		if (!is_array($check)) {
 			return false;
 		}
-		if (!array_key_exists('name',$check)
-		 || !array_key_exists('type',$check)
-		 || !array_key_exists('tmp_name',$check)
-		 || !array_key_exists('error',$check)
-		 || !array_key_exists('size',$check)) {
+		if (!array_key_exists('name', $check)
+		 || !array_key_exists('type', $check)
+		 || !array_key_exists('tmp_name', $check)
+		 || !array_key_exists('error', $check)
+		 || !array_key_exists('size', $check)) {
 			return false;
 		}
 		return true;
@@ -103,7 +103,7 @@ class TransferValidation {
 			return false;
 		}
 		if (isset($options['scheme'])) {
-			if (!preg_match('/^(' . implode('|', (array) $options['scheme']) . ':)+/', $check)) {
+			if (!preg_match('/^(' . implode('|', (array)$options['scheme']) . ':)+/', $check)) {
 				return false;
 			}
 		}

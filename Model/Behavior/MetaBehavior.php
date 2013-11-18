@@ -91,7 +91,7 @@ class MetaBehavior extends ModelBehavior {
 			$this->settings[$Model->alias] = $this->_defaultSettings;
 		}
 
-		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array) $settings);
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array)$settings);
 
 		extract(MetaBehavior::$cacheConfig);
 		/* @var $config string */
@@ -209,7 +209,8 @@ class MetaBehavior extends ModelBehavior {
 				foreach ($Info->all() as $key => $value) {
 					$data[2][Inflector::underscore($key)] = $value;
 				}
-			} catch (Exception $E) {}
+			} catch (Exception $E) {
+			}
 		}
 
 		for ($i = $level, $result = array(); $i > 0; $i--) {

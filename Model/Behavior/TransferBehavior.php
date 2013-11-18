@@ -153,7 +153,7 @@ class TransferBehavior extends ModelBehavior {
 			$this->settings[$Model->alias] = $this->_defaultSettings;
 		}
 
-		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array) $settings);
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array)$settings);
 		$this->runtime[$Model->alias] = $this->_defaultRuntime;
 	}
 
@@ -607,7 +607,7 @@ class TransferBehavior extends ModelBehavior {
  * @return array|boolean Parsed results on success, false on error
  */
 	protected function _destination($Model, $resource) {
-		if (MediaValidation::file($resource , false)) {
+		if (MediaValidation::file($resource, false)) {
 			return $this->transferMeta($Model, $resource);
 		}
 		return false;

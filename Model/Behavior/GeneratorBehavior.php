@@ -104,7 +104,7 @@ class GeneratorBehavior extends ModelBehavior {
 			$this->settings[$Model->alias] = $this->_defaultSettings;
 		}
 
-		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array) $settings);
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array)$settings);
 	}
 
 /**
@@ -292,7 +292,7 @@ class GeneratorBehavior extends ModelBehavior {
 				$args = null;
 			}
 			if (method_exists($Media, $method)) {
-				$result = call_user_func_array(array($Media, $method), (array) $args);
+				$result = call_user_func_array(array($Media, $method), (array)$args);
 			} else {
 				$result = $Media->passthru($method, $args);
 			}
@@ -416,6 +416,6 @@ class GeneratorBehavior extends ModelBehavior {
 		}
 
 		return $filter[$name];
-    }
+	}
 
 }

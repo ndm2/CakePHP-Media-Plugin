@@ -50,10 +50,10 @@ if (!isset($model)) {
 	$model = $this->Form->model();
 }
 
-$modelId = $this->Form->value($this->Form->model().'.id');
+$modelId = $this->Form->value($this->Form->model() . '.id');
 
 if (isset($this->data[$assocAlias][0]['basename'])) {
-	array_unshift($this->data[$assocAlias],array());
+	array_unshift($this->data[$assocAlias], array());
 }
 
 if (!isset($title)) {

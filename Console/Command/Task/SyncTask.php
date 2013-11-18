@@ -419,7 +419,6 @@ class SyncTask extends MediaShell {
 
 	/* map related methods */
 
-
 /**
  * Generates filesystem and model maps
  *
