@@ -69,7 +69,7 @@ class MediaHelperTest extends CakeTestCase {
 		parent::setUp();
 
 		$this->Data = new TestData();
-		$this->Data->settings['special'] = $this->Data->settings['base']  . 'special' . DS;
+		$this->Data->settings['special'] = $this->Data->settings['base'] . 'special' . DS;
 		$this->Data->Folder->create($this->Data->settings['special'] . 'img');
 		$this->Data->Folder->create($this->Data->settings['filter'] . 's' . DS . 'static' . DS . 'img');
 		$this->Data->Folder->create($this->Data->settings['filter'] . 's' . DS . 'transfer' . DS . 'img');

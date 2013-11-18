@@ -296,16 +296,12 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		));
 
 		$expected = null;
-		try
-		{
+		try {
 			$Model->make($file);
-		}
-		catch(Exception $exception)
-		{
+		} catch (Exception $exception) {
 			$expected = $exception;
 		}
-		if($expected === null)
-		{
+		if ($expected === null) {
 			$this->fail('Expected Model::make to raise an error.');
 		}
 
@@ -314,7 +310,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 
 		$Model->Behaviors->load('Media.Generator', array(
 			'createDirectory' => true
-		) +  $this->behaviorSettings);
+		) + $this->behaviorSettings);
 
 		$Model->make($file);
 
@@ -437,7 +433,7 @@ class GeneratorBehaviorTest extends BaseBehaviorTest {
 		$this->assertTrue(file_exists($directory . 'copied.jpg'));
 		$this->assertTrue(is_file($directory . 'copied.jpg'));
 
-		if($this->skipIf($this->_isWindows(), 'For some reason on Windows symlink does not work, and hard links cannot be unlinked immediately.')) {
+		if ($this->skipIf($this->_isWindows(), 'For some reason on Windows symlink does not work, and hard links cannot be unlinked immediately.')) {
 			return;
 		}
 

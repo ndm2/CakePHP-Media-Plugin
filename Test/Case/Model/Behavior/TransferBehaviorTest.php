@@ -56,7 +56,7 @@ class TransferBehaviorTest extends BaseBehaviorTest {
 		);
 
 		$handle = @fsockopen('cakephp.org', 80);
-		if($handle) {
+		if ($handle) {
 			$this->_remoteAvailable = true;
 			fclose($handle);
 		}

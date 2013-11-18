@@ -160,7 +160,6 @@ class MediaValidationTest extends CakeTestCase {
 
 		$result = MediaValidation::size('', '2M');
 		$this->assertFalse($result);
-
 	}
 
 	public function testLocation() {

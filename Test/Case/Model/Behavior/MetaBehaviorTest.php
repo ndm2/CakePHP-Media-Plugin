@@ -95,7 +95,7 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		/* Virtual */
 		$result = $Model->findById(1);
 		$this->assertTrue(Set::matches('/Song/size', $result));
-		$this->assertTrue(Set::matches('/Song/mime_type',$result));
+		$this->assertTrue(Set::matches('/Song/mime_type', $result));
 	}
 
 	public function testRegenerate() {
@@ -110,7 +110,6 @@ class MetaBehaviorTest extends BaseBehaviorTest {
 		$result = $Model->findById($id);
 		$checksum = $result['Song']['checksum'];
 		$this->assertEqual($result['Song']['checksum'], md5_file($this->record1File));
-
 
 		$Model->Behaviors->load('Media.Meta', $this->behaviorSettings['Meta']);
 
