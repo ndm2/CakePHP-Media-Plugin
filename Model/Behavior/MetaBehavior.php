@@ -155,7 +155,7 @@ class MetaBehavior extends ModelBehavior {
 		extract($this->settings[$Model->alias]);
 		/* @var $level integer */
 
-		foreach ($results as $key => &$result) {
+		foreach ($results as &$result) {
 			if (!isset($result[$Model->alias]['file'])) {
 				continue;
 			}

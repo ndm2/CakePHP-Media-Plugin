@@ -198,7 +198,7 @@ class CouplerBehavior extends ModelBehavior {
 		extract($this->settings[$Model->alias]);
 		/* @var $baseDirectory string */
 
-		foreach ($results as $key => &$result) {
+		foreach ($results as &$result) {
 			if (!isset($result[$Model->alias]['dirname'], $result[$Model->alias]['basename'])) {
 				continue;
 			}
