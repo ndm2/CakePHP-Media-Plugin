@@ -71,7 +71,7 @@ if (!isset($title)) {
 			'label' => __d('media', 'File'),
 			'type'  => 'file',
 			'error' => array(
-				'error'      => __d('media', 'An error occured while transferring the file.'),
+				'error'      => __d('media', 'An error occurred while transferring the file.'),
 				'resource'   => __d('media', 'The file is invalid.'),
 				'access'     => __d('media', 'The file cannot be processed.'),
 				'location'   => __d('media', 'The file cannot be transferred from or to location.'),

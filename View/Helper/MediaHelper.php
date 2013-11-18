@@ -171,7 +171,7 @@ class MediaHelper extends AppHelper {
  * Generates HTML5 markup for one ore more media files
  *
  * Determines correct dimensions for all images automatically. Dimensions for all
- * other media should be passed explictly within the options array in order to prevent
+ * other media should be passed explicitly within the options array in order to prevent
  * the browser refloating the layout.
  *
  * @param string|array $paths Absolute or partial path to a file (or an array thereof)

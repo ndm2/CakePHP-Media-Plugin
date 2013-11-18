@@ -326,13 +326,13 @@ class TransferBehavior extends ModelBehavior {
  * setting.
  *
  * Since there are many requirements to file name generation the behavior
- * implements thise method which is given information about the temporary and
- * destination resource of the current transfer. You can reimplment this method
- * in your model which then will take precendence over the one provided by the
+ * implements these method which is given information about the temporary and
+ * destination resource of the current transfer. You can reimplement this method
+ * in your model which then will take precedence over the one provided by the
  * behavior. The method must return a relative path.
  *
  * The default implementation generates destination paths according to the pattern
- * <shortend media name>/<slugged filename>.<original extension>. However it is
+ * <shortened media name>/<slugged filename>.<original extension>. However it is
  * also possible to do much more here, like correcting the extension using
  * Mime_Type::guessExtension() or multiple levels of subdirectories.
  *
@@ -382,7 +382,7 @@ class TransferBehavior extends ModelBehavior {
 	}
 
 /**
- * Prepares (if neccessary) and performs a transfer
+ * Prepares (if necessary) and performs a transfer
  *
  * Please note that if a file with the same name as the destination exists,
  * it will be silently overwritten.

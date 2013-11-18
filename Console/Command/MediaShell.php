@@ -241,7 +241,7 @@ class MediaShell extends Shell {
 		$this->out("\tmake [-force] [-version name] [sourcefile/sourcedir] [destinationdir]");
 		$this->out("\t\tProcess a file or directory according to filters.");
 		$this->out('');
-		$this->out("\t\t-version name Restrict command to a specfic filter version (e.g. xxl).");
+		$this->out("\t\t-version name Restrict command to a specific filter version (e.g. xxl).");
 		$this->out("\t\t-force Overwrite files if they exist.");
 		$this->out('');
 		$this->out("\thelp");
