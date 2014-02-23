@@ -180,6 +180,7 @@ class TestData extends Object {
 
 		$File->write($string);
 		$File->offset(0);
+		$File->close();
 
 		$this->Files[$alias] =& $File;
 		return $File->pwd();
