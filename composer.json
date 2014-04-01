@@ -1,5 +1,5 @@
 {
-	"name": "bmcclure/cakephp-media-plugin",
+	"name": "ndm2/cakephp-media-plugin",
 	"description": "CakePHP Media Plugin",
 	"type": "cakephp-plugin",
 	"keywords": ["cakephp", "media", "upload", "convert"],
